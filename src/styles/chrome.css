@@ -1,0 +1,278 @@
+/* ---------- Header ---------- */
+
+.site-header {
+  position: fixed;
+  z-index: var(--z-header);
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 4.25rem;
+  padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
+  background: linear-gradient(180deg, rgb(11 11 12 / 0.92), rgb(11 11 12 / 0.55) 60%, transparent);
+  transition: opacity 900ms var(--ease-out);
+}
+
+.site-header__mark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-size: var(--text-sm);
+  font-stretch: var(--wide);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bone);
+  white-space: nowrap;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: auto;
+}
+
+.site-header__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--bone-2);
+  text-decoration: none;
+  transition: color var(--hover) ease;
+}
+
+.site-header__link[aria-current="true"] {
+  color: var(--tungsten);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header__link:hover {
+    color: var(--bone);
+  }
+}
+
+.site-header__toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  min-height: 2.75rem;
+  padding: 0 0.25rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Mobile cue menu ---------- */
+
+.cue-menu {
+  position: fixed;
+  z-index: var(--z-menu);
+  inset: 4.25rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px));
+  background: var(--stage);
+  overflow-y: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cue-menu[data-open] {
+    animation: menu-up 320ms var(--ease-out);
+  }
+}
+
+@keyframes menu-up {
+  from {
+    opacity: 0;
+  }
+}
+
+.cue-menu[hidden] {
+  display: none;
+}
+
+.cue-menu__list {
+  display: grid;
+}
+
+.cue-menu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-2xl);
+  font-stretch: var(--semi-wide);
+  font-weight: 500;
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.cue-menu__link[aria-current="true"] {
+  color: var(--tungsten);
+}
+
+.cue-menu__numeral {
+  width: 2.5rem;
+  font-size: var(--text-sm);
+  color: var(--bone-3);
+}
+
+.cue-menu__resume {
+  align-self: flex-start;
+}
+
+html.menu-open body {
+  overflow: hidden;
+}
+
+@media (max-width: 1199px) {
+  .site-header__nav {
+    display: none;
+  }
+  .site-header__toggle {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cue-menu {
+    display: none !important;
+  }
+}
+
+/* ---------- Cue rail ---------- */
+
+.cue-rail {
+  position: fixed;
+  z-index: var(--z-rail);
+  left: 0;
+  top: 50%;
+  width: var(--rail-width);
+  translate: 0 -50%;
+  padding-left: var(--gutter);
+  transition:
+    opacity 700ms var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+/* The rail waits in the dark during the opening. */
+.cue-rail[data-idle] {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 400ms ease,
+    visibility 0s linear 400ms;
+}
+
+.cue-rail ol {
+  display: grid;
+  gap: 0.125rem;
+  border-left: 1px solid var(--line);
+}
+
+.cue-rail__cue {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0 0.4rem 1rem;
+  font-size: var(--text-xs);
+  font-stretch: var(--semi-wide);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bone-3);
+  transition: color 400ms ease;
+}
+
+.cue-rail__cue::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 1px;
+  background: var(--tungsten);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.cue-rail__numeral {
+  width: 1.75rem;
+  flex: none;
+  font-weight: 500;
+}
+
+.cue-rail__cue[data-state="past"] {
+  color: var(--bone-2);
+}
+
+.cue-rail__cue[data-state="current"] {
+  color: var(--bone);
+}
+.cue-rail__cue[data-state="current"] .cue-rail__numeral {
+  color: var(--tungsten);
+}
+.cue-rail__cue[data-state="current"]::before {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cue-rail__cue:hover {
+    color: var(--bone);
+  }
+}
+
+/* Immersed: while the visitor reads, the rail steps back to a column of
+   numerals, and only the current cue keeps its name. It wakes on a chapter
+   change (data-cue), on pointer approach (data-near) and on keyboard focus.
+   Waking is quick; stepping back is slow, like a house light on a dimmer. */
+.cue-rail__title,
+.cue-rail__numeral,
+.cue-rail ol {
+  transition:
+    opacity 900ms ease,
+    color 400ms ease,
+    border-color 900ms ease;
+}
+
+.cue-rail:not([data-cue], [data-near], :focus-within, :hover) {
+  & ol {
+    border-left-color: rgb(236 233 226 / 0.05);
+  }
+  & .cue-rail__cue:not([data-state="current"]) .cue-rail__title {
+    opacity: 0;
+  }
+  & .cue-rail__cue:not([data-state="current"]) .cue-rail__numeral {
+    opacity: 0.55;
+  }
+  & .cue-rail__cue[data-state="current"] .cue-rail__title {
+    color: var(--bone-2);
+  }
+}
+
+.cue-rail:is([data-cue], [data-near], :hover) :is(.cue-rail__title, .cue-rail__numeral, ol) {
+  transition-duration: 220ms, 220ms, 220ms;
+}
+
+/* Keyboard arrives instantly: no fade between a keypress and what it reveals. */
+.cue-rail:focus-within :is(.cue-rail__title, .cue-rail__numeral, ol) {
+  transition-duration: 0ms;
+}
+
+@media (max-width: 1199px) {
+  .cue-rail {
+    display: none;
+  }
+}

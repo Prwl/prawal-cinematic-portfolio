@@ -1,0 +1,223 @@
+.epilogue {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-bottom: 0;
+}
+
+.epilogue__stage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.epilogue__topology {
+  position: absolute;
+  inset: 0 0 20% 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
+  opacity: 0.8;
+}
+
+.epilogue__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.epilogue__backlight {
+  position: absolute;
+  left: 72%;
+  top: 40%;
+  width: 64vmax;
+  height: 64vmax;
+  translate: -50% -50%;
+  background: radial-gradient(closest-side, rgb(243 184 121 / 0.09), rgb(159 176 189 / 0.05) 50%, transparent);
+}
+
+/* The floor and its horizon: the opening's first gesture, made last. */
+.epilogue__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 76%;
+  bottom: 0;
+  background: radial-gradient(56% 90% at 72% 0%, rgb(159 176 189 / 0.06), transparent 70%);
+}
+
+.epilogue__horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.1) 24%, rgb(236 233 226 / 0.34) 72%, rgb(236 233 226 / 0.1) 94%, transparent);
+  transform-origin: 72% 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .epilogue__horizon {
+    transform: scaleX(0);
+    opacity: 0;
+    transition:
+      transform 1600ms var(--ease-in-out),
+      opacity 1600ms var(--ease-in-out);
+  }
+  .epilogue[data-settled] .epilogue__horizon {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.epilogue__figure {
+  position: absolute;
+  right: max(0rem, calc((100vw - var(--rail-width) - 1500px) / 2));
+  bottom: 0;
+  height: 92%;
+  aspect-ratio: 1980 / 2240;
+}
+
+.epilogue__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(3px -2px 2px rgb(159 176 189 / 0.16));
+}
+
+.epilogue__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--stage) 18%, rgb(11 11 12 / 0.7) 42%, transparent 62%),
+    linear-gradient(0deg, var(--stage), transparent 30%),
+    linear-gradient(180deg, var(--stage), transparent 18%);
+}
+
+.epilogue__copy {
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: 1.5rem;
+  padding-block: 6rem 4rem;
+}
+
+.epilogue__title {
+  font-size: clamp(2.5rem, 1rem + 5vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  max-width: 11ch;
+}
+
+.epilogue__lede {
+  max-width: 34ch;
+}
+
+.epilogue__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.epilogue__direct {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.epilogue__direct > div {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.epilogue__direct dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.epilogue__copy {
+  position: relative;
+}
+
+.epilogue__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0;
+  font-size: var(--text-sm);
+  color: var(--bone-3);
+  transition: color var(--hover) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .epilogue__copy-btn:hover {
+    color: var(--tungsten);
+  }
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  align-items: baseline;
+  padding-block: 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line);
+  font-size: var(--text-sm);
+  color: var(--bone-3);
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-left: auto;
+  color: var(--bone-2);
+}
+
+@media (orientation: portrait), (max-width: 899px) {
+  .epilogue {
+    grid-template-rows: auto auto;
+  }
+  .epilogue__stage {
+    bottom: auto;
+    height: min(78svh, 120vw);
+  }
+  .epilogue__figure {
+    left: 50%;
+    right: auto;
+    translate: -50% 0;
+    height: 100%;
+  }
+  .epilogue__backlight {
+    left: 50%;
+    top: 40%;
+  }
+  .epilogue__floor {
+    top: 74%;
+    background: radial-gradient(70% 90% at 50% 0%, rgb(159 176 189 / 0.06), transparent 70%);
+  }
+  .epilogue__horizon {
+    transform-origin: 50% 50%;
+    background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.12) 16%, rgb(236 233 226 / 0.34) 50%, rgb(236 233 226 / 0.12) 84%, transparent);
+  }
+  .epilogue__vignette {
+    background:
+      linear-gradient(0deg, var(--stage) 4%, rgb(11 11 12 / 0.6) 30%, transparent 55%),
+      linear-gradient(180deg, var(--stage), transparent 22%);
+  }
+  .epilogue__copy {
+    padding-top: calc(min(78svh, 120vw) - 7rem);
+    padding-bottom: 3.5rem;
+  }
+  .site-footer a {
+    margin-left: 0;
+  }
+}

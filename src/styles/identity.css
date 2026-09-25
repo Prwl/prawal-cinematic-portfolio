@@ -1,0 +1,110 @@
+.identity__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: clamp(2.5rem, 6vw, 7rem);
+  align-items: end;
+}
+
+.identity__intro .h2 {
+  max-width: 17ch;
+  margin-bottom: 2rem;
+}
+
+/* The first paragraph is the lede of the scene; the second supports it. */
+.identity__para:first-of-type {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--bone);
+  max-width: 50ch;
+}
+
+.identity__para + .identity__para {
+  margin-top: 1.25rem;
+}
+
+/* Film credits: right-aligned role, left-aligned name, a shared gutter. */
+.credits {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.credits__row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: baseline;
+}
+
+.credits__label {
+  text-align: right;
+  font-size: 0.8125rem;
+  font-stretch: var(--semi-wide);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bone-2);
+}
+
+.credits__value {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+/* Operating notes: one lit at a time, earlier ones stay up. */
+/* Each note gets its own beat of the scroll, like a title card. */
+.notes {
+  margin-top: clamp(5rem, 12vw, 9rem);
+  display: grid;
+  gap: clamp(3.5rem, 13vh, 7.5rem);
+  max-width: 58rem;
+  margin-left: auto;
+}
+
+.note {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: baseline;
+}
+
+.note__topic {
+  color: var(--bone-2);
+  transition: color 600ms ease;
+}
+
+.note__text {
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  color: var(--bone);
+  transition: color 700ms ease;
+}
+
+.note[data-state="dark"] .note__text {
+  color: var(--bone-3);
+}
+
+.note[data-state="lit"] .note__text {
+  color: var(--bone-2);
+}
+
+.note[data-state="current"] .note__topic {
+  color: var(--tungsten);
+}
+
+@media (max-width: 899px) {
+  .identity__grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .credits__row {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .note {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}

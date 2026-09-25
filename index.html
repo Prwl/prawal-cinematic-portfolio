@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prawal Sharma, Technology Manager</title>
+    <meta
+      name="description"
+      content="Prawal Sharma, Technology Manager at Successive Digital. Engineering leadership across cloud-native payment, data and AI-enabled platforms for clients in the US, UK and South Africa."
+    />
+    <meta name="theme-color" content="#0b0b0c" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Prawal Sharma, Technology Manager" />
+    <meta
+      property="og:description"
+      content="From code, to systems, to the teams and intelligence behind them. Ten years of payment, data and AI-enabled platforms."
+    />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Decide before first paint whether the title sequence plays, so the
+      // opening never flashes its final state. Motion-reduced visitors, deep
+      // links and restored scroll positions get the settled composition.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && !location.hash && window.scrollY < 10) {
+          d.classList.add("intro");
+          // Safety net: never leave the stage dark if the app fails to start.
+          setTimeout(function () {
+            if (!d.classList.contains("intro-started")) d.classList.remove("intro");
+          }, 3500);
+        }
+      })();
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Prawal Sharma",
+        "jobTitle": "Technology Manager",
+        "worksFor": { "@type": "Organization", "name": "Successive Digital" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Delhi", "addressCountry": "IN" },
+        "sameAs": ["https://www.linkedin.com/in/sharma-prawal/"]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; color: #ece9e2; background: #0b0b0c; font-family: sans-serif">
+        Prawal Sharma, Technology Manager at Successive Digital.
+        <a style="color: #f3b879" href="/documents/prawal-sharma-resume.pdf">Download the résumé (PDF)</a>
+        or connect on <a style="color: #f3b879" href="https://www.linkedin.com/in/sharma-prawal/">LinkedIn</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

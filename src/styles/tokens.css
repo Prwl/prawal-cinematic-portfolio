@@ -1,0 +1,89 @@
+/* The lighting plot: one stage, one warm key, everything else in the dark. */
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("/fonts/archivo-latin-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("/fonts/archivo-latin-ext-var.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Ground */
+  --stage: #0b0b0c;
+  --stage-raised: #111113;
+  --riser: #18181b;
+  --riser-edge: #232327;
+
+  /* Ink */
+  --bone: #ece9e2;
+  --bone-2: #b3afa6;
+  --bone-3: #8a867e;
+  --ghost: #3a3935;
+  --line: rgb(236 233 226 / 0.1);
+  --line-strong: rgb(236 233 226 / 0.2);
+
+  /* Light. Tungsten marks what is lit now; the backlight is atmosphere only. */
+  --tungsten: #f3b879;
+  --tungsten-soft: rgb(243 184 121 / 0.16);
+  --tungsten-glow: rgb(243 184 121 / 0.08);
+  --backlight: #9fb0bd;
+  --backlight-soft: rgb(159 176 189 / 0.1);
+
+  /* Type */
+  --font: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --wide: 125%;
+  --semi-wide: 112%;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  --text-3xl: clamp(2.125rem, 1.3rem + 3.2vw, 3.75rem);
+  --text-display: clamp(2.625rem, 1rem + 6.2vw, 6rem);
+
+  /* Space */
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+  --section: clamp(6rem, 4rem + 9vw, 11rem);
+  --measure: 62ch;
+  --page-max: 1320px;
+  --rail-width: 0px;
+
+  /* Motion (Emil Kowalski's curves; never ease-in) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --press: 140ms;
+  --hover: 200ms;
+  --lamp: 1100ms;
+
+  /* Layers */
+  --z-stage: 0;
+  --z-content: 1;
+  --z-rail: 20;
+  --z-header: 30;
+  --z-menu: 40;
+  --z-skip: 50;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --rail-width: 196px;
+  }
+}

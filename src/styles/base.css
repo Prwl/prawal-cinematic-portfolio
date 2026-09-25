@@ -1,0 +1,494 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+  scrollbar-color: var(--ghost) var(--stage);
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.intro-running) {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--stage);
+  color: var(--bone);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.intro-running body {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--tungsten);
+  color: var(--stage);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--stage);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ghost);
+  border: 3px solid var(--stage);
+}
+
+img,
+picture,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--tungsten);
+  outline-offset: 4px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: var(--z-skip);
+  padding: 0.75rem 1rem;
+  background: var(--bone);
+  color: var(--stage);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- Layout primitives ---------- */
+
+.page {
+  padding-left: var(--rail-width);
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.chapter {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--section);
+}
+
+/* ---------- The horizon: one line of light carried from the opening ----------
+   Each scene begins on it. Its focal point (--focus) is where the scene is lit;
+   --from is where the previous scene was lit, so the warm key travels along the
+   line between them. Positions are measured across the stage (the page minus
+   the cue rail); chapter I and the close sit exactly under the opening's own
+   brightest point, 64% across the viewport. */
+
+:root {
+  --stage-w: calc(100vw - var(--rail-width));
+  --opening-focus: calc(64vw - var(--rail-width));
+}
+
+#identity {
+  --focus: var(--opening-focus);
+}
+#evolution {
+  --from: var(--opening-focus);
+  --focus: calc(var(--stage-w) * 0.2);
+}
+#systems {
+  --from: calc(var(--stage-w) * 0.2);
+  --focus: calc(var(--stage-w) * 0.36);
+}
+#scale {
+  --from: calc(var(--stage-w) * 0.36);
+  --focus: calc(var(--stage-w) * 0.5);
+}
+#intelligence {
+  --from: calc(var(--stage-w) * 0.5);
+  --focus: calc(var(--stage-w) * 0.3);
+}
+#recognition {
+  --from: calc(var(--stage-w) * 0.3);
+  --focus: calc(var(--stage-w) * 0.7);
+}
+#contact {
+  --from: calc(var(--stage-w) * 0.7);
+  --focus: var(--opening-focus);
+}
+/* The archive, inside Recognition: the light leaves the award wall. */
+.archive {
+  --from: calc(var(--stage-w) * 0.7);
+  --focus: calc(var(--stage-w) * 0.24);
+}
+
+.horizon {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: var(--stage-w);
+  height: 1px;
+  pointer-events: none;
+}
+
+.horizon__line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(236 233 226 / 0.1) calc(var(--focus) - 44vw),
+    rgb(236 233 226 / 0.34) var(--focus),
+    rgb(236 233 226 / 0.1) calc(var(--focus) + 30vw),
+    transparent
+  );
+  transform-origin: var(--focus) 50%;
+  opacity: 0.7;
+}
+
+/* A short warm key on the line: the one thing lit at the moment a scene changes. */
+.horizon__core {
+  position: absolute;
+  top: 0;
+  left: calc(var(--focus) - 9vw);
+  width: 18vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(243 184 121 / 0.9), transparent);
+  opacity: 0;
+}
+
+/* The cool wash the horizon throws on the floor of the new scene. */
+.horizon__spill {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  right: 0;
+  height: min(70vh, 44rem);
+  background: radial-gradient(36% 100% at var(--focus) 0%, rgb(159 176 189 / 0.075), transparent 78%);
+  opacity: 0.5;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .horizon {
+      view-timeline: --horizon block;
+    }
+    .horizon__line,
+    .horizon__core,
+    .horizon__spill {
+      animation-timeline: --horizon;
+      animation-range: cover 0% cover 72%;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-duration: auto;
+    }
+    .horizon__line {
+      animation-name: horizon-draw;
+    }
+    .horizon__core {
+      animation-name: horizon-key;
+    }
+    .horizon__spill {
+      animation-name: horizon-wash;
+    }
+    /* Chapter I receives the opening's line in place. */
+    .horizon--handoff .horizon__line {
+      animation-name: horizon-receive;
+    }
+    .horizon--handoff .horizon__core {
+      animation-name: horizon-key-late;
+    }
+  }
+}
+
+@keyframes horizon-draw {
+  0% {
+    transform: scaleX(0.04);
+    opacity: 0.25;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes horizon-receive {
+  0%,
+  34% {
+    opacity: 0;
+  }
+  53% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes horizon-key {
+  0% {
+    opacity: 0;
+    transform: translateX(calc(var(--from, var(--focus)) - var(--focus)));
+  }
+  12% {
+    opacity: 0.8;
+    transform: translateX(calc(var(--from, var(--focus)) - var(--focus)));
+  }
+  58% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes horizon-key-late {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes horizon-wash {
+  0% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* ---------- Type roles ---------- */
+
+.title-wide {
+  font-stretch: var(--wide);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+.h2 {
+  font-size: var(--text-3xl);
+  max-width: 20ch;
+}
+
+.h3 {
+  font-size: var(--text-2xl);
+  max-width: 22ch;
+}
+
+.lede {
+  font-size: var(--text-xl);
+  line-height: 1.45;
+  color: var(--bone-2);
+  max-width: 44ch;
+  font-weight: 350;
+}
+
+.body {
+  color: var(--bone-2);
+  max-width: var(--measure);
+}
+
+/* Metadata has to hold its own at desk distance, not merely pass contrast. */
+.label {
+  font-size: 0.8125rem;
+  font-stretch: var(--semi-wide);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bone-3);
+}
+
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---------- Actions ---------- */
+
+.action {
+  --action-fg: var(--stage);
+  --action-bg: var(--bone);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.375rem;
+  background: var(--action-bg);
+  color: var(--action-fg);
+  font-size: var(--text-sm);
+  font-stretch: var(--semi-wide);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--hover) ease,
+    color var(--hover) ease,
+    box-shadow var(--hover) ease,
+    transform var(--press) var(--ease-out);
+}
+
+.action svg {
+  flex: none;
+}
+
+.action:active {
+  transform: scale(0.97);
+}
+
+.action--ghost {
+  --action-fg: var(--bone);
+  --action-bg: transparent;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action:hover {
+    --action-bg: var(--tungsten);
+  }
+  .action--ghost:hover {
+    --action-bg: transparent;
+    --action-fg: var(--tungsten);
+    box-shadow: inset 0 0 0 1px var(--tungsten);
+  }
+}
+
+.text-link {
+  color: var(--bone);
+  text-decoration-color: var(--line-strong);
+  transition:
+    color var(--hover) ease,
+    text-decoration-color var(--hover) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover {
+    color: var(--tungsten);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ---------- Lamps: content fades up like a light on a dimmer ----------
+   Content is visible by default. Only when JS runs and motion is allowed do
+   unlit lamps start dark; they come up once when they enter the stage. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-lamp]:not([data-lit]) {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  .js [data-lamp] {
+    transition:
+      opacity var(--lamp) var(--ease-out),
+      filter var(--lamp) var(--ease-out);
+    transition-delay: calc(var(--cue, 0) * 70ms);
+  }
+}

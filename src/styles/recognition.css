@@ -1,0 +1,506 @@
+/* ---------- Exhibition: award photographs under a pinspot ---------- */
+
+.exhibition {
+  position: relative;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.exhibition__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  max-width: var(--page-max);
+  margin: 0 auto 1.25rem;
+  padding-inline: var(--gutter);
+}
+
+.exhibition__btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  color: var(--bone);
+  transition:
+    color var(--hover) ease,
+    box-shadow var(--hover) ease,
+    transform var(--press) var(--ease-out);
+}
+
+.exhibition__btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.exhibition__btn:disabled {
+  color: var(--ghost);
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .exhibition__btn:hover:not(:disabled) {
+    color: var(--tungsten);
+    box-shadow: inset 0 0 0 1px var(--tungsten);
+  }
+}
+
+.exhibition__wall {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  --wall-inset: max(var(--gutter), calc((100vw - var(--rail-width) - var(--page-max)) / 2 + var(--gutter)));
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--wall-inset);
+  padding: 1rem var(--wall-inset) 1.5rem;
+  scrollbar-width: none;
+}
+
+.exhibition__wall::-webkit-scrollbar {
+  display: none;
+}
+
+.exhibition__wall:focus-visible {
+  outline-offset: -2px;
+}
+
+.exhibit {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.exhibit figure {
+  margin: 0;
+  display: grid;
+  gap: 1.25rem;
+  /* The label never runs wider than its photograph. */
+  width: min-content;
+}
+
+.exhibit__frame {
+  position: relative;
+  display: block;
+  height: clamp(15rem, 44vh, 26rem);
+}
+
+.exhibit__frame img {
+  height: 100%;
+  width: auto;
+  max-width: min(82vw, 36rem);
+  object-fit: cover;
+  filter: grayscale(0.85) brightness(0.55);
+  transition: filter 700ms ease;
+}
+
+/* The pinspot: a pool of warm light on the wall around the lit exhibit. */
+.exhibit__frame::after {
+  content: "";
+  position: absolute;
+  inset: -18% -14%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgb(243 184 121 / 0.09), transparent);
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.exhibit[data-spot] .exhibit__frame img {
+  filter: none;
+}
+.exhibit[data-spot] .exhibit__frame::after {
+  opacity: 1;
+}
+
+.exhibit__label {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 15rem;
+}
+
+.exhibit__title {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--bone-2);
+  transition: color 500ms ease;
+}
+
+.exhibit[data-spot] .exhibit__title {
+  color: var(--bone);
+}
+
+.exhibit__date {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bone-2);
+}
+
+.exhibit__note {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--bone-3);
+  transition: color 500ms ease;
+}
+
+.exhibit[data-spot] .exhibit__note {
+  color: var(--bone-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exhibit__frame img {
+    filter: none;
+  }
+}
+
+/* ---------- The archive: the light comes down off the award wall ---------- */
+
+.archive {
+  position: relative;
+  isolation: isolate;
+  margin-top: clamp(5rem, 10vw, 8rem);
+  padding-top: clamp(4.5rem, 9vw, 7rem);
+}
+
+/* Certifications as a catalogue: each issuer a drawer, named wide on the
+   left, its certificates set at reading size on the right. No cards, no
+   rules: scale and light carry the hierarchy. */
+.catalogue {
+  display: grid;
+  gap: clamp(2.25rem, 5vw, 3.5rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.catalogue__drawer {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 0.75rem clamp(1.5rem, 5vw, 5rem);
+  align-items: baseline;
+}
+
+.catalogue__issuer {
+  font-size: var(--text-xl);
+  font-stretch: var(--wide);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--bone-3);
+  transition: color 600ms ease;
+}
+
+.catalogue__count {
+  margin-left: 0.7em;
+  font-size: var(--text-sm);
+  font-stretch: 100%;
+  font-weight: 500;
+  color: var(--bone-3);
+  transition: color 400ms ease;
+}
+
+.catalogue__items {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.catalogue__item {
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  color: var(--bone-2);
+  transition: color 600ms ease;
+}
+
+.catalogue__drawer[data-state="lit"] .catalogue__issuer {
+  color: var(--bone-2);
+}
+.catalogue__drawer[data-state="current"] .catalogue__issuer {
+  color: var(--bone);
+}
+.catalogue__drawer[data-state="current"] .catalogue__count {
+  color: var(--tungsten);
+}
+.catalogue__drawer:is([data-state="lit"], [data-state="current"]) .catalogue__item {
+  color: var(--bone);
+}
+
+@media (max-width: 767px) {
+  .catalogue__drawer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .catalogue__issuer {
+    font-size: var(--text-lg);
+  }
+  .catalogue__item {
+    font-size: var(--text-base);
+  }
+}
+
+.register__archive {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.register__groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  margin-top: 1.25rem;
+}
+
+.register__groups h4 {
+  margin-bottom: 0.75rem;
+}
+
+.register__groups ul {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--bone-2);
+  font-size: 0.9375rem;
+}
+
+.register__groups > div:last-child {
+  grid-column: span 1;
+}
+
+@media (max-width: 1023px) {
+  .register__groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Voices ---------- */
+
+.voices {
+  margin-top: clamp(6rem, 12vw, 9rem);
+}
+
+.voices__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  margin-top: 2.5rem;
+  align-items: start;
+}
+
+.voices__names {
+  display: grid;
+}
+
+.voices__name {
+  display: grid;
+  width: 100%;
+  gap: 0.1rem;
+  padding: 0.6rem 0 0.6rem 1rem;
+  text-align: left;
+  box-shadow: inset 1px 0 0 var(--line);
+  transition:
+    color var(--hover) ease,
+    box-shadow var(--hover) ease;
+}
+
+.voices__name > span:first-child {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--bone-2);
+  transition: color var(--hover) ease;
+}
+
+.voices__role {
+  font-size: 0.8125rem;
+  color: var(--bone-3);
+}
+
+.voices__name[aria-pressed="true"] {
+  box-shadow: inset 1px 0 0 var(--tungsten);
+}
+.voices__name[aria-pressed="true"] > span:first-child {
+  color: var(--bone);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .voices__name:hover > span:first-child {
+    color: var(--bone);
+  }
+}
+
+.voices__quote {
+  position: sticky;
+  top: 8rem;
+  margin: 0;
+}
+
+.voices__quote blockquote {
+  margin: 0;
+}
+
+.voices__quote p {
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-indent: -0.4em;
+  max-width: 28ch;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .voices__quote blockquote {
+    animation: quote-up 520ms var(--ease-out);
+  }
+}
+
+@keyframes quote-up {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+
+.voices__quote figcaption {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 1.75rem;
+}
+
+.voices__who {
+  font-weight: 600;
+}
+
+.voices__meta {
+  font-size: 0.875rem;
+  color: var(--bone-2);
+}
+
+.voices__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  margin-top: 1rem;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 899px) {
+  .voices__grid {
+    grid-template-columns: 1fr;
+  }
+  .voices__names {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .voices__names::-webkit-scrollbar {
+    display: none;
+  }
+  .voices__names li {
+    scroll-snap-align: start;
+  }
+  .voices__name {
+    box-shadow: inset 0 -1px 0 var(--line);
+    padding: 0.6rem 1rem 0.75rem 0;
+    margin-right: 1rem;
+  }
+  .voices__name[aria-pressed="true"] {
+    box-shadow: inset 0 -2px 0 var(--tungsten);
+  }
+  .voices__quote {
+    position: static;
+  }
+}
+
+/* ---------- Appearances: by year, and the one publication ---------- */
+
+.appearances {
+  margin-top: clamp(6rem, 12vw, 9rem);
+}
+
+.appearances__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  align-items: start;
+}
+
+.appearances__years {
+  display: grid;
+  gap: clamp(2rem, 4vw, 2.75rem);
+}
+
+.appearances__year {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 0.75rem clamp(1.25rem, 3vw, 2.5rem);
+  align-items: baseline;
+}
+
+.appearances__when {
+  font-size: var(--text-xl);
+  color: var(--bone-2);
+}
+
+.appearances__list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.appearances__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+}
+
+.appearances__title {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.appearances__kind {
+  font-size: 0.9375rem;
+  color: var(--bone-2);
+}
+
+/* The book: set apart by scale and one hairline, not a box. */
+.publication {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  justify-items: start;
+  padding: 0.25rem 0 0 clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: inset 1px 0 0 var(--line-strong);
+}
+
+.publication__title {
+  font-size: var(--text-2xl);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+}
+
+.publication__detail {
+  color: var(--bone-2);
+  font-size: 1rem;
+  max-width: 32ch;
+}
+
+.publication__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+}
+
+@media (max-width: 899px) {
+  .appearances__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 499px) {
+  .appearances__year {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+  .appearances__title {
+    font-size: var(--text-base);
+  }
+}

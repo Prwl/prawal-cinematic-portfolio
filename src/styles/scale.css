@@ -1,0 +1,70 @@
+.scale__title {
+  margin-bottom: clamp(3.5rem, 9vw, 7rem);
+}
+
+.figures {
+  display: grid;
+  gap: clamp(3rem, 9vh, 6rem);
+}
+
+/* Set like film credits: figures right-aligned to a shared axis, words to its left edge. */
+.figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem clamp(1.5rem, 3vw, 3rem);
+  align-items: baseline;
+}
+
+.figure__num {
+  justify-self: end;
+  text-align: right;
+}
+
+.figure__num {
+  font-size: clamp(3.25rem, 1rem + 7.4vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: #66635c;
+  /* Ignite, do not fade: a short switch-on. */
+  transition: color 160ms linear;
+}
+
+.figure__text {
+  font-size: var(--text-xl);
+  line-height: 1.35;
+  color: var(--bone-3);
+  max-width: 30ch;
+  transition: color 400ms ease;
+}
+
+.figure__text strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+.figure[data-state="lit"] .figure__num {
+  color: var(--bone);
+}
+.figure[data-state="lit"] .figure__text {
+  color: var(--bone-2);
+}
+
+.figure[data-state="current"] .figure__num {
+  color: var(--tungsten);
+}
+.figure[data-state="current"] .figure__text {
+  color: var(--bone);
+}
+
+@media (max-width: 767px) {
+  .figure {
+    grid-template-columns: 1fr;
+  }
+  .figure__num {
+    justify-self: start;
+    text-align: left;
+  }
+  .figure__text {
+    font-size: var(--text-lg);
+  }
+}

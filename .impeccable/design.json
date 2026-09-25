@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-24T19:50:00+05:30",
+  "title": "Design System: Prawal Sharma, cinematic portfolio",
+  "extensions": {
+    "colorMeta": {
+      "stage": { "role": "neutral", "displayName": "Stage Black", "canonical": "#0b0b0c", "tonalRamp": ["#0b0b0c", "#111113", "#18181b", "#232327", "#3a3935", "#57554f", "#8a867e", "#b3afa6"] },
+      "bone": { "role": "neutral", "displayName": "Bone", "canonical": "#ece9e2", "tonalRamp": ["#3a3935", "#57554f", "#6e6b64", "#8a867e", "#9e9a92", "#b3afa6", "#d0ccc4", "#ece9e2"] },
+      "tungsten": { "role": "primary", "displayName": "Tungsten Key", "canonical": "#f3b879", "tonalRamp": ["#3a2a1a", "#5c4128", "#7f5a37", "#a37447", "#c78f58", "#f3b879", "#f7cea3", "#fbe5cd"] },
+      "backlight": { "role": "neutral", "displayName": "Backlight (atmosphere only)", "canonical": "#9fb0bd", "tonalRamp": ["#1d2226", "#343d44", "#4c5963", "#657683", "#7e93a1", "#9fb0bd", "#c1ccd4", "#e2e8ec"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display, wide", "purpose": "The name in the opening and the Scale figures." },
+      "headline": { "displayName": "Headline", "purpose": "One statement per chapter." },
+      "title": { "displayName": "Title", "purpose": "Case studies, sub-sections, operating notes." },
+      "body": { "displayName": "Body", "purpose": "Prose at 62ch." },
+      "label": { "displayName": "Label", "purpose": "Metadata beside or below content, and group headings." }
+    },
+    "shadows": [
+      { "name": "rim-light", "value": "drop-shadow(3px -2px 2px rgb(159 176 189 / 0.16))", "purpose": "Directional backlight rim on the cut-out photograph only." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entrances, lamps, presses." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "On-screen movement: the horizon line, the light sweep." },
+      { "name": "lamp", "value": "1100ms", "purpose": "Content fading up with a 6px focus pull, 70ms cue stagger." },
+      { "name": "press", "value": "140ms", "purpose": "scale(0.97) press feedback." },
+      { "name": "hover", "value": "200ms", "purpose": "Colour changes on hover." },
+      { "name": "ignite", "value": "160ms linear", "purpose": "Scale figures switching on." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "699px" },
+      { "name": "stack", "value": "899px" },
+      { "name": "pin", "value": "1024px landscape, 620px tall" },
+      { "name": "rail", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action in a view: See the work, Email Prawal.",
+      "html": "<a class=\"ds-action\" href=\"#\">See the work</a>",
+      "css": ".ds-action { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; background: #ece9e2; color: #0b0b0c; font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-action:hover { background: #f3b879; } .ds-action:active { transform: scale(0.97); } .ds-action:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary actions: Résumé, LinkedIn, Read the framework.",
+      "html": "<a class=\"ds-ghost\" href=\"#\">Résumé</a>",
+      "css": ".ds-ghost { display: inline-flex; align-items: center; min-height: 48px; padding: 12px 22px; background: transparent; color: #ece9e2; box-shadow: inset 0 0 0 1px rgb(236 233 226 / 0.2); font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 200ms ease, box-shadow 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-ghost:hover { color: #f3b879; box-shadow: inset 0 0 0 1px #f3b879; } .ds-ghost:active { transform: scale(0.97); } .ds-ghost:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+    },
+    {
+      "name": "Cue Rail",
+      "kind": "nav",
+      "description": "Chapters as numbered cues; the current cue is lit.",
+      "html": "<ol class=\"ds-rail\"><li><a href=\"#\" data-state=\"past\"><span>I</span>Identity</a></li><li><a href=\"#\" data-state=\"current\"><span>II</span>Evolution</a></li><li><a href=\"#\"><span>III</span>Systems</a></li></ol>",
+      "css": ".ds-rail { list-style: none; margin: 0; padding: 0; border-left: 1px solid rgb(236 233 226 / 0.1); background: #0b0b0c; } .ds-rail a { position: relative; display: flex; gap: 12px; padding: 6px 0 6px 16px; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a867e; text-decoration: none; transition: color 400ms ease; } .ds-rail span { width: 28px; } .ds-rail a[data-state=past] { color: #b3afa6; } .ds-rail a[data-state=current] { color: #ece9e2; } .ds-rail a[data-state=current] span { color: #f3b879; } .ds-rail a[data-state=current]::before { content: ''; position: absolute; left: -1px; top: 5px; bottom: 5px; width: 1px; background: #f3b879; } .ds-rail a:hover { color: #ece9e2; }"
+    },
+    {
+      "name": "Patch Channel",
+      "kind": "chip",
+      "description": "A capability in the patch sheet; pressed lights where it was used.",
+      "html": "<button class=\"ds-channel\" aria-pressed=\"true\">GraphQL and Apollo</button>",
+      "css": ".ds-channel { position: relative; display: block; min-height: 40px; padding: 7px 0 7px 16px; background: none; border: 0; text-align: left; font-family: Archivo, system-ui, sans-serif; font-size: 16px; color: #b3afa6; cursor: pointer; transition: color 200ms ease; } .ds-channel::before { content: ''; position: absolute; left: 0; top: calc(7px + 0.8em); width: 10px; height: 1px; background: #8a867e; transform: scaleX(0.6); transform-origin: left; transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms ease; } .ds-channel[aria-pressed=true] { color: #f3b879; } .ds-channel[aria-pressed=true]::before { background: #f3b879; transform: none; } .ds-channel:hover { color: #ece9e2; } .ds-channel:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+    },
+    {
+      "name": "Credits",
+      "kind": "custom",
+      "description": "Facts set like film credits: role right-aligned, value left-aligned on a shared gutter.",
+      "html": "<dl class=\"ds-credits\"><div><dt>Based in</dt><dd>Delhi, India</dd></div><div><dt>Company</dt><dd>Successive Digital, since 2017</dd></div></dl>",
+      "css": ".ds-credits { display: grid; gap: 14px; margin: 0; background: #0b0b0c; padding: 16px; } .ds-credits div { display: grid; grid-template-columns: 136px 1fr; gap: 20px; align-items: baseline; } .ds-credits dt { text-align: right; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8a867e; } .ds-credits dd { margin: 0; font-family: Archivo, system-ui, sans-serif; font-size: 15px; color: #ece9e2; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lighting Plot",
+    "overview": "The page is a black-box stage. Nothing exists until it is lit, and light is the only accent. A single warm tungsten key marks whatever is lit now; a cool, desaturated backlight lives only in atmosphere. Motion is light level and focus, not travel: content comes up like a dimmer, figures ignite rather than count, the current cue is lit while earlier cues stay up. The real photograph of Prawal is the only figurative image, graded for a key light and falling away into darkness below the waist.",
+    "keyCharacteristics": [
+      "Stage-black ground, one warm accent, one cool atmospheric light.",
+      "Archivo across its width axis: expanded caps for titles, standard width for reading.",
+      "Sharp corners everywhere; hairlines only where they measure or separate.",
+      "Abstractions drawn as geometry (canvas and SVG), always captioned as abstractions."
+    ],
+    "rules": [
+      { "name": "The Lit-Now Rule", "body": "Tungsten marks the one thing that is lit at this moment. If an element would be tungsten whatever the visitor does, it is the wrong colour.", "section": "colors" },
+      { "name": "The Atmosphere Rule", "body": "The cool backlight belongs to the set, never to interface controls or text.", "section": "colors" },
+      { "name": "The No-Kicker Rule", "body": "Labels sit beside or below what they describe, or are the heading itself. Never a small label above a heading.", "section": "typography" },
+      { "name": "The Light-Not-Shadow Rule", "body": "If something needs to come forward, light it. Do not lift it with a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep tungsten (#f3b879) for the one thing lit now.",
+      "Do use the real photograph for Prawal; grade it, never replace it with a generated likeness.",
+      "Do caption every diagram as an abstraction and keep its claims to the published description.",
+      "Do give reduced motion a composed state: every cue lit, no sequence, no pin.",
+      "Do use strong ease-out (cubic-bezier(0.23, 1, 0.32, 1)) for entrances; never ease-in."
+    ],
+    "donts": [
+      "Don't put a label above a heading.",
+      "Don't use the cool backlight (#9fb0bd) for text or controls.",
+      "Don't round corners or add elevation shadows.",
+      "Don't count numbers up; figures ignite.",
+      "Don't use em or en dashes in copy."
+    ]
+  }
+}
