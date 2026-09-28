@@ -123,13 +123,64 @@
   background: radial-gradient(36% 100% at var(--focus) 0%, rgb(238 185 123 / 0.06), transparent 78%);
 }
 
-/* Six figures, each given enough scroll to be read before the next ignites. */
-.scale-scene { --run: 340svh; }
+/* ---------- Six events ----------
+   The figure sits left; the thing it counts is drawn right, and switches on
+   mark by mark in its own order (--k), like segments on a board. Marks are
+   pale ink; the one mark that carries the point is tungsten. */
+.scale-scene { --run: 400svh; }
 .scale-scene .story-sticky { overflow: clip; }
-.scale-scene__structure { position: absolute; inset: 18% 0 12%; overflow: hidden; pointer-events: none; }
-.scale-scene__structure i { position: absolute; left: calc(8% + var(--column) * 16%); width: 9%; top: 0; bottom: 0; background: linear-gradient(90deg, #313639, #202426); transform: skewY(-20deg) translateY(calc((var(--column) - var(--metric)) * 5%)); transition: transform 700ms var(--ease-out); }
-.scale-scene__metric { position: relative; margin-block: auto; padding-block: 4rem; }
-.scale-scene__metric > span { font-size: clamp(4rem, 12vw, 11rem); color: var(--tungsten); letter-spacing: -.03em; }
-.scale-scene__metric p { font-size: clamp(1.4rem, 3vw, 2.4rem); margin-top: 1rem; max-width: 28ch; }
 .scale-scene .scene-footer { margin-top: 0; }
-@media(max-width:699px) { .scale-scene__metric > span { font-size: clamp(3.6rem, 16vw, 6rem); } .scale-scene .story-controls { justify-content: flex-start; } }
+.scale-scene__event {
+  position: absolute;
+  right: max(var(--gutter), 2%);
+  top: 50%;
+  width: min(50%, 68svh);
+  aspect-ratio: 1;
+  translate: 0 -48%;
+  pointer-events: none;
+}
+.scale-scene__event svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.scale-scene__event svg:not([data-current="true"]) { visibility: hidden; transition: visibility 0s 500ms; }
+.scale-scene__event svg:not([data-current="true"]) .mark { opacity: 0; transition-delay: 0ms; transition-duration: 400ms; }
+
+.mark {
+  opacity: .08;
+  stroke: var(--ink-2);
+  fill: var(--ink-2);
+  transition: opacity 240ms linear calc(var(--k) * 6ms + 250ms);
+}
+[data-current="true"] .mark { opacity: 1; }
+line.mark { stroke-width: 2; }
+.mark--key { stroke: var(--ember); fill: var(--ember); }
+line.mark--key { stroke-width: 3; }
+.mark--ghost { fill: none; stroke: var(--ink-3); stroke-width: 1; }
+[data-current="true"] .mark--ghost { opacity: .5; }
+.mark--half { fill: rgb(238 185 123 / .35); stroke: var(--ember); stroke-width: 1.5; }
+.mark--hatch { fill: rgb(238 185 123 / .45); }
+.mark--rule { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 5; }
+.mark__thread { stroke: var(--ink-3); stroke-width: .6; opacity: .22; }
+.mark__note { font: 600 15px var(--font); letter-spacing: .08em; text-transform: uppercase; fill: var(--ink-3); stroke: none; }
+.mark--draw { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 1; transition: stroke-dashoffset 1400ms var(--ease-in-out) 250ms; }
+[data-current="true"] .mark--draw { stroke-dashoffset: 0; }
+.mark--region rect { fill: var(--ember); }
+.mark--column rect { fill: #3a3f43; stroke: none; }
+.mark--column .mark__return { fill: #262a2d; }
+[data-current="true"] .mark--column rect:first-child { fill: #d9d5ce; }
+[data-current="true"] .mark--column .mark__return { fill: #8f8b84; }
+[data-kind="5"] .mark--column:last-child rect:first-child { fill: var(--ember); }
+
+.scale-scene__metric { position: relative; z-index: 1; margin-block: auto; padding-block: 2rem; max-width: 46%; }
+.scale-scene__figure { display: block; white-space: nowrap; font-size: clamp(3.4rem, 7.6vw, 8.5rem); color: var(--ember); letter-spacing: -.03em; line-height: .9; }
+.scale-scene__metric p { font-size: clamp(1.4rem, 2.6vw, 2.2rem); margin-top: 1rem; max-width: 16ch; line-height: 1.15; }
+
+@media (max-width: 699px) {
+  .scale-scene .story-sticky { min-height: 720px; }
+  .scale-scene__event { top: 7.5rem; right: auto; left: 50%; width: min(86vw, 44svh); translate: -50% 0; }
+  .scale-scene__metric { max-width: none; margin-top: auto; margin-bottom: 1rem; padding-block: 0; }
+  .scale-scene__figure { font-size: clamp(3.6rem, 18vw, 5.5rem); }
+  .scale-scene__metric p { font-size: 1.35rem; }
+  .scale-scene .story-controls { justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark, .mark--draw { transition: none !important; }
+}

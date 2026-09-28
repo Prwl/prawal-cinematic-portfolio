@@ -3,8 +3,13 @@ import { createPortal } from "react-dom";
 import { X, ArrowUpRight } from "@phosphor-icons/react";
 import "../styles/story.css";
 
-/** Native top-layer focus containment; closing restores the trigger and scroll. */
-export function DetailLayer({ title, label = "Explore the detail", children }) {
+/**
+ * The second layer: complete professional detail, opened from a scene.
+ * Native top-layer focus containment; closing restores the trigger and
+ * scroll. It is a page from the archive, lit from the same window: the
+ * chapter's numeral heads it, and plates of real material sit in the text.
+ */
+export function DetailLayer({ title, label = "Explore the detail", chapter, children }) {
   const ref = useRef(null);
   const trigger = useRef(null);
   const id = useId();
@@ -31,7 +36,7 @@ export function DetailLayer({ title, label = "Explore the detail", children }) {
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
     }} onCancel={() => setOpen(false)} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right) setOpen(false); } }}>
-      <header className="detail-layer__head"><h2 id={id}>{title}</h2><button type="button" onClick={() => setOpen(false)} aria-label="Close details"><X size={24} /></button></header>
+      <header className="detail-layer__head">{chapter && <span className="detail-layer__numeral" aria-hidden="true">{chapter}</span>}<h2 id={id}>{title}</h2><button type="button" onClick={() => setOpen(false)} aria-label="Close details"><X size={24} /></button></header>
       <div className="detail-layer__body">{children}</div>
     </dialog>, document.body)}
   </>;

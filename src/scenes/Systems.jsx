@@ -101,16 +101,13 @@ function WorkIndex() {
 
 export function Systems() {
   return (
-    <section id="systems" className="chapter systems" aria-labelledby="systems-title">
+    <section id="systems" className="chapter systems bleed" aria-labelledby="systems-title">
       <Horizon />
       <div className="wrap">
         <div className="systems__head">
           <h2 id="systems-title" className="h2" data-lamp>
             {systemsIntro.heading}
           </h2>
-          <p className="lede" data-lamp style={{ "--cue": 1 }}>
-            Data, payments, dependencies. Three systems, three kinds of responsibility.
-          </p>
         </div>
 
         <div className="systems__cases">

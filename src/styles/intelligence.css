@@ -1,38 +1,72 @@
+/* ---------- V. Intelligence: the model takes shape ----------
+   The brightest room. An isometric plinth; a graphite core of engineering
+   judgment; four stone principles slide in along their own axes and lock
+   against it. Channels are cut as each joins; a ring binds the whole. */
 .intelligence { padding-block: 3rem 0; }
-.assembly { --run: 270svh; }
-.assembly__model { position: relative; width: min(100%, 960px); flex: 1; min-height: 0; margin: 1rem auto; display: grid; align-content: center; }
-.assembly__model svg { width: 100%; max-height: 53svh; overflow: visible; }
-.assembly__ground { fill: rgb(241 246 239 / .5); stroke: rgb(80 100 86 / .12); }
-.assembly__connection path { fill: none; stroke: #8b9c8e; stroke-width: 1.5; }
-.assembly__connection { opacity: .12; transition: opacity 550ms ease; }
-.assembly__connection[data-present="true"] { opacity: 1; }
-.assembly__connection .assembly__join { stroke: var(--ember-ink); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 650ms var(--ease-out); }
-.assembly__join[data-present="true"] { stroke-dashoffset: 0; }
-.assembly__anchor { fill: var(--ink); }
-.assembly__centre { font: 17px var(--font); fill: var(--ink); }
-.assembly__pillar { position: absolute; width: 29%; min-height: 5rem; padding: 1rem; background: linear-gradient(125deg, #edf1e9, #c6d0c7); box-shadow: 14px 23px 28px -18px rgb(27 30 34 / .3); opacity: .22; transform: translateY(18px); transition: opacity 500ms ease, transform 650ms var(--ease-out); }
-.assembly__pillar[data-present="true"] { opacity: 1; transform: none; }
-.assembly__pillar[data-current="true"] { border-top: 2px solid var(--ember-ink); }
-.assembly__pillar span { color: var(--ember-ink); font-size: .8rem; }
-.assembly__pillar p { font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.2; }
-.assembly__pillar--0 { top: 6%; left: 3%; }
-.assembly__pillar--1 { top: 6%; right: 3%; }
-.assembly__pillar--2 { bottom: 5%; right: 3%; }
-.assembly__pillar--3 { bottom: 5%; left: 3%; }
-.assembly__caption { min-height: 5rem; margin-block: .5rem 1rem; }
-.assembly__caption h3 { font-size: clamp(1.6rem, 3vw, 2.5rem); }
+.assembly { --run: 330svh; }
+.assembly .story-sticky { overflow: visible; }
+.assembly .scene-footer { margin-top: 0; }
+
+.assembly__light {
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 52% at 55% 44%, rgb(252 253 250 / .75), transparent 72%),
+    linear-gradient(180deg, transparent 60%, rgb(110 128 114 / .14));
+  opacity: .7;
+  transition: opacity 1400ms var(--ease-in-out);
+}
+.assembly__light[data-complete="true"] { opacity: 1; }
+
+.assembly__model { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; margin-block: .5rem; }
+.assembly__model svg { width: 100%; height: 100%; max-height: 62svh; overflow: visible; }
+.assembly__model text { font-family: var(--font); }
+
+.face-top { fill: #eef2ea; }
+.face-left { fill: #d8dfd6; }
+.face-right { fill: #bfc9c0; }
+.assembly__plinth .face-top { fill: #e6ece3; stroke: rgb(40 60 46 / .12); }
+.assembly__plinth .face-left { fill: #cdd6cc; }
+.assembly__plinth .face-right { fill: #b3bfb5; }
+
+.assembly__core .face-top { fill: #4a5055; }
+.assembly__core .face-left { fill: #33383c; }
+.assembly__core .face-right { fill: #1f2224; }
+.assembly__shadow { fill: rgb(40 56 44 / .12); }
+.assembly__core-name { font-size: 15px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; fill: var(--ink); }
+
+.assembly__block {
+  transform: translate(var(--ox), var(--oy));
+  opacity: 0;
+  transition: transform 1200ms var(--ease-out), opacity 700ms ease;
+}
+.assembly__block[data-state="arriving"], .assembly__block[data-state="set"] { transform: none; opacity: 1; }
+.assembly__block[data-state="arriving"] .face-top { fill: #f7f9f5; stroke: var(--ember); stroke-width: 2; }
+.assembly__num { font-size: 13px; font-weight: 600; letter-spacing: .1em; fill: var(--ink-3); }
+.assembly__block[data-state="arriving"] .assembly__num { fill: var(--ember-ink); }
+.assembly__name { font-size: 17px; fill: var(--ink); opacity: 0; transition: opacity 600ms ease 500ms; }
+.assembly__block[data-state="arriving"] .assembly__name, svg[data-complete="true"] .assembly__name { opacity: 1; }
+
+.assembly__channel { fill: none; stroke: var(--ember-ink); stroke-width: 2.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 900ms var(--ease-out) 700ms; }
+.assembly__channel[data-cut="true"] { stroke-dashoffset: 0; }
+.assembly__ring { fill: none; stroke: var(--ember-ink); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1600ms var(--ease-in-out) 400ms; }
+.assembly__ring[data-cut="true"] { stroke-dashoffset: 0; }
+
+.assembly__caption { position: relative; z-index: 2; min-height: 5.5rem; margin-block: .25rem 1rem; }
+.assembly__caption h3 { font-size: clamp(1.6rem, 3vw, 2.5rem); line-height: 1.05; }
 .assembly__caption p { margin-top: .5rem; color: var(--ink-2); }
-.assembly__download { min-height: 44px; display: inline-flex; align-items: center; font-size: .8rem; align-self: flex-end; margin-top: .5rem; }
-@media(max-width: 699px) {
- .assembly__model { flex: none; height: 39svh; min-height: 285px; margin: auto 0; }
- .assembly__model svg { height: 100%; }
- .assembly__pillar { width: 43%; min-height: 4.5rem; padding: .7rem; }
- .assembly__pillar p { font-size: 1rem; }
- .assembly__pillar--0, .assembly__pillar--3 { left: 0; }
- .assembly__pillar--1, .assembly__pillar--2 { right: 0; }
- .assembly__pillar--0, .assembly__pillar--1 { top: 0; }
- .assembly__pillar--2, .assembly__pillar--3 { bottom: 0; }
- .assembly__centre { font-size: 26px; }
- .assembly__caption { min-height: 6rem; margin-bottom: 0; }
- .assembly__download { align-self: flex-start; min-height: 32px; }
+.assembly__links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: flex-end; }
+.assembly__download { min-height: 44px; display: inline-flex; align-items: center; font-size: .85rem; }
+
+@media (max-width: 699px) {
+  .assembly__model svg { max-height: 50svh; }
+  .assembly__name { display: none; }
+  .assembly__num { font-size: 18px; }
+  .assembly__shadow { fill: rgb(40 56 44 / .12); }
+.assembly__core-name { font-size: 19px; }
+  .assembly__caption { min-height: 6rem; margin-bottom: 0; }
+  .assembly__links { justify-content: flex-start; gap: 0 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assembly__block, .assembly__channel, .assembly__ring, .assembly__name, .assembly__light { transition: none; }
 }

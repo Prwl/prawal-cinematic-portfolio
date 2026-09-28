@@ -1,27 +1,127 @@
+/* ---------- II. Evolution: the ascent ----------
+   A stone staircase in real perspective. Each step is a block standing on
+   the ground (front face, riser, tread), taller than the last. The camera
+   climbs: the stair is translated so the step on stage sits at one focal
+   point, then viewed from a fixed angle above and to the left. */
 .evolution { padding-block: 3rem 0; }
-.journey { --run: 300svh; }
-.journey .story-sticky { overflow: clip; }
-.journey__architecture { position: absolute; inset: 17% 0 8%; perspective: 1100px; overflow: hidden; pointer-events: none; }
-.journey__vanishing { position: absolute; inset: 7% 0 0 30%; background: linear-gradient(132deg, transparent 20%, rgb(250 248 239 / .65) 20.2%, transparent 67%); clip-path: polygon(45% 0, 68% 0, 100% 100%, 0 100%); }
-.journey__step { position: absolute; top: 37%; left: 43%; width: 43%; height: 36%; transform: translate(calc(var(--distance) * 15%), calc(var(--distance) * -35%)) translateZ(calc(var(--depth) * -155px)); background: linear-gradient(110deg, #e9e4da, #c4bdae); box-shadow: 18px 28px 34px -18px rgb(27 30 34 / .25); opacity: calc(1 - var(--depth) * .16); transition: transform 750ms var(--ease-out), opacity 650ms ease; z-index: calc(10 - var(--depth)); }
-.journey__step::before { content: ""; position: absolute; bottom: 100%; width: 100%; height: 32%; background: linear-gradient(110deg, #f0ece4, #dbd4c7); transform-origin: bottom; transform: skewX(-42deg); }
-.journey__step::after { content: ""; position: absolute; inset: 0 auto 0 100%; width: 19%; background: #b8b2a6; transform-origin: left; transform: skewY(-48deg); }
-.journey__step span { display: block; padding: 1rem 1.4rem; font-size: clamp(2.5rem, 7vw, 6rem); font-stretch: var(--wide); letter-spacing: -.03em; transition: opacity 450ms ease; }
-.journey__step[data-current="true"] { border-top: 2px solid var(--ember); }
-/* Only the step on stage carries its year: the others read as architecture,
-   not as fragments of numbers peeking out behind it. */
-.journey__step:not([data-current="true"]) span { opacity: 0; }
-.journey__caption { position: relative; margin-block: auto; width: 40%; padding-block: 2rem; }
-.journey__caption h3 { font-size: clamp(2rem, 3.5vw, 3.6rem); margin: .65rem 0 1rem; }
-.journey__scope { margin-top: 1.5rem; color: var(--ember-ink); font-size: 1.2rem; }
-@media(max-width: 699px) {
- .journey__architecture { inset: 15% -5% 31%; }
- .journey__step { left: 20%; top: 44%; width: 57%; height: 34%; }
- .journey__step span { font-size: 3.4rem; padding: .5rem 1rem; }
- .journey__caption { width: 100%; margin-top: auto; margin-bottom: 0; padding: 0; }
- .journey__caption h3 { font-size: 1.85rem; max-width: 22ch; margin: .3rem 0; }
- .journey__caption > p { font-size: .88rem; }
- .journey__scope { margin-top: .3rem; }
-}
+.ascent { --run: 380svh; }
+.ascent .story-sticky { overflow: visible; }
+.ascent .scene-footer { margin-top: 0; }
 
-.journey__period { margin-top: .6rem; }
+.ascent__space {
+  --R: 21cqw;
+  --W: 30cqw;
+  container-type: size;
+  perspective: 1500px;
+  perspective-origin: 46% 40%;
+  overflow: clip;
+  z-index: 0;
+  pointer-events: none;
+}
+/* The hall floor falling into shade toward the viewer. */
+.ascent__ground {
+  position: absolute;
+  inset: 58% 0 0;
+  background: linear-gradient(180deg, transparent, rgb(120 106 88 / .16));
+}
+.ascent__stair {
+  position: absolute;
+  left: 57%;
+  top: 60%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(-14deg) rotateY(30deg) translate3d(calc((var(--x) + .5) * var(--R) * -1), calc(var(--top) * 1cqh), 0);
+  transition: transform 1400ms var(--ease-in-out);
+}
+.ascent__step {
+  position: absolute;
+  left: calc(var(--i) * var(--R));
+  top: 0;
+  width: var(--R);
+  height: 0;
+  transform-style: preserve-3d;
+}
+.ascent__step > span {
+  position: absolute;
+  left: 0;
+  top: calc(var(--t) * -1cqh);
+  transition: opacity 900ms var(--ease-out);
+}
+/* The face toward the viewer, turned from the sun: the step's mass. */
+.ascent__front {
+  width: var(--R);
+  height: calc(var(--t) * 1cqh);
+  transform: translateZ(calc(var(--W) / 2));
+  background: linear-gradient(180deg, #d6cfc3, #bcb4a6 70%);
+  box-shadow: inset 1px 0 0 rgb(255 255 255 / .35);
+  padding: 1.6cqh 1.6cqw;
+}
+/* The riser, lit from the left by the window. */
+.ascent__riser {
+  width: var(--W);
+  height: calc(var(--t) * 1cqh);
+  transform-origin: left;
+  transform: translateZ(calc(var(--W) / 2)) rotateY(90deg);
+  background: linear-gradient(180deg, #ece6db, #d9d2c5 70%);
+}
+/* The tread: the lightest face, where the light lands. */
+.ascent__tread {
+  width: var(--R);
+  height: var(--W);
+  transform-origin: top;
+  transform: translateZ(calc(var(--W) / -2)) rotateX(90deg);
+  background: linear-gradient(0deg, #f3efe7, #e7e1d6);
+}
+.ascent__step[data-state="current"] .ascent__tread { box-shadow: inset 0 -3px 0 var(--ember); }
+
+.ascent__year {
+  display: block;
+  font-size: min(9cqh, 7.5cqw);
+  font-weight: 500;
+  font-stretch: var(--wide);
+  line-height: .9;
+  letter-spacing: -.03em;
+  color: rgb(27 30 34 / .18);
+  transition: color 700ms ease;
+}
+.ascent__scope {
+  display: block;
+  margin-top: 1.2cqh;
+  font-size: min(1.9cqh, 1.25cqw);
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgb(27 30 34 / .2);
+  transition: color 700ms ease;
+}
+.ascent__step[data-state="current"] .ascent__year { color: var(--ink); }
+.ascent__step[data-state="current"] .ascent__scope { color: var(--ember-ink); }
+
+/* Climbed steps fall away; the ones ahead rise into haze. */
+.ascent__step[data-state="passed"] > span { opacity: .5; }
+.ascent__step[data-state="ahead"] > span { opacity: calc(1 - var(--d) * .2); }
+
+.ascent__caption {
+  position: relative;
+  z-index: 5;
+  margin-top: auto;
+  margin-bottom: 1.25rem;
+  min-height: 7rem;
+  max-width: 24ch;
+}
+.ascent__caption h3 { font-size: clamp(1.9rem, 3.3vw, 3.3rem); line-height: 1.02; letter-spacing: -.025em; margin-bottom: .6rem; }
+.ascent__caption p { color: var(--ink-2); }
+.ascent__caption .label { margin-top: .35rem; color: var(--ink-3); }
+
+@media (max-width: 699px) {
+  .ascent__space { --R: 38cqw; --W: 44cqw; perspective: 900px; perspective-origin: 50% 36%; }
+  .ascent__stair { left: 50%; top: 46%; transform: rotateX(-14deg) rotateY(26deg) translate3d(calc((var(--x) + .5) * var(--R) * -1), calc(var(--top) * 1cqh), 0); }
+  .ascent__year { font-size: 11cqw; }
+  .ascent__scope { font-size: 2.6cqw; }
+  .ascent__caption { min-height: 8.5rem; }
+  .ascent__caption h3 { font-size: 1.85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ascent__stair, .ascent__step > span { transition: none; }
+}

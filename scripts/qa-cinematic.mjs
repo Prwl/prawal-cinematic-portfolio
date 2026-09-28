@@ -28,13 +28,13 @@ for (const [width,height] of sizes) {
   await page.waitForTimeout(800);
   const info=await scene.evaluate(el=>{
    const stick=el.querySelector(".story-sticky");const r=stick.getBoundingClientRect();
-   const controls=[...stick.querySelectorAll("button,a")].filter(e=>!e.disabled);
+   const controls=[...stick.querySelectorAll("button,a")].filter(e=>!e.disabled&&e.tabIndex>=0);
    return {kind:el.className,top:r.top,bottom:r.bottom,overflow:document.documentElement.scrollWidth-innerWidth,offscreen:controls.filter(e=>{const b=e.getBoundingClientRect();return b.left<0||b.right>innerWidth+1||b.bottom>innerHeight+2}).map(e=>e.textContent)};
   });
   if(info.overflow>0||info.offscreen.length)errors.push(`${width}: ${JSON.stringify(info)}`);
   if([1440,390,360,820].includes(width))await page.screenshot({path:`${out}/${width}-scene-${i}.png`});
   // A real keyboard opener, native modal containment, Escape, focus and scroll restoration.
-  const opener=scene.locator(".detail-link");
+  const opener=scene.locator(".detail-link").first();
   await opener.focus(); const before=await page.evaluate(()=>scrollY);
   
   await page.keyboard.press("Enter");
@@ -60,8 +60,8 @@ for (const [width,height] of sizes) {
 for(const width of [1440,390]) {
  const page=await browser.newPage({viewport:{width,height:900},reducedMotion:"reduce",hasTouch:width<700});
  await page.goto(base,{waitUntil:"networkidle"});
- assert.equal(await page.locator(".assembly__model").getAttribute("data-complete"),"true");
- for(const selector of [".journey",".system-story",".assembly"]) {
+ assert.equal(await page.locator(".assembly__model svg").getAttribute("data-complete"),"true");
+ for(const selector of [".ascent",".system-story",".assembly"]) {
   await page.locator(selector).first().evaluate(el=>window.scrollTo({top:el.getBoundingClientRect().top+scrollY,behavior:"instant"}));
   await page.screenshot({path:`${out}/${width}-reduced-${selector.slice(1)}.png`});
  }

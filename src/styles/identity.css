@@ -1,12 +1,242 @@
+/* ---------- Identity: a hall of principles ----------
+   Four stone flats stand in depth, alternating sides of a long hall. The
+   camera dollies forward one flat per beat (the depth layer's translateZ):
+   the flat on stage takes the window's light, the passed one slides past the
+   lens and is gone, the ones ahead wait in haze. Each flat carries the mark
+   of its idea in the stone itself. */
 .identity { padding-block: 0; }
-.identity-scene { --run: 220svh; }
-.identity-scene__room { flex: 1; position: relative; isolation: isolate; overflow: hidden; margin-block: 1rem; }
-.identity-scene__plane { position: absolute; left: calc(13% + var(--plane) * 18%); top: calc(18% - var(--plane) * 3%); bottom: 9%; width: 11%; background: linear-gradient(90deg, #f1eade, #c3bbac); box-shadow: 24px 35px 34px -18px rgb(38 37 30 / .23); transform: translateY(15%); opacity: .45; transition: transform 650ms var(--ease-out), opacity 650ms ease; }
-.identity-scene__plane[data-current="true"] { transform: translateY(0); opacity: 1; border-top: 2px solid var(--ember-ink); }
-.identity-scene__light { position: absolute; inset: 0; background: linear-gradient(120deg, transparent 15%, rgb(253 248 232 / .8) 15.2%, transparent 66%); transform: translateX(-20%); transition: transform 750ms var(--ease-out); }
-.identity-scene__room[data-idea="1"] .identity-scene__light { transform: translateX(-5%); }
-.identity-scene__room[data-idea="2"] .identity-scene__light { transform: translateX(10%); }
-.identity-scene__room[data-idea="3"] .identity-scene__light { transform: translateX(25%); }
-.identity-scene__word { position: absolute; left: 5%; bottom: 16%; font-size: clamp(4rem, 10vw, 9rem); font-stretch: var(--wide); font-weight: 500; line-height: 1.1; letter-spacing: -.04em; }
-.identity-scene__caption { font-size: clamp(1.25rem, 2.5vw, 2rem); max-width: 32ch; min-height: 3em; margin-bottom: 1.5rem; }
-@media(max-width:699px) { .identity-scene__word { font-size: clamp(2.9rem, 12vw, 4rem); left: 0; bottom: 18%; } .identity-scene__room { margin-block: 2rem; } .identity-scene__plane { width: 14%; } }
+.hall { --run: 300svh; }
+.hall .story-sticky { overflow: visible; }
+.hall .scene-footer { margin-top: 0; }
+
+/* The hall fills the frame edge to edge; the words sit over it. */
+.hall__space {
+  --gap: 40cqw;
+  --horizon: 40%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: calc((100vw + var(--rail-width)) / -2);
+  container-type: size;
+  perspective: 1100px;
+  perspective-origin: 56% var(--horizon);
+  isolation: isolate;
+  z-index: 0;
+  overflow: clip;
+}
+
+/* The floor of the hall: haze at the far end, shade toward the viewer, the
+   sunpatch the window throws (it follows the flat on stage), and the long
+   spill of light from the doorway at the end of the hall. */
+.hall__floor {
+  position: absolute;
+  inset: var(--horizon) 0 0;
+  z-index: -2;
+  background:
+    radial-gradient(34% 46% at var(--patch, 30%) 62%, rgb(255 250 238 / .5), transparent 70%),
+    linear-gradient(180deg, rgb(255 252 246 / .3), transparent 30%, rgb(120 108 90 / .2));
+  transition: --patch 1300ms var(--ease-in-out);
+}
+.hall__space[data-side="right"] .hall__floor { --patch: 70%; }
+.hall__floor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(255 253 248 / .75), rgb(255 253 248 / 0) 85%);
+  clip-path: polygon(55.4% 0, 56.6% 0, 74% 100%, 44% 100%);
+}
+/* The doorway at the end of the hall, where the light comes from. */
+.hall__floor::after {
+  content: "";
+  position: absolute;
+  left: calc(56% - .7cqw);
+  bottom: 100%;
+  width: 1.4cqw;
+  height: 11cqh;
+  background: #fcfaf5;
+  box-shadow: inset 2px 0 0 rgb(27 30 34 / .08);
+}
+
+/* The window's shaft: one diagonal from high left onto the flat on stage. */
+.hall__shaft {
+  position: absolute;
+  inset: -10% -10% 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(118deg, transparent 22%, rgb(255 251 242 / .5) 30%, rgb(255 251 242 / .16) 44%, transparent 52%);
+  mix-blend-mode: soft-light;
+  transform: translateX(-12%);
+  transition: transform 1200ms var(--ease-in-out);
+}
+.hall__space[data-side="right"] .hall__shaft { transform: translateX(14%); }
+.hall__space[data-idea="slit"] .hall__shaft { background: linear-gradient(118deg, transparent 26%, rgb(255 251 242 / .62) 31%, rgb(255 251 242 / .12) 38%, transparent 44%); }
+
+.hall__depth {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--at) * var(--gap)));
+  transition: transform 1300ms var(--ease-in-out);
+}
+
+.hall__flat {
+  --w: 34cqw;
+  --shift: 12cqw;
+  position: absolute;
+  bottom: 21cqh;
+  left: calc(58% - var(--w) / 2 - var(--shift));
+  width: var(--w);
+  height: 58cqh;
+  background:
+    linear-gradient(100deg, #f2ece2 0%, #e5ded2 50%, #cec6b8 100%);
+  transform: translateZ(calc(var(--i) * var(--gap) * -1));
+  transition: opacity 900ms var(--ease-out), filter 900ms var(--ease-out);
+}
+.hall__flat[data-side="right"] { left: calc(58% - var(--w) / 2 + var(--shift)); }
+
+/* Its shadow on the floor, thrown right and toward the viewer by the window. */
+.hall__flat::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 7cqh;
+  background: linear-gradient(180deg, rgb(62 54 42 / .26), rgb(62 54 42 / 0));
+  transform: skewX(-58deg);
+  transform-origin: top left;
+}
+
+/* The return of the stone, on the side facing the far end of the hall. */
+.hall__flat::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 2.2cqw;
+  background: linear-gradient(180deg, #c3bbad, #aea697);
+  clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
+}
+.hall__flat[data-side="right"]::after { left: auto; right: 100%; clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%); background: linear-gradient(180deg, #d9d2c5, #c9c1b3); }
+
+/* Haze: flats further down the hall lose contrast into the room's light. */
+.hall__flat[data-state="ahead"] { opacity: calc(1 - var(--d) * .22); filter: blur(calc(var(--d) * 1.4px)) saturate(.8); }
+.hall__flat[data-state="passed"] { opacity: 0; pointer-events: none; }
+
+.hall__word {
+  position: absolute;
+  left: 7%;
+  bottom: 11%;
+  font-size: clamp(2.5rem, 5.4cqw, 6.25rem);
+  font-stretch: var(--semi-wide);
+  font-weight: 500;
+  line-height: .9;
+  letter-spacing: -.035em;
+  color: #24272a;
+  /* Carved: the sun at upper left lights the lower right wall of each cut. */
+  text-shadow: 1px 1px 0 rgb(255 255 255 / .55);
+}
+.hall__num {
+  position: absolute;
+  left: 7%;
+  top: 8%;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-3);
+}
+.hall__flat[data-state="current"] .hall__num { color: var(--ember-ink); }
+.hall__flat[data-state="current"] { border-top: 2px solid var(--ember); }
+
+/* The marks. Clarity: a slit through the stone that lets the light in. */
+.hall__mark { position: absolute; pointer-events: none; }
+[data-mark="slit"] .hall__mark {
+  right: 17%;
+  top: 9%;
+  bottom: 9%;
+  width: 1.6%;
+  background: linear-gradient(180deg, #fffcf5, #f6f0e4);
+  box-shadow: inset -4px 0 5px -2px rgb(27 30 34 / .22);
+}
+/* Structure: one measured module, scored into the face. */
+[data-mark="module"] .hall__mark {
+  right: 8%;
+  top: 9%;
+  width: 36%;
+  height: 50%;
+  border: 1px solid rgb(27 30 34 / .2);
+  background-image:
+    linear-gradient(to right, rgb(27 30 34 / .12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 30 34 / .12) 1px, transparent 1px);
+  background-size: 16.666% 20%;
+}
+/* Trust: courses laid the same way, again and again. */
+[data-mark="courses"] .hall__mark {
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 calc(11.1% - 1px), rgb(27 30 34 / .11) calc(11.1% - 1px) 11.1%);
+}
+[data-mark="courses"] .hall__mark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), rgb(27 30 34 / .08) calc(20% - 1px) 20%);
+  -webkit-mask: repeating-linear-gradient(180deg, #000 0 11.1%, transparent 11.1% 22.2%);
+  mask: repeating-linear-gradient(180deg, #000 0 11.1%, transparent 11.1% 22.2%);
+}
+/* Judgment: a plumb line. True vertical, held by hand. */
+[data-mark="plumb"] .hall__mark {
+  right: 21%;
+  top: 0;
+  height: 62%;
+  width: 1px;
+  background: var(--ember);
+}
+[data-mark="plumb"] .hall__mark::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  bottom: -14px;
+  width: 11px;
+  height: 14px;
+  background: var(--ember-ink);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.hall__line {
+  position: relative;
+  z-index: 5;
+  font-size: clamp(1.3rem, 2.3vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -.015em;
+  max-width: 26ch;
+  min-height: 2.5em;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 699px) {
+  .hall__space { --gap: 70cqw; --horizon: 34%; perspective: 700px; perspective-origin: 50% var(--horizon); }
+  .hall__floor::before { clip-path: polygon(49.4% 0, 50.6% 0, 66% 100%, 34% 100%); }
+  .hall__floor::after { left: calc(50% - .9cqw); width: 1.8cqw; }
+  .hall__flat { --w: 66cqw; --shift: 7cqw; height: 50cqh; bottom: 30cqh; left: calc(50% - var(--w) / 2 - var(--shift)); }
+  .hall__flat[data-side="right"] { left: calc(50% - var(--w) / 2 + var(--shift)); }
+  .hall__word { font-size: 10.5cqw; }
+  .hall__line { font-size: 1.3rem; }
+}
+@media (max-height: 699px) and (min-width: 700px) {
+  .hall .story-sticky { min-height: 640px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hall__depth, .hall__flat, .hall__shaft, .hall__floor { transition: none; }
+}
+
+@property --patch {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 30%;
+}

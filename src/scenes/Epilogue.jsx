@@ -4,8 +4,6 @@ import { contact, documents } from "../data/contact.js";
 import { profile } from "../data/profile.js";
 import { email, phone, phoneHref } from "../lib/contact.js";
 import { Portrait } from "../components/Portrait.jsx";
-import { CanvasStage } from "../experience/CanvasStage.jsx";
-import { topologyScene } from "../experience/topology.js";
 import { Horizon } from "../components/Horizon.jsx";
 import { prefersReducedMotion } from "../hooks/useReducedMotion.js";
 import "../styles/epilogue.css";
@@ -32,20 +30,19 @@ function CopyEmail() {
 // How long after the close is on stage before it settles: long enough for
 // its lamps to come up (1100ms plus the cue stagger).
 const SETTLE_AFTER = 1600;
-const topologyOptions = { awake: true, focusX: 0.72, focusY: 0.4, reach: 0.7, seed: 19, density: 0.8 };
 
 /**
  * The close. The camera has moved in; for the first time the page speaks in
- * his voice. The topology from the opening returns, quieter.
+ * his voice. It is the end of the day in the building: low, warm light comes
+ * in from the right and lies across the wall behind him.
  *
  * It ends the way the film began, in reverse: once the close is on stage and
- * lit, the horizon draws out behind him, and then the set comes to rest.
- * Signals stop, nodes stop breathing, and the canvas stops drawing.
+ * lit, the horizon draws out behind him, the evening light deepens, and the
+ * room comes to rest.
  */
 export function Epilogue() {
   const address = email();
   const ref = useRef(null);
-  const topology = useRef(null);
 
   useEffect(() => {
     const section = ref.current;
@@ -53,7 +50,6 @@ export function Epilogue() {
     let timer = 0;
     const settle = () => {
       section.dataset.settled = "";
-      topology.current?.settle?.();
     };
     if (prefersReducedMotion()) {
       settle();
@@ -78,11 +74,9 @@ export function Epilogue() {
   }, []);
 
   return (
-    <section ref={ref} id="contact" className="chapter epilogue" aria-labelledby="contact-title">
+    <section ref={ref} id="contact" className="chapter epilogue bleed" aria-labelledby="contact-title">
       <div className="epilogue__stage" aria-hidden="true">
-        <div className="epilogue__topology">
-          <CanvasStage scene={topologyScene} sceneRef={topology} className="epilogue__canvas" options={topologyOptions} />
-        </div>
+        <span className="epilogue__dusk" />
         <span className="epilogue__backlight" />
         <div className="epilogue__floor">
           <span className="epilogue__horizon" />

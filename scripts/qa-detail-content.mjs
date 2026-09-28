@@ -14,9 +14,9 @@ const cases=[
  ["Roles and responsibilities",risers.flatMap(r=>[r.title,r.period,...r.points])],
  ["Full toolkit and project archive",[...capabilityGroups.flatMap(g=>g.items.map(i=>i.name)),...workIndex.flatMap(g=>g.items.map(i=>i.detail))]],
  ["Framework and practice",[...pillars.map(p=>p.detail),...practice.map(p=>p.what)]],
- ["Awards and their stories",awards.map(a=>a.note)],
- ["Open the certification archive",[...credentials.map(c=>c.title),...learningArchive.flatMap(g=>g.items)]],
- ["Open events and publication",[...appearances.map(a=>a.title),publication.detail]],
+ ["All ten awards and their stories",awards.map(a=>a.note)],
+ ["Certification archive",[...credentials.map(c=>c.title),...learningArchive.flatMap(g=>g.items)]],
+ ["Events and publication",[...appearances.map(a=>a.title),publication.detail]],
  ["All 12 voices",recommendations.map(r=>r.quote)]
 ];
 for(const [label,texts] of cases){
@@ -33,11 +33,11 @@ for(let i=0;i<caseStudies.length;i++){
  for(const expected of [caseStudies[i].summary,...caseStudies[i].stages.map(s=>s.detail),...caseStudies[i].stack])assert(text.includes(expected),`Missing case content ${expected}`);
  await page.keyboard.press("Escape");
 }
-await page.locator(".voices").scrollIntoViewIfNeeded();
-for(let i=1;i<recommendations.length;i++){
- await page.getByRole("button",{name:"Next voice",exact:true}).click();
- assert((await page.locator(".voices__quote").innerText()).includes(recommendations[i].quote));
+const row=page.getByRole("navigation",{name:"Recommendations"});
+await row.scrollIntoViewIfNeeded();
+for(const r of recommendations){
+ await row.getByRole("button",{name:r.name,exact:true}).click();
+ assert((await page.locator(".voices__quote").innerText()).includes(r.quote));
 }
-assert(await page.getByRole("button",{name:"Next voice",exact:true}).isDisabled());
 console.log("All three systems and all twelve voices verified");
 await browser.close();

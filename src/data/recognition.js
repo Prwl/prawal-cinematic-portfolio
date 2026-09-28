@@ -24,18 +24,18 @@ export const awardsIssuer = "Successive Digital";
 
 // Proctored exams and professional certifications.
 export const credentials = [
-  { title: "AWS Certified Solutions Architect, Associate", issuer: "Amazon Web Services" },
-  { title: "AWS Certified Developer, Associate", issuer: "Amazon Web Services" },
-  { title: "AWS Certified AI Practitioner", issuer: "Amazon Web Services" },
-  { title: "Google Cloud Certified Cloud Digital Leader", issuer: "Google Cloud" },
-  { title: "Microsoft Certified: Azure Fundamentals", issuer: "Microsoft" },
-  { title: "Microsoft Certified: Azure Data Fundamentals", issuer: "Microsoft" },
-  { title: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft" },
-  { title: "Microsoft Certified: Security, Compliance, and Identity Fundamentals", issuer: "Microsoft" },
-  { title: "Certified Agile Leadership Essentials (CAL-E)", issuer: "Scrum Alliance" },
-  { title: "Graph Developer, Professional", issuer: "Apollo GraphQL" },
-  { title: "Graph Developer, Associate", issuer: "Apollo GraphQL" },
-  { title: "Artificial Intelligence and Machine Learning Program", issuer: "ICTRD" }
+  { title: "AWS Certified Solutions Architect, Associate", issuer: "Amazon Web Services", image: "aws-solutions-architect" },
+  { title: "AWS Certified Developer, Associate", issuer: "Amazon Web Services", image: "aws-developer" },
+  { title: "AWS Certified AI Practitioner", issuer: "Amazon Web Services", image: "aws-ai-practitioner" },
+  { title: "Google Cloud Certified Cloud Digital Leader", issuer: "Google Cloud", image: "gcp-digital-leader" },
+  { title: "Microsoft Certified: Azure Fundamentals", issuer: "Microsoft", image: "azure-fundamentals" },
+  { title: "Microsoft Certified: Azure Data Fundamentals", issuer: "Microsoft", image: "azure-data" },
+  { title: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft", image: "azure-ai" },
+  { title: "Microsoft Certified: Security, Compliance, and Identity Fundamentals", issuer: "Microsoft", image: "azure-security" },
+  { title: "Certified Agile Leadership Essentials (CAL-E)", issuer: "Scrum Alliance", image: "scrum-cal-e" },
+  { title: "Graph Developer, Professional", issuer: "Apollo GraphQL", image: "apollo-professional" },
+  { title: "Graph Developer, Associate", issuer: "Apollo GraphQL", image: "apollo-associate" },
+  { title: "Artificial Intelligence and Machine Learning Program", issuer: "ICTRD", image: "ictrd-ai-ml" }
 ];
 
 // The long tail, grouped. Full titles from profile.certifications.
@@ -105,18 +105,18 @@ export const learningArchive = [
 ];
 
 export const recommendations = [
-  { name: "Amit Bora", role: "Specialist Engineer", date: "2025", quote: "Prawal exemplifies the qualities of a forward-thinking and highly effective technology leader, with well-rounded cloud expertise across Azure, AWS, and GCP." },
-  { name: "Ravi Chaudhary", role: "Manager Technology", date: "2022", quote: "The great thing about Prawal is the ownership and readiness to learn anything quickly. Handles team calmly, and good knowledge of ReactJS." },
-  { name: "Aashna Diwan", role: "Lead Technical Communications Engineer", date: "2021", quote: "An innovative, hard-working, and intelligent leader who welcomes change, motivates people, and leads by great examples." },
-  { name: "Ajai Srivastava", role: "Technology Manager", date: "2021", quote: "Impressed by Prawal's ability to handle any situation calmly and patiently, even with the toughest clients." },
-  { name: "Sapna Upreti", role: "VP Engineering Track", date: "2021", quote: "A gem of a person and a great engineer, always available, very organised, helpful, and ready to help team members." },
-  { name: "Shubham Soni", role: "SDET, Playwright", date: "2021", quote: "The best lead I have ever worked with, patient, solution-oriented, and strong at handling more than one project." },
-  { name: "Archana Sharma", role: "Automation testing", date: "2021", quote: "A dynamic resource who finds solutions quickly, thinks from all aspects of a problem, and delivers solutions with results." },
-  { name: "Jitendra Pal Singh", role: "Senior Manager Technology", date: "2021", quote: "Multitalented, hardworking, and handling multiple projects across different technologies with perfection." },
-  { name: "Tanish Kulshrestha", role: "MERN, Full Stack Developer", date: "2021", quote: "A multi-skilled and insightful colleague, an inspiring team lead, and a signature of success." },
-  { name: "Deepak Prajapati", role: "GraphQL, Node.js, React, Vue", date: "2021", quote: "Exceptional expertise in leadership, coaching, motivation, forward thinking, and broad technical knowledge." },
-  { name: "Vikas Chauhan", role: "Senior Software Engineer", date: "2021", quote: "Professional, serious about work, supportive in every situation, and recognizes efforts as a team leader." },
-  { name: "Shashank Dixit", role: "Manager Technology", date: "2021", quote: "Proactive, result-oriented, responsible, technically sound, and always ready to put in the energy and time to get the job done." }
+  { name: "Amit Bora", image: "amit-bora", role: "Specialist Engineer", date: "2025", quote: "Prawal exemplifies the qualities of a forward-thinking and highly effective technology leader, with well-rounded cloud expertise across Azure, AWS, and GCP." },
+  { name: "Ravi Chaudhary", image: "ravi-chaudhary", role: "Manager Technology", date: "2022", quote: "The great thing about Prawal is the ownership and readiness to learn anything quickly. Handles team calmly, and good knowledge of ReactJS." },
+  { name: "Aashna Diwan", image: "aashna-diwan", role: "Lead Technical Communications Engineer", date: "2021", quote: "An innovative, hard-working, and intelligent leader who welcomes change, motivates people, and leads by great examples." },
+  { name: "Ajai Srivastava", image: "ajai-srivastava", role: "Technology Manager", date: "2021", quote: "Impressed by Prawal's ability to handle any situation calmly and patiently, even with the toughest clients." },
+  { name: "Sapna Upreti", image: "sapna-upreti", role: "VP Engineering Track", date: "2021", quote: "A gem of a person and a great engineer, always available, very organised, helpful, and ready to help team members." },
+  { name: "Shubham Soni", image: "shubham-soni", role: "SDET, Playwright", date: "2021", quote: "The best lead I have ever worked with, patient, solution-oriented, and strong at handling more than one project." },
+  { name: "Archana Sharma", image: "archana-sharma", role: "Automation testing", date: "2021", quote: "A dynamic resource who finds solutions quickly, thinks from all aspects of a problem, and delivers solutions with results." },
+  { name: "Jitendra Pal Singh", image: "jitendra-singh", role: "Senior Manager Technology", date: "2021", quote: "Multitalented, hardworking, and handling multiple projects across different technologies with perfection." },
+  { name: "Tanish Kulshrestha", image: "tanish-kulshreshtha", role: "MERN, Full Stack Developer", date: "2021", quote: "A multi-skilled and insightful colleague, an inspiring team lead, and a signature of success." },
+  { name: "Deepak Prajapati", image: "deepak-prajapati", role: "GraphQL, Node.js, React, Vue", date: "2021", quote: "Exceptional expertise in leadership, coaching, motivation, forward thinking, and broad technical knowledge." },
+  { name: "Vikas Chauhan", image: "vikas-chauhan", role: "Senior Software Engineer", date: "2021", quote: "Professional, serious about work, supportive in every situation, and recognizes efforts as a team leader." },
+  { name: "Shashank Dixit", image: "shashank-dixit", role: "Manager Technology", date: "2021", quote: "Proactive, result-oriented, responsible, technically sound, and always ready to put in the energy and time to get the job done." }
 ];
 
 export const recommendationsSource = {
@@ -125,19 +125,21 @@ export const recommendationsSource = {
 };
 
 export const appearances = [
-  { year: "2026", title: "AI Impact Summit", kind: "AI and leadership" },
-  { year: "2026", title: "Convergence India Expo", kind: "Technology expo" },
-  { year: "2025", title: "MongoDB.local", kind: "Developer event" },
-  { year: "2024", title: "MongoDB.local", kind: "Developer event" },
-  { year: "2023", title: "AWS Symposium", kind: "Cloud platform" },
-  { year: "2023", title: "Deloitte Fast 50", kind: "Invite-only forum" },
-  { year: "2023", title: "IAMAI", kind: "National digital forum" },
-  { year: "2023", title: "Unicommerce", kind: "Commerce platform event" }
+  { year: "2026", title: "AI Impact Summit", kind: "AI and leadership", image: "ai-impact-summit-2026" },
+  { year: "2026", title: "Convergence India Expo", kind: "Technology expo", image: "convergence-india-2026" },
+  { year: "2025", title: "MongoDB.local", kind: "Developer event", image: "mongodb-local-2025" },
+  { year: "2024", title: "MongoDB.local", kind: "Developer event", image: "mongodb-local-2024" },
+  { year: "2023", title: "AWS Symposium", kind: "Cloud platform", image: "aws-symposium-2023" },
+  { year: "2023", title: "Deloitte Fast 50", kind: "Invite-only forum", image: "deloitte-fast-50-2023" },
+  { year: "2023", title: "IAMAI", kind: "National digital forum", image: "iamai-2023" },
+  { year: "2023", title: "Unicommerce", kind: "Commerce platform event", image: "unicommerce-2023" }
 ];
 
 export const publication = {
   title: "The Subtle Art of Effective Communication",
   role: "Contributor",
   detail: "An organizational book on communication and listening skills.",
-  href: "https://amzn.eu/d/fgmVx7H"
+  href: "https://amzn.eu/d/fgmVx7H",
+  cover: "book-cover",
+  stage: "book-contributors"
 };

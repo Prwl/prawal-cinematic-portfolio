@@ -1,6 +1,5 @@
 .systems { padding-block: 5rem 1rem; }
-.systems__head { margin-bottom: 1rem; }
-.systems__head .lede { margin-top: 1.5rem; }
+.systems__head { padding-block: 2rem 0; }
 .systems__cases { display: grid; }
 .systems__archive { padding-block: 2rem; display: flex; justify-content: flex-end; }
 .patch__group { margin-block: 2rem; }

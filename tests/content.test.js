@@ -9,7 +9,7 @@ import { risers } from "../src/data/experience.js";
 import { caseStudies, workIndex } from "../src/data/systems.js";
 import { figures } from "../src/data/scale.js";
 import { pillars, practice } from "../src/data/intelligence.js";
-import { awards, credentials, recommendations, appearances } from "../src/data/recognition.js";
+import { awards, credentials, recommendations, appearances, publication } from "../src/data/recognition.js";
 import { capabilityGroups, contexts } from "../src/data/capabilities.js";
 import { REST_FRAME, frameAt, gridPosition } from "../src/hooks/useLivingPortrait.js";
 import livingGrid from "../src/assets/media/living/prawal-living.json";
@@ -52,6 +52,14 @@ describe("content", () => {
       expect(existsSync(path.join(root, "src/assets/media/awards", `${a.image}.avif`))).toBe(true);
     }
     for (const d of Object.values(documents)) expect(existsSync(path.join(root, "public", d.href))).toBe(true);
+  });
+
+  it("ships every archive image the scenes stage", () => {
+    const sets = [["credentials", credentials.map((c) => c.image)], ["events", appearances.map((a) => a.image)], ["voices", recommendations.map((r) => r.image)], ["book", [publication.cover, publication.stage]]];
+    for (const [set, keys] of sets) {
+      expect(keys.every(Boolean)).toBe(true);
+      for (const k of keys) for (const ext of ["webp", "avif"]) expect(existsSync(path.join(root, "src/assets/media", set, `${k}.${ext}`))).toBe(true);
+    }
   });
 
   it("uses https for every external link", () => {

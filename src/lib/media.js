@@ -47,3 +47,9 @@ export const living = {
 export function awardImage(key) {
   return { avif: url(`awards/${key}.avif`), webp: url(`awards/${key}.webp`) };
 }
+
+// Archive material (scripts/prepare-archive.mjs): event photographs,
+// credential documents, the book and the portraits of recommenders.
+export function archiveImage(set, key) {
+  return { avif: url(`${set}/${key}.avif`), webp: url(`${set}/${key}.webp`) };
+}

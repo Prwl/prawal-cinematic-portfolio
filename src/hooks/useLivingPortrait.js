@@ -24,7 +24,10 @@ const OMEGA = 10;
 // The generated extremes introduce eye smearing and a pale keyed outline.
 // Keep the performance in the clean, believable part of the pose grid.
 const MAX_YAW = 0.72;
-const MAX_PITCH = 0.62;
+// Up has twelve filmed rows, down only six (7 degrees): down gets more of its
+// smaller range so the lower diagonals read as clearly as the upper ones.
+const MAX_PITCH_UP = 0.62;
+const MAX_PITCH_DOWN = 0.9;
 // Gain comes up over about 1.4s once he may notice the viewer, and goes down
 // a little faster when the viewer leaves.
 const GAIN_UP = 2.2;
@@ -160,7 +163,7 @@ export function useLivingPortrait(ref, { enabled, settled }) {
       x += vx * dt;
       y += vy * dt;
 
-      const [gx, gy] = gridPosition(x * MAX_YAW, y * MAX_PITCH);
+      const [gx, gy] = gridPosition(x * MAX_YAW, y * (y < 0 ? MAX_PITCH_UP : MAX_PITCH_DOWN));
       copy.want = frameAt(Math.round(gx), Math.round(gy));
       commit();
       paint();

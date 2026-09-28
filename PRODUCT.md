@@ -41,7 +41,7 @@ Ten years inside one company (Successive Digital, since 2017) rising from traine
 ## Evidence on Hand
 
 - Portrait: `IMG_2574.JPG` (3024x4032, full length, cream blazer, black tee), used in the close.
-- Living portrait source: owner-supplied generated takes in `reference-video/`, assembled into the retained 627-pose asset (see README for production history). Runtime uses neutral pitch with horizontal tracking; vertical pointer response is limited to a small body/camera shift, with no breathing or persistent idle animation.
+- Living portrait source: owner-supplied generated takes in `reference-video/`, assembled into the retained 627-pose asset (see README for production history). Runtime tracks the pointer in both axes (yaw and pitch across the pose grid, so diagonals are real poses) with a small body response, and no breathing or persistent idle animation.
 - Résumé PDF: `Assets/Prawal-Resume/ATS_resume_for_Google - Prawal Latest (1).pdf`; AI Engineering Leadership Framework PDF.
 - Structured facts: roles and dates, projects (Data Refinery / Connectors / Data Serve, Enrollment & Transactions, Taxonomy, TruckBoard, ACL URL Shortener, StormSmart, internal tools), AI POCs, 10 awards with dates, certifications (8 proctored cloud/AI, CAL-E, ICTRD AI/ML, Apollo Graph Developer Professional, HackerRank, MongoDB, LinkedIn/Pluralsight), 12 LinkedIn recommendations, education, contact.
 - Absent (must not be fabricated): MCP or agent production systems, team headcount beyond "Team: 11" on Connectors and "four engineers" early on, revenue figures, client names beyond those in source (Dentsu, Coca-Cola, Microsoft contexts).
