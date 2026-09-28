@@ -1,38 +1,342 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-24T19:50:00+05:30",
+  "generatedAt": "2026-09-28",
   "title": "Design System: Prawal Sharma, cinematic portfolio",
   "extensions": {
     "colorMeta": {
-      "stage": { "role": "neutral", "displayName": "Stage Black", "canonical": "#0b0b0c", "tonalRamp": ["#0b0b0c", "#111113", "#18181b", "#232327", "#3a3935", "#57554f", "#8a867e", "#b3afa6"] },
-      "bone": { "role": "neutral", "displayName": "Bone", "canonical": "#ece9e2", "tonalRamp": ["#3a3935", "#57554f", "#6e6b64", "#8a867e", "#9e9a92", "#b3afa6", "#d0ccc4", "#ece9e2"] },
-      "tungsten": { "role": "primary", "displayName": "Tungsten Key", "canonical": "#f3b879", "tonalRamp": ["#3a2a1a", "#5c4128", "#7f5a37", "#a37447", "#c78f58", "#f3b879", "#f7cea3", "#fbe5cd"] },
-      "backlight": { "role": "neutral", "displayName": "Backlight (atmosphere only)", "canonical": "#9fb0bd", "tonalRamp": ["#1d2226", "#343d44", "#4c5963", "#657683", "#7e93a1", "#9fb0bd", "#c1ccd4", "#e2e8ec"] }
+      "stone": {
+        "role": "neutral",
+        "displayName": "Stone (the hall)",
+        "canonical": "#d4d1ca",
+        "tonalRamp": [
+          "#bfbbb3",
+          "#d4d1ca",
+          "#e4e1da"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand (Identity, Evolution)",
+        "canonical": "#dcd5c9",
+        "tonalRamp": [
+          "#c8c0b2",
+          "#dcd5c9",
+          "#e9e3d8"
+        ]
+      },
+      "mineral": {
+        "role": "neutral",
+        "displayName": "Mineral fog (Systems)",
+        "canonical": "#c8d1d6",
+        "tonalRamp": [
+          "#b3bdc3",
+          "#c8d1d6",
+          "#dbe2e5"
+        ]
+      },
+      "pale": {
+        "role": "neutral",
+        "displayName": "Pale (Intelligence)",
+        "canonical": "#dfe4e0",
+        "tonalRamp": [
+          "#c9d0cb",
+          "#dfe4e0",
+          "#eef1ee"
+        ]
+      },
+      "gallery": {
+        "role": "neutral",
+        "displayName": "Gallery stone (Recognition)",
+        "canonical": "#ded8d1",
+        "tonalRamp": [
+          "#c9c2b9",
+          "#ded8d1",
+          "#ece8e2"
+        ]
+      },
+      "dusk": {
+        "role": "neutral",
+        "displayName": "Dusk mineral (the close)",
+        "canonical": "#c4cbc5",
+        "tonalRamp": [
+          "#adb5ae",
+          "#c4cbc5",
+          "#d6dbd6"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite passage (Scale)",
+        "canonical": "#1f2224",
+        "tonalRamp": [
+          "#1f2224",
+          "#2a2d30"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Graphite ink",
+        "canonical": "#1b1e22",
+        "tonalRamp": [
+          "#1b1e22",
+          "#44484c",
+          "#515458"
+        ]
+      },
+      "paleInk": {
+        "role": "neutral",
+        "displayName": "Pale ink (graphite passage)",
+        "canonical": "#eae7e2",
+        "tonalRamp": [
+          "#95928b",
+          "#bab7b0",
+          "#eae7e2"
+        ]
+      },
+      "ember": {
+        "role": "primary",
+        "displayName": "Ember key",
+        "canonical": "#b8602e",
+        "tonalRamp": [
+          "#873f17",
+          "#b8602e",
+          "#eeb97b"
+        ]
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display, wide", "purpose": "The name in the opening and the Scale figures." },
-      "headline": { "displayName": "Headline", "purpose": "One statement per chapter." },
-      "title": { "displayName": "Title", "purpose": "Case studies, sub-sections, operating notes." },
-      "body": { "displayName": "Body", "purpose": "Prose at 62ch." },
-      "label": { "displayName": "Label", "purpose": "Metadata beside or below content, and group headings." }
+      "display": {
+        "displayName": "Display, wide",
+        "purpose": "The name in the opening and the Scale figures."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "One statement per chapter."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Case studies, sub-sections, operating notes."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose at 62ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Metadata beside or below content, and group headings."
+      },
+      "close": {
+        "displayName": "Close",
+        "purpose": "Tell me what you are building. Only."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Standfirsts under chapter headlines."
+      }
     },
     "shadows": [
-      { "name": "rim-light", "value": "drop-shadow(3px -2px 2px rgb(159 176 189 / 0.16))", "purpose": "Directional backlight rim on the cut-out photograph only." }
+      {
+        "name": "figure-dusk",
+        "value": "drop-shadow(18px 8px 22px rgb(27 30 34 / 0.16))",
+        "purpose": "The real photograph in the close."
+      },
+      {
+        "name": "step",
+        "value": "18px 28px 34px -18px rgb(27 30 34 / .25)",
+        "purpose": "Spatial career stone step"
+      },
+      {
+        "name": "print",
+        "value": "18px 26px 32px -16px rgb(27 30 34 / .35)",
+        "purpose": "Selected award print"
+      }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entrances, lamps, presses." },
-      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "On-screen movement: the horizon line, the light sweep." },
-      { "name": "lamp", "value": "1100ms", "purpose": "Content fading up with a 6px focus pull, 70ms cue stagger." },
-      { "name": "press", "value": "140ms", "purpose": "scale(0.97) press feedback." },
-      { "name": "hover", "value": "200ms", "purpose": "Colour changes on hover." },
-      { "name": "ignite", "value": "160ms linear", "purpose": "Scale figures switching on." }
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entrances, development, presses."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "On-screen movement and lighting cues: the horizon line, the atmosphere crossfade."
+      },
+      {
+        "name": "lamp",
+        "value": "1100ms",
+        "purpose": "Content developing from latent with a 6px focus pull, 70ms cue stagger."
+      },
+      {
+        "name": "cue",
+        "value": "1400ms",
+        "purpose": "A chapter lighting-condition change."
+      },
+      {
+        "name": "press",
+        "value": "140ms",
+        "purpose": "scale(0.97) press feedback."
+      },
+      {
+        "name": "hover",
+        "value": "200ms",
+        "purpose": "Colour changes on hover."
+      },
+      {
+        "name": "ignite",
+        "value": "160ms linear",
+        "purpose": "Scale figures switching on."
+      },
+      {
+        "name": "portrait-follow",
+        "value": "critically damped spring, omega 8",
+        "purpose": "The living portrait following the pointer; no overshoot."
+      }
     ],
     "breakpoints": [
-      { "name": "phone", "value": "699px" },
-      { "name": "stack", "value": "899px" },
-      { "name": "pin", "value": "1024px landscape, 620px tall" },
-      { "name": "rail", "value": "1200px" }
-    ]
+      {
+        "name": "phone",
+        "value": "699px"
+      },
+      {
+        "name": "stack",
+        "value": "899px"
+      },
+      {
+        "name": "rail",
+        "value": "1200px"
+      },
+      {
+        "name": "short-landscape-story-flow",
+        "value": "max-height: 699px and min-width: 700px"
+      }
+    ],
+    "sceneMaterialRoles": {
+      "journey-face-light": {
+        "value": "#e9e4da",
+        "purpose": "journey face light"
+      },
+      "journey-face-shade": {
+        "value": "#c4bdae",
+        "purpose": "journey face shade"
+      },
+      "journey-tread-light": {
+        "value": "#f0ece4",
+        "purpose": "journey tread light"
+      },
+      "journey-tread-shade": {
+        "value": "#dbd4c7",
+        "purpose": "journey tread shade"
+      },
+      "journey-return": {
+        "value": "#b8b2a6",
+        "purpose": "journey return"
+      },
+      "framework-light": {
+        "value": "#edf1e9",
+        "purpose": "framework light"
+      },
+      "framework-shade": {
+        "value": "#c6d0c7",
+        "purpose": "framework shade"
+      },
+      "framework-connection": {
+        "value": "#8b9c8e",
+        "purpose": "framework connection"
+      },
+      "system-structure": {
+        "value": "#89979e",
+        "purpose": "system structure"
+      },
+      "system-source": {
+        "value": "#9caab1",
+        "purpose": "system source"
+      },
+      "system-route": {
+        "value": "#aab6ba",
+        "purpose": "system route"
+      },
+      "system-edge": {
+        "value": "#7b8a91",
+        "purpose": "system edge"
+      },
+      "system-output": {
+        "value": "#687d87",
+        "purpose": "system output"
+      },
+      "taxonomy-edge": {
+        "value": "#9aa9ae",
+        "purpose": "taxonomy edge"
+      },
+      "taxonomy-cell": {
+        "value": "#c0cdd1",
+        "purpose": "taxonomy cell"
+      },
+      "taxonomy-border": {
+        "value": "#94a5ad",
+        "purpose": "taxonomy border"
+      },
+      "taxonomy-developed": {
+        "value": "#e4ebeb",
+        "purpose": "taxonomy developed"
+      },
+      "taxonomy-edited": {
+        "value": "#d0b29a",
+        "purpose": "taxonomy edited"
+      },
+      "taxonomy-dormant-output": {
+        "value": "#b5c2c8",
+        "purpose": "taxonomy dormant output"
+      },
+      "archive-face-light": {
+        "value": "#e9e4dd",
+        "purpose": "archive face light"
+      },
+      "archive-face-shade": {
+        "value": "#c9c2b8",
+        "purpose": "archive face shade"
+      },
+      "archive-tread": {
+        "value": "#eeebe4",
+        "purpose": "archive tread"
+      }
+    },
+    "sceneTypography": {
+      "scene-heading": {
+        "fontSize": "clamp(1.65rem, 2.8vw, 2.6rem)",
+        "purpose": "scene heading"
+      },
+      "journey-role": {
+        "fontSize": "clamp(2rem, 3.5vw, 3.6rem)",
+        "purpose": "journey role"
+      },
+      "system-narrative": {
+        "fontSize": "clamp(1.25rem, 2.6vw, 2rem)",
+        "purpose": "system narrative"
+      },
+      "framework-caption": {
+        "fontSize": "clamp(1.6rem, 3vw, 2.5rem)",
+        "purpose": "framework caption"
+      },
+      "gallery-caption": {
+        "fontSize": "clamp(1.6rem, 2.5vw, 2.5rem)",
+        "purpose": "gallery caption"
+      },
+      "archive-subject": {
+        "fontSize": "clamp(2rem, 4vw, 3.5rem)",
+        "purpose": "archive subject"
+      },
+      "voice": {
+        "fontSize": "clamp(1.7rem, 3.7vw, 3.5rem)",
+        "purpose": "voice"
+      }
+    },
+    "storyBehavior": {
+      "driver": "useStory: discrete ScrollTrigger beats, native CSS sticky, no scroll interception or idle loop",
+      "detail": "Native modal dialog; background scroll lock; focus containment; Escape and close restore opener without scrolling",
+      "reducedMotion": "Resolved non-sticky scenes, no transitions, manual selectors retained",
+      "portrait": "Neutral-pitch runtime row; horizontal yaw; small vertical body/camera response; no breathing; RAF sleeps when settled"
+    }
   },
   "components": [
     {
@@ -41,66 +345,115 @@
       "refersTo": "button-primary",
       "description": "The one primary action in a view: See the work, Email Prawal.",
       "html": "<a class=\"ds-action\" href=\"#\">See the work</a>",
-      "css": ".ds-action { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; background: #ece9e2; color: #0b0b0c; font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-action:hover { background: #f3b879; } .ds-action:active { transform: scale(0.97); } .ds-action:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+      "css": ".ds-action { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; background: #1b1e22; color: #e4e1da; font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background-color 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-action:hover { background: #873f17; } .ds-action:active { transform: scale(0.97); } .ds-action:focus-visible { outline: 2px solid #873f17; outline-offset: 4px; }"
     },
     {
       "name": "Ghost Button",
       "kind": "button",
       "refersTo": "button-ghost",
-      "description": "Secondary actions: Résumé, LinkedIn, Read the framework.",
-      "html": "<a class=\"ds-ghost\" href=\"#\">Résumé</a>",
-      "css": ".ds-ghost { display: inline-flex; align-items: center; min-height: 48px; padding: 12px 22px; background: transparent; color: #ece9e2; box-shadow: inset 0 0 0 1px rgb(236 233 226 / 0.2); font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 200ms ease, box-shadow 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-ghost:hover { color: #f3b879; box-shadow: inset 0 0 0 1px #f3b879; } .ds-ghost:active { transform: scale(0.97); } .ds-ghost:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+      "description": "Secondary actions: R\u00e9sum\u00e9, LinkedIn, Read the framework.",
+      "html": "<a class=\"ds-ghost\" href=\"#\">R\u00e9sum\u00e9</a>",
+      "css": ".ds-ghost { display: inline-flex; align-items: center; min-height: 48px; padding: 12px 22px; background: transparent; color: #1b1e22; box-shadow: inset 0 0 0 1px rgb(27 30 34 / 0.2); font-family: Archivo, system-ui, sans-serif; font-size: 13px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 200ms ease, box-shadow 200ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-ghost:hover { color: #873f17; box-shadow: inset 0 0 0 1px #873f17; } .ds-ghost:active { transform: scale(0.97); } .ds-ghost:focus-visible { outline: 2px solid #873f17; outline-offset: 4px; }"
     },
     {
       "name": "Cue Rail",
       "kind": "nav",
       "description": "Chapters as numbered cues; the current cue is lit.",
       "html": "<ol class=\"ds-rail\"><li><a href=\"#\" data-state=\"past\"><span>I</span>Identity</a></li><li><a href=\"#\" data-state=\"current\"><span>II</span>Evolution</a></li><li><a href=\"#\"><span>III</span>Systems</a></li></ol>",
-      "css": ".ds-rail { list-style: none; margin: 0; padding: 0; border-left: 1px solid rgb(236 233 226 / 0.1); background: #0b0b0c; } .ds-rail a { position: relative; display: flex; gap: 12px; padding: 6px 0 6px 16px; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8a867e; text-decoration: none; transition: color 400ms ease; } .ds-rail span { width: 28px; } .ds-rail a[data-state=past] { color: #b3afa6; } .ds-rail a[data-state=current] { color: #ece9e2; } .ds-rail a[data-state=current] span { color: #f3b879; } .ds-rail a[data-state=current]::before { content: ''; position: absolute; left: -1px; top: 5px; bottom: 5px; width: 1px; background: #f3b879; } .ds-rail a:hover { color: #ece9e2; }"
+      "css": ".ds-rail { list-style: none; margin: 0; padding: 0; border-left: 1px solid rgb(27 30 34 / 0.1); background: #e4e1da; } .ds-rail a { position: relative; display: flex; gap: 12px; padding: 6px 0 6px 16px; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #515458; text-decoration: none; transition: color 400ms ease; } .ds-rail span { width: 28px; } .ds-rail a[data-state=past] { color: #44484c; } .ds-rail a[data-state=current] { color: #1b1e22; } .ds-rail a[data-state=current] span { color: #873f17; } .ds-rail a[data-state=current]::before { content: ''; position: absolute; left: -1px; top: 5px; bottom: 5px; width: 1px; background: #873f17; } .ds-rail a:hover { color: #1b1e22; }"
     },
     {
       "name": "Patch Channel",
       "kind": "chip",
       "description": "A capability in the patch sheet; pressed lights where it was used.",
       "html": "<button class=\"ds-channel\" aria-pressed=\"true\">GraphQL and Apollo</button>",
-      "css": ".ds-channel { position: relative; display: block; min-height: 40px; padding: 7px 0 7px 16px; background: none; border: 0; text-align: left; font-family: Archivo, system-ui, sans-serif; font-size: 16px; color: #b3afa6; cursor: pointer; transition: color 200ms ease; } .ds-channel::before { content: ''; position: absolute; left: 0; top: calc(7px + 0.8em); width: 10px; height: 1px; background: #8a867e; transform: scaleX(0.6); transform-origin: left; transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms ease; } .ds-channel[aria-pressed=true] { color: #f3b879; } .ds-channel[aria-pressed=true]::before { background: #f3b879; transform: none; } .ds-channel:hover { color: #ece9e2; } .ds-channel:focus-visible { outline: 2px solid #f3b879; outline-offset: 4px; }"
+      "css": ".ds-channel { position: relative; display: block; min-height: 40px; padding: 7px 0 7px 16px; background: none; border: 0; text-align: left; font-family: Archivo, system-ui, sans-serif; font-size: 16px; color: #44484c; cursor: pointer; transition: color 200ms ease; } .ds-channel::before { content: ''; position: absolute; left: 0; top: calc(7px + 0.8em); width: 10px; height: 1px; background: #515458; transform: scaleX(0.6); transform-origin: left; transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms ease; } .ds-channel[aria-pressed=true] { color: #873f17; } .ds-channel[aria-pressed=true]::before { background: #873f17; transform: none; } .ds-channel:hover { color: #1b1e22; } .ds-channel:focus-visible { outline: 2px solid #873f17; outline-offset: 4px; }"
     },
     {
       "name": "Credits",
       "kind": "custom",
       "description": "Facts set like film credits: role right-aligned, value left-aligned on a shared gutter.",
       "html": "<dl class=\"ds-credits\"><div><dt>Based in</dt><dd>Delhi, India</dd></div><div><dt>Company</dt><dd>Successive Digital, since 2017</dd></div></dl>",
-      "css": ".ds-credits { display: grid; gap: 14px; margin: 0; background: #0b0b0c; padding: 16px; } .ds-credits div { display: grid; grid-template-columns: 136px 1fr; gap: 20px; align-items: baseline; } .ds-credits dt { text-align: right; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8a867e; } .ds-credits dd { margin: 0; font-family: Archivo, system-ui, sans-serif; font-size: 15px; color: #ece9e2; }"
+      "css": ".ds-credits { display: grid; gap: 14px; margin: 0; background: #e4e1da; padding: 16px; } .ds-credits div { display: grid; grid-template-columns: 136px 1fr; gap: 20px; align-items: baseline; } .ds-credits dt { text-align: right; font-family: Archivo, system-ui, sans-serif; font-size: 12px; font-stretch: 112%; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #515458; } .ds-credits dd { margin: 0; font-family: Archivo, system-ui, sans-serif; font-size: 15px; color: #1b1e22; }"
+    },
+    {
+      "name": "Story selector",
+      "kind": "button",
+      "description": "Manual beat selection remains available alongside native scroll and in reduced motion.",
+      "html": "<button class=\"ds-story\" aria-pressed=\"true\">03</button>",
+      "css": ".ds-story { min-width:44px; min-height:44px; padding:.6rem .7rem; background:transparent; border:0; border-bottom:1px solid var(--ember-ink, #873f17); color:var(--ember-ink, #873f17); font: .82rem Archivo, sans-serif; } .ds-story:hover { color:var(--ink, #1b1e22); } .ds-story:active { transform:scale(.97); } .ds-story:focus-visible { outline:2px solid var(--ember-ink, #873f17); outline-offset:4px; }"
+    },
+    {
+      "name": "Detail trigger",
+      "kind": "button",
+      "description": "Opens the shared native reading dialog and restores the initiating control on close.",
+      "html": "<button class=\"ds-detail\" aria-haspopup=\"dialog\">Roles and responsibilities \u2197</button>",
+      "css": ".ds-detail { min-height:48px; padding:.6rem 0; text-align:left; background:transparent; border:0; border-bottom:1px solid var(--ink-3, #515458); font:.9rem Archivo, sans-serif; color:var(--ink, #1b1e22); } .ds-detail:hover { color:var(--ember-ink, #873f17); } .ds-detail:active { transform:scale(.97); } .ds-detail:focus-visible { outline:2px solid var(--ember-ink, #873f17); outline-offset:4px; }"
     }
   ],
   "narrative": {
-    "northStar": "The Lighting Plot",
-    "overview": "The page is a black-box stage. Nothing exists until it is lit, and light is the only accent. A single warm tungsten key marks whatever is lit now; a cool, desaturated backlight lives only in atmosphere. Motion is light level and focus, not travel: content comes up like a dimmer, figures ignite rather than count, the current cue is lit while earlier cues stay up. The real photograph of Prawal is the only figurative image, graded for a key light and falling away into darkness below the waist.",
+    "northStar": "Developed in Daylight",
+    "overview": "A career walked through one stone building over one day. Each chapter is a lighting condition in that building (a stone hall, sand-lit rooms, a fog-lit gallery of systems, one graphite colonnade, the brightest room, a warm gallery, dusk). Nothing lamps up out of darkness: content develops, like an architect's diazo print under light, from a pale latent image into graphite ink as the light reaches it. One ember key marks the thing developed now.\n\nThe opening is a living portrait. Prawal stands in the stone hall and, on a desktop with a mouse, turns his head toward the visitor's pointer. The close returns to him at dusk in the real photograph. There is one sun, high at upper left: every plane is lit on its left face and every shadow falls right and down by the same ratio.",
     "keyCharacteristics": [
-      "Stage-black ground, one warm accent, one cool atmospheric light.",
-      "Archivo across its width axis: expanded caps for titles, standard width for reading.",
-      "Sharp corners everywhere; hairlines only where they measure or separate.",
+      "Mineral grounds lit as environments, never cream paper and never plain white. One graphite passage for the numbers.",
+      "Cool graphite ink taken from the charcoal blazer; one ember accent for what is developed now.",
+      "Archivo across its width axis: expanded caps for the name and figures, standard width for reading.",
+      "Sharp corners, hairlines only where they measure, measured shadows from one sun, no glow.",
       "Abstractions drawn as geometry (canvas and SVG), always captioned as abstractions."
     ],
     "rules": [
-      { "name": "The Lit-Now Rule", "body": "Tungsten marks the one thing that is lit at this moment. If an element would be tungsten whatever the visitor does, it is the wrong colour.", "section": "colors" },
-      { "name": "The Atmosphere Rule", "body": "The cool backlight belongs to the set, never to interface controls or text.", "section": "colors" },
-      { "name": "The No-Kicker Rule", "body": "Labels sit beside or below what they describe, or are the heading itself. Never a small label above a heading.", "section": "typography" },
-      { "name": "The Light-Not-Shadow Rule", "body": "If something needs to come forward, light it. Do not lift it with a shadow.", "section": "elevation" }
+      {
+        "name": "The Developed-Now Rule",
+        "body": "Ember marks the one thing developed at this moment. If an element would be ember whatever the visitor does, it is the wrong colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Condition Rule",
+        "body": "Chapters change light, not paint. A chapter's ground comes from the fixed atmosphere as a lighting cue (a registered-colour crossfade over 1.4s), never as a hard band of section colour. The only built-in ground is the graphite passage, and text never sits on its thresholds.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Sun Rule",
+        "body": "Light comes from upper left. Planes are lit on their left face; shadows fall right and down with one offset ratio (about 0.6 across to 1 down). A shadow in any other direction is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Kicker Rule",
+        "body": "Labels sit beside or below what they describe, or are the heading itself. Never a small label above a heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measured-Shadow Rule",
+        "body": "A shadow is cast by something, in the sun's direction. No glow, no halo, no zero-offset shadow.",
+        "section": "elevation & depth"
+      },
+      {
+        "name": "The Material-Shade Rule",
+        "body": "Scene-specific stone, sage and mineral colors in the token layer describe lit faces, returns, inactive routes and developed cells within the established rooms. They are intentional material shades, not new chapter palettes. Directional light washes remain translucent; they are not text colors.",
+        "section": "components"
+      },
+      {
+        "name": "The Scene-Type Rule",
+        "body": "Scene headings, role captions, system narrative, framework and gallery captions, archive subjects and voices use the named type endpoints above. Their scales follow visual responsibility; they do not introduce another font or a competing global hierarchy.",
+        "section": "components"
+      }
     ],
     "dos": [
-      "Do keep tungsten (#f3b879) for the one thing lit now.",
-      "Do use the real photograph for Prawal; grade it, never replace it with a generated likeness.",
-      "Do caption every diagram as an abstraction and keep its claims to the published description.",
-      "Do give reduced motion a composed state: every cue lit, no sequence, no pin.",
-      "Do use strong ease-out (cubic-bezier(0.23, 1, 0.32, 1)) for entrances; never ease-in."
+      "**Do** keep ember (#b8602e) and ember-ink (#873f17) for the one thing developed now.",
+      "**Do** keep the real photograph of Prawal in the film (the close), and judge any generated likeness against it; identity fidelity outranks spectacle.",
+      "**Do** caption every diagram as an abstraction and keep its claims to the published description.",
+      "**Do** give reduced motion a composed state: resolved scenes with manual selectors, no animated sequence or sticky run, and the neutral portrait as a still.",
+      "**Do** end the opening only on an intentional request: Skip intro, the skip link, Escape, a real wheel or trackpad scroll, or a vertical swipe.",
+      "**Do** use strong ease-out (`cubic-bezier(0.23, 1, 0.32, 1)`) for entrances; never ease-in."
     ],
     "donts": [
-      "Don't put a label above a heading.",
-      "Don't use the cool backlight (#9fb0bd) for text or controls.",
-      "Don't round corners or add elevation shadows.",
-      "Don't count numbers up; figures ignite.",
-      "Don't use em or en dashes in copy."
+      "**Don't** put a label above a heading.",
+      "**Don't** paint a chapter as a flat band of colour; change the light.",
+      "**Don't** use cream paper or pure white as a ground, or glow, glass or neon anywhere.",
+      "**Don't** cast a shadow in any direction but right and down.",
+      "**Don't** crossfade two different generated takes of Prawal; one source drives his face.",
+      "**Don't** count numbers up; figures switch on.",
+      "**Don't** use em or en dashes in copy."
     ]
   }
 }

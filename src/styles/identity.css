@@ -1,110 +1,12 @@
-.identity__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-  gap: clamp(2.5rem, 6vw, 7rem);
-  align-items: end;
-}
-
-.identity__intro .h2 {
-  max-width: 17ch;
-  margin-bottom: 2rem;
-}
-
-/* The first paragraph is the lede of the scene; the second supports it. */
-.identity__para:first-of-type {
-  font-size: var(--text-lg);
-  line-height: 1.55;
-  color: var(--bone);
-  max-width: 50ch;
-}
-
-.identity__para + .identity__para {
-  margin-top: 1.25rem;
-}
-
-/* Film credits: right-aligned role, left-aligned name, a shared gutter. */
-.credits {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.credits__row {
-  display: grid;
-  grid-template-columns: 8.5rem minmax(0, 1fr);
-  gap: 1.25rem;
-  align-items: baseline;
-}
-
-.credits__label {
-  text-align: right;
-  font-size: 0.8125rem;
-  font-stretch: var(--semi-wide);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--bone-2);
-}
-
-.credits__value {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--bone);
-}
-
-/* Operating notes: one lit at a time, earlier ones stay up. */
-/* Each note gets its own beat of the scroll, like a title card. */
-.notes {
-  margin-top: clamp(5rem, 12vw, 9rem);
-  display: grid;
-  gap: clamp(3.5rem, 13vh, 7.5rem);
-  max-width: 58rem;
-  margin-left: auto;
-}
-
-.note {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: baseline;
-}
-
-.note__topic {
-  color: var(--bone-2);
-  transition: color 600ms ease;
-}
-
-.note__text {
-  font-size: var(--text-2xl);
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  font-weight: 400;
-  color: var(--bone);
-  transition: color 700ms ease;
-}
-
-.note[data-state="dark"] .note__text {
-  color: var(--bone-3);
-}
-
-.note[data-state="lit"] .note__text {
-  color: var(--bone-2);
-}
-
-.note[data-state="current"] .note__topic {
-  color: var(--tungsten);
-}
-
-@media (max-width: 899px) {
-  .identity__grid {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
-  .credits__row {
-    grid-template-columns: 7rem minmax(0, 1fr);
-    gap: 1rem;
-  }
-  .note {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-  }
-}
+.identity { padding-block: 0; }
+.identity-scene { --run: 220svh; }
+.identity-scene__room { flex: 1; position: relative; isolation: isolate; overflow: hidden; margin-block: 1rem; }
+.identity-scene__plane { position: absolute; left: calc(13% + var(--plane) * 18%); top: calc(18% - var(--plane) * 3%); bottom: 9%; width: 11%; background: linear-gradient(90deg, #f1eade, #c3bbac); box-shadow: 24px 35px 34px -18px rgb(38 37 30 / .23); transform: translateY(15%); opacity: .45; transition: transform 650ms var(--ease-out), opacity 650ms ease; }
+.identity-scene__plane[data-current="true"] { transform: translateY(0); opacity: 1; border-top: 2px solid var(--ember-ink); }
+.identity-scene__light { position: absolute; inset: 0; background: linear-gradient(120deg, transparent 15%, rgb(253 248 232 / .8) 15.2%, transparent 66%); transform: translateX(-20%); transition: transform 750ms var(--ease-out); }
+.identity-scene__room[data-idea="1"] .identity-scene__light { transform: translateX(-5%); }
+.identity-scene__room[data-idea="2"] .identity-scene__light { transform: translateX(10%); }
+.identity-scene__room[data-idea="3"] .identity-scene__light { transform: translateX(25%); }
+.identity-scene__word { position: absolute; left: 5%; bottom: 16%; font-size: clamp(4rem, 10vw, 9rem); font-stretch: var(--wide); font-weight: 500; line-height: 1.1; letter-spacing: -.04em; }
+.identity-scene__caption { font-size: clamp(1.25rem, 2.5vw, 2rem); max-width: 32ch; min-height: 3em; margin-bottom: 1.5rem; }
+@media(max-width:699px) { .identity-scene__word { font-size: clamp(2.9rem, 12vw, 4rem); left: 0; bottom: 18%; } .identity-scene__room { margin-block: 2rem; } .identity-scene__plane { width: 14%; } }

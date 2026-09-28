@@ -1,7 +1,7 @@
 import { portraits } from "../lib/media.js";
 
-/** The real photograph of Prawal, cut out and graded for the stage. */
-export function Portrait({ variant = "stage", sizes, className, priority = false, alt }) {
+/** The real photograph of Prawal, cut out and graded for the close. */
+export function Portrait({ variant = "close", sizes, className, priority = false, alt }) {
   const p = portraits[variant];
   return (
     <picture className={className}>

@@ -1,4 +1,6 @@
-/* The lighting plot: one stage, one warm key, everything else in the dark. */
+/* Developed in daylight: one stone building walked through a day. Each
+   chapter is a lighting condition; content develops from a pale latent image
+   into graphite ink; one ember key marks what is developed now. */
 
 @font-face {
   font-family: "Archivo";
@@ -22,29 +24,71 @@
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* The environment is registered so a lighting cue can transition between
+   conditions. Not inherited: only the atmosphere and the header read it. */
+@property --env-ground {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #d4d1ca;
+}
+@property --env-light {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #e6e3dc;
+}
+@property --env-shade {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #bdb9b1;
+}
+
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Ground */
-  --stage: #0b0b0c;
-  --stage-raised: #111113;
-  --riser: #18181b;
-  --riser-edge: #232327;
+  /* Lighting conditions (ground, light falling on it, shade). Mineral, never cream. */
+  --stone: #d4d1ca;
+  --stone-light: #e4e1da;
+  --stone-shade: #bfbbb3;
+  --sand: #dcd5c9;
+  --sand-light: #e9e3d8;
+  --sand-shade: #c8c0b2;
+  --mineral: #c8d1d6;
+  --mineral-light: #dbe2e5;
+  --mineral-shade: #b3bdc3;
+  --pale: #dfe4e0;
+  --pale-light: #eef1ee;
+  --pale-shade: #c9d0cb;
+  --gallery: #ded8d1;
+  --gallery-light: #ece8e2;
+  --gallery-shade: #c9c2b9;
+  --dusk: #c4cbc5;
+  --dusk-light: #d6dbd6;
+  --dusk-shade: #adb5ae;
+  --graphite: #1f2224;
+  --graphite-raised: #2a2d30;
 
-  /* Ink */
-  --bone: #ece9e2;
-  --bone-2: #b3afa6;
-  --bone-3: #8a867e;
-  --ghost: #3a3935;
-  --line: rgb(236 233 226 / 0.1);
-  --line-strong: rgb(236 233 226 / 0.2);
+  /* The ground under any surface that is not the atmosphere (menu, fallbacks). */
+  --ground: var(--stone);
 
-  /* Light. Tungsten marks what is lit now; the backlight is atmosphere only. */
-  --tungsten: #f3b879;
-  --tungsten-soft: rgb(243 184 121 / 0.16);
-  --tungsten-glow: rgb(243 184 121 / 0.08);
-  --backlight: #9fb0bd;
-  --backlight-soft: rgb(159 176 189 / 0.1);
+  /* Ink: cool graphite taken from the blazer, not espresso. */
+  --ink: #1b1e22;
+  --ink-2: #44484c;
+  --ink-3: #515458;
+  --latent: rgb(27 30 34 / 0.22);
+  --ghost: rgb(27 30 34 / 0.3);
+  --line: rgb(27 30 34 / 0.12);
+  --line-strong: rgb(27 30 34 / 0.26);
+
+  /* Ember: the tungsten key re-expressed for daylight. It marks the one thing
+     developed now. --ember is for marks (lines, nodes, treads); --ember-ink is
+     the text weight of the same key (AA on every light ground). */
+  --ember: #b8602e;
+  --ember-ink: #873f17;
+  --ember-soft: rgb(184 96 46 / 0.14);
+
+  /* One sun, upper left: every cast shadow falls right and down by the same ratio. */
+  --sun-x: 0.6;
+  --sun-y: 1;
 
   /* Type */
   --font: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -72,14 +116,48 @@
   --press: 140ms;
   --hover: 200ms;
   --lamp: 1100ms;
+  --cue: 1400ms;
 
   /* Layers */
+  --z-atmosphere: -2;
   --z-stage: 0;
   --z-content: 1;
   --z-rail: 20;
   --z-header: 30;
   --z-menu: 40;
   --z-skip: 50;
+}
+
+/* The one darker passage. Components read the same roles; only the values change. */
+[data-env="dark"] {
+  --ground: var(--graphite);
+  --ink: #eae7e2;
+  --ink-2: #bab7b0;
+  --ink-3: #95928b;
+  --latent: rgb(234 231 226 / 0.18);
+  --ghost: rgb(234 231 226 / 0.26);
+  --line: rgb(234 231 226 / 0.1);
+  --line-strong: rgb(234 231 226 / 0.22);
+  --ember: #eeb97b;
+  --ember-ink: #eeb97b;
+  --ember-soft: rgb(238 185 123 / 0.14);
+  color: var(--ink);
+}
+
+/* Explicitly back in daylight inside something that sits over the dark (the menu). */
+[data-env="light"] {
+  --ground: var(--stone);
+  --ink: #1b1e22;
+  --ink-2: #44484c;
+  --ink-3: #515458;
+  --latent: rgb(27 30 34 / 0.22);
+  --ghost: rgb(27 30 34 / 0.3);
+  --line: rgb(27 30 34 / 0.12);
+  --line-strong: rgb(27 30 34 / 0.26);
+  --ember: #b8602e;
+  --ember-ink: #873f17;
+  --ember-soft: rgb(184 96 46 / 0.14);
+  color: var(--ink);
 }
 
 @media (min-width: 1200px) {

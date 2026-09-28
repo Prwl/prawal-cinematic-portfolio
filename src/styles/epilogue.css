@@ -19,7 +19,7 @@
   inset: 0 0 20% 0;
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .epilogue__canvas {
@@ -34,7 +34,8 @@
   width: 64vmax;
   height: 64vmax;
   translate: -50% -50%;
-  background: radial-gradient(closest-side, rgb(243 184 121 / 0.09), rgb(159 176 189 / 0.05) 50%, transparent);
+  /* The last of the day: low, warm light on the wall behind him. */
+  background: radial-gradient(closest-side, rgb(255 244 228 / 0.42), rgb(255 255 255 / 0.12) 55%, transparent);
 }
 
 /* The floor and its horizon: the opening's first gesture, made last. */
@@ -44,7 +45,7 @@
   right: 0;
   top: 76%;
   bottom: 0;
-  background: radial-gradient(56% 90% at 72% 0%, rgb(159 176 189 / 0.06), transparent 70%);
+  background: linear-gradient(180deg, rgb(27 30 34 / 0.03), rgb(27 30 34 / 0.07));
 }
 
 .epilogue__horizon {
@@ -53,7 +54,7 @@
   right: 0;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.1) 24%, rgb(236 233 226 / 0.34) 72%, rgb(236 233 226 / 0.1) 94%, transparent);
+  background: linear-gradient(90deg, transparent, rgb(27 30 34 / 0.1) 24%, rgb(27 30 34 / 0.4) 72%, rgb(27 30 34 / 0.1) 94%, transparent);
   transform-origin: 72% 50%;
 }
 
@@ -84,16 +85,14 @@
   height: 100%;
   object-fit: contain;
   object-position: bottom;
-  filter: drop-shadow(3px -2px 2px rgb(159 176 189 / 0.16));
+  /* The same sun as the opening, now low: one soft shadow thrown right. */
+  filter: drop-shadow(18px 8px 22px rgb(27 30 34 / 0.16));
 }
 
 .epilogue__vignette {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, var(--stage) 18%, rgb(11 11 12 / 0.7) 42%, transparent 62%),
-    linear-gradient(0deg, var(--stage), transparent 30%),
-    linear-gradient(180deg, var(--stage), transparent 18%);
+  background: linear-gradient(0deg, var(--dusk), transparent 16%);
 }
 
 .epilogue__copy {
@@ -153,13 +152,13 @@
   gap: 0.35rem;
   padding: 0.25rem 0;
   font-size: var(--text-sm);
-  color: var(--bone-3);
+  color: var(--ink-3);
   transition: color var(--hover) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .epilogue__copy-btn:hover {
-    color: var(--tungsten);
+    color: var(--ember-ink);
   }
 }
 
@@ -171,7 +170,7 @@
   padding-block: 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line);
   font-size: var(--text-sm);
-  color: var(--bone-3);
+  color: var(--ink-3);
 }
 
 .site-footer a {
@@ -179,7 +178,7 @@
   align-items: center;
   min-height: 2.75rem;
   margin-left: auto;
-  color: var(--bone-2);
+  color: var(--ink-2);
 }
 
 @media (orientation: portrait), (max-width: 899px) {
@@ -202,16 +201,14 @@
   }
   .epilogue__floor {
     top: 74%;
-    background: radial-gradient(70% 90% at 50% 0%, rgb(159 176 189 / 0.06), transparent 70%);
+    background: linear-gradient(180deg, rgb(27 30 34 / 0.03), rgb(27 30 34 / 0.06));
   }
   .epilogue__horizon {
     transform-origin: 50% 50%;
-    background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.12) 16%, rgb(236 233 226 / 0.34) 50%, rgb(236 233 226 / 0.12) 84%, transparent);
+    background: linear-gradient(90deg, transparent, rgb(27 30 34 / 0.12) 16%, rgb(27 30 34 / 0.4) 50%, rgb(27 30 34 / 0.12) 84%, transparent);
   }
   .epilogue__vignette {
-    background:
-      linear-gradient(0deg, var(--stage) 4%, rgb(11 11 12 / 0.6) 30%, transparent 55%),
-      linear-gradient(180deg, var(--stage), transparent 22%);
+    background: linear-gradient(0deg, var(--dusk) 2%, transparent 30%);
   }
   .epilogue__copy {
     padding-top: calc(min(78svh, 120vw) - 7rem);

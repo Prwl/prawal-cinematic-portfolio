@@ -65,3 +65,5 @@ for (const [name, [width, height, touch]] of Object.entries(viewports)) {
 
 await browser.close();
 console.log(failures ? `\n${failures} viewport(s) with findings` : "\nAll viewports clean.");
+
+if (failures) process.exitCode = 1;

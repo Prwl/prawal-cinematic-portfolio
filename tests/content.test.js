@@ -11,6 +11,8 @@ import { figures } from "../src/data/scale.js";
 import { pillars, practice } from "../src/data/intelligence.js";
 import { awards, credentials, recommendations, appearances } from "../src/data/recognition.js";
 import { capabilityGroups, contexts } from "../src/data/capabilities.js";
+import { REST_FRAME, frameAt, gridPosition } from "../src/hooks/useLivingPortrait.js";
+import livingGrid from "../src/assets/media/living/prawal-living.json";
 
 const root = path.resolve(import.meta.dirname, "..");
 const all = { profile, identity, contact, documents, chapters, risers, caseStudies, workIndex, figures, pillars, practice, awards, credentials, recommendations, appearances, capabilityGroups, contexts };
@@ -68,5 +70,34 @@ describe("content", () => {
     expect(risers.at(-1).title).toBe(profile.role);
     const years = risers.map((r) => Number(r.years));
     expect([...years].sort((a, b) => a - b)).toEqual(years);
+  });
+
+  it("maps the living portrait's pointer poses onto its pose grid, resting on the level frontal frame", () => {
+    const { nx, ny, centre, yaw, pitch, box } = livingGrid;
+    expect(yaw).toHaveLength(nx);
+    expect(pitch).toHaveLength(ny);
+    for (let i = 1; i < nx; i++) expect(yaw[i]).toBeGreaterThan(yaw[i - 1]);
+    for (let i = 1; i < ny; i++) expect(pitch[i]).toBeGreaterThan(pitch[i - 1]);
+    // Rest is the level, frontal pose, and an exact frame.
+    expect(yaw[centre[0]]).toBe(0);
+    expect(pitch[centre[1]]).toBe(0);
+    expect(REST_FRAME).toBe(frameAt(centre[0], centre[1]));
+    // Serpentine: rows alternate direction, so row ends meet.
+    expect(frameAt(nx - 1, 0) + 1).toBe(frameAt(nx - 1, 1));
+    expect(frameAt(0, ny - 1)).toBeLessThan(nx * ny);
+    expect(gridPosition(0, 0)).toEqual(centre);
+    // The pointer's extremes reach the grid's corners. Up is the first row,
+    // down the last; the columns turn him from the viewer's right to the
+    // viewer's left, so a pointer on the left takes the last column.
+    expect(gridPosition(-1, -1)).toEqual([nx - 1, 0]);
+    expect(gridPosition(1, 1)).toEqual([0, ny - 1]);
+    // The head box lies within the plate.
+    expect(box.left).toBeGreaterThanOrEqual(0);
+    expect(box.top).toBeGreaterThanOrEqual(0);
+    expect(box.left + box.width).toBeLessThanOrEqual(1);
+    expect(box.top + box.height).toBeLessThanOrEqual(1);
+    for (const f of ["prawal-living.mp4", "prawal-living-poster.avif", "prawal-living-poster.webp"]) {
+      expect(existsSync(path.join(root, "src/assets/media/living", f))).toBe(true);
+    }
   });
 });

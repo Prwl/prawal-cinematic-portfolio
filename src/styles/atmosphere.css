@@ -1,0 +1,76 @@
+/* ---------- The light of the building ----------
+   Every chapter plays under one of six conditions. The values are registered
+   colours (tokens.css), so a cue transitions them instead of cutting. */
+
+.atmosphere,
+.site-header {
+  --env-ground: var(--stone);
+  --env-light: var(--stone-light);
+  --env-shade: var(--stone-shade);
+  transition:
+    --env-ground var(--cue) var(--ease-in-out),
+    --env-light var(--cue) var(--ease-in-out),
+    --env-shade var(--cue) var(--ease-in-out);
+}
+
+html[data-light="sand"] :is(.atmosphere, .site-header) {
+  --env-ground: var(--sand);
+  --env-light: var(--sand-light);
+  --env-shade: var(--sand-shade);
+}
+html[data-light="mineral"] :is(.atmosphere, .site-header) {
+  --env-ground: var(--mineral);
+  --env-light: var(--mineral-light);
+  --env-shade: var(--mineral-shade);
+}
+html[data-light="pale"] :is(.atmosphere, .site-header) {
+  --env-ground: var(--pale);
+  --env-light: var(--pale-light);
+  --env-shade: var(--pale-shade);
+}
+html[data-light="gallery"] :is(.atmosphere, .site-header) {
+  --env-ground: var(--gallery);
+  --env-light: var(--gallery-light);
+  --env-shade: var(--gallery-shade);
+}
+html[data-light="dusk"] :is(.atmosphere, .site-header) {
+  --env-ground: var(--dusk);
+  --env-light: var(--dusk-light);
+  --env-shade: var(--dusk-shade);
+}
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-atmosphere);
+  pointer-events: none;
+  background:
+    /* Daylight from a high window at upper left. */
+    radial-gradient(80% 70% at 16% -6%, var(--env-light), transparent 72%),
+    /* The floor falls into shade toward the bottom of the frame. */
+    linear-gradient(180deg, transparent 52%, var(--env-shade) 118%),
+    var(--env-ground);
+}
+
+/* The window's shaft: one soft diagonal of light across the hall. It holds
+   still; only its colour follows the cue. */
+.atmosphere__window {
+  position: absolute;
+  inset: -10% -10% auto -10%;
+  height: 120%;
+  background: linear-gradient(
+    112deg,
+    transparent 18%,
+    color-mix(in oklab, var(--env-light) 55%, transparent) 27%,
+    transparent 38%
+  );
+  opacity: 0.8;
+  --env-light: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere,
+  .site-header {
+    transition-duration: 500ms;
+  }
+}

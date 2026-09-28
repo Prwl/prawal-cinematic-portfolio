@@ -1,256 +1,47 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
-import {
-  recognition,
-  awards,
-  awardsIssuer,
-  credentials,
-  learningArchive,
-  recommendations,
-  recommendationsSource,
-  appearances,
-  publication
-} from "../data/recognition.js";
+import { useState } from "react";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { awards, awardsIssuer, credentials, learningArchive, recommendations, recommendationsSource, appearances, publication } from "../data/recognition.js";
 import { awardImage } from "../lib/media.js";
-import { useReducedMotion } from "../hooks/useReducedMotion.js";
-import { useCueFocus, cueState } from "../hooks/useCueFocus.js";
 import { Horizon } from "../components/Horizon.jsx";
+import { DetailLayer } from "../components/DetailLayer.jsx";
+import { useStory } from "../hooks/useStory.js";
 import "../styles/recognition.css";
 
-/** The exhibition wall. The exhibit nearest the centre of the wall is under the pinspot. */
+function AwardImage({ award, eager = false }) {
+  const img = awardImage(award.image);
+  return <picture><source type="image/avif" srcSet={img.avif}/><img src={img.webp} alt={`${award.title}, ${award.date}`} loading={eager ? "eager" : "lazy"} decoding="async" width="600" height="450" /></picture>;
+}
 function Exhibition() {
-  const wallRef = useRef(null);
-  const [spot, setSpot] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    const wall = wallRef.current;
-    const items = [...wall.querySelectorAll(".exhibit")];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setSpot(items.indexOf(e.target));
-      },
-      { root: wall, rootMargin: "0px -70% 0px -16%", threshold: 0 }
-    );
-    items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  function step(dir) {
-    const wall = wallRef.current;
-    const items = wall.querySelectorAll(".exhibit");
-    const next = items[Math.max(0, Math.min(items.length - 1, spot + dir))];
-    const inset = parseFloat(getComputedStyle(wall).scrollPaddingLeft) || 0;
-    wall.scrollTo({ left: next.offsetLeft - inset, behavior: reduce ? "auto" : "smooth" });
-  }
-
-  return (
-    <div className="exhibition">
-      <div className="exhibition__controls">
-        <button type="button" className="exhibition__btn" onClick={() => step(-1)} disabled={spot === 0} aria-label="Previous award">
-          <ArrowLeft size={18} aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="exhibition__btn"
-          onClick={() => step(1)}
-          disabled={spot === awards.length - 1}
-          aria-label="Next award"
-        >
-          <ArrowRight size={18} aria-hidden="true" />
-        </button>
+  const { ref, reduce, active, select } = useStory(awards.length);
+  const award = awards[active];
+  return <div ref={ref} className="story-run exhibition" data-reduced={reduce}>
+    <div className="story-sticky wrap">
+      <h2 id="recognition-title" className="scene-heading">Recognition, earned over time.</h2>
+      <div className="exhibition__room">
+        {awards.map((a,i)=><figure key={a.image} className="exhibition__piece" data-selected={i===active} aria-hidden={i!==active} style={{"--offset":i-active,"--away":Math.abs(i-active)}}><AwardImage award={a} /></figure>)}
       </div>
-      <ul ref={wallRef} className="exhibition__wall" tabIndex={0} aria-label={`Ten awards from ${awardsIssuer}, newest first. Scroll sideways.`}>
-        {awards.map((a, i) => {
-          const img = awardImage(a.image);
-          return (
-            <li key={a.image} className="exhibit" data-spot={i === spot ? "" : undefined}>
-              <figure>
-                <picture className="exhibit__frame">
-                  <source type="image/avif" srcSet={img.avif} />
-                  <img src={img.webp} alt={`${a.title}, ${a.date}`} loading="lazy" decoding="async" />
-                </picture>
-                <figcaption className="exhibit__label">
-                  <span className="exhibit__title">{a.title}</span>
-                  <span className="exhibit__date num">{a.date}</span>
-                  <span className="exhibit__note">{a.note}</span>
-                </figcaption>
-              </figure>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="exhibition__caption" aria-live="polite" aria-atomic="true"><div key={active} className="beat"><h3>{award.title}</h3><p>{award.date} · {awardsIssuer}</p></div></div>
+      <div className="scene-footer"><div className="gallery-controls"><button type="button" onClick={()=>select(active-1)} disabled={active===0} aria-label="Previous award"><ArrowLeft size={20}/></button><span>{active+1} / {awards.length}</span><button type="button" onClick={()=>select(active+1)} disabled={active===awards.length-1} aria-label="Next award"><ArrowRight size={20}/></button></div><DetailLayer title="The awards archive" label="Awards and their stories">{awards.map(a=><article key={a.image}><h3>{a.title}</h3><p>{a.date} · {awardsIssuer}</p><AwardImage award={a}/><p>{a.note}</p></article>)}</DetailLayer></div>
     </div>
-  );
+  </div>;
 }
-
 function Voices() {
-  const [current, setCurrent] = useState(0);
-  const r = recommendations[current];
-  return (
-    <section className="voices" aria-labelledby="voices-title">
-      <h3 id="voices-title" className="h3" data-lamp>
-        Recommendations
-      </h3>
-      <div className="voices__grid">
-        <ul className="voices__names" aria-label="Choose a recommendation">
-          {recommendations.map((v, i) => (
-            <li key={v.name}>
-              <button type="button" className="voices__name" aria-pressed={i === current} onClick={() => setCurrent(i)}>
-                <span>{v.name}</span>
-                <span className="voices__role">{v.role}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-        <figure className="voices__quote" aria-live="polite">
-          <blockquote key={r.name}>
-            <p>“{r.quote}”</p>
-          </blockquote>
-          <figcaption>
-            <span className="voices__who">{r.name}</span>
-            <span className="voices__meta">
-              {r.role}, {r.date}
-            </span>
-          </figcaption>
-          <a className="text-link voices__source" href={recommendationsSource.href} target="_blank" rel="noreferrer">
-            {recommendationsSource.label}
-            <ArrowUpRight size={13} weight="bold" aria-hidden="true" />
-            <span className="visually-hidden"> (opens LinkedIn in a new tab)</span>
-          </a>
-        </figure>
-      </div>
-    </section>
-  );
+  const [current,setCurrent] = useState(0);
+  const voice = recommendations[current];
+  return <section className="voices wrap" aria-labelledby="voices-title"><h3 id="voices-title" className="scene-heading">In their words.</h3>
+    <figure className="voices__quote" aria-live="polite" aria-atomic="true"><blockquote key={voice.name}>“{voice.quote}”</blockquote><figcaption key={`${voice.name}-by`} className="beat beat--late"><strong>{voice.name}</strong><span>{voice.role} · {voice.date}</span></figcaption></figure>
+    <div className="scene-footer"><div className="voices__controls"><button type="button" disabled={current===0} onClick={()=>setCurrent(current-1)}>Previous voice</button><button type="button" disabled={current===recommendations.length-1} onClick={()=>setCurrent(current+1)}>Next voice <ArrowRight size={18}/></button></div><DetailLayer title="Professional recommendations" label="All 12 voices">{recommendations.map(r=><article key={r.name}><h3>{r.name}</h3><p className="label">{r.role} · {r.date}</p><blockquote><p>“{r.quote}”</p></blockquote></article>)}<p><a href={recommendationsSource.href} target="_blank" rel="noreferrer">{recommendationsSource.label} (opens in a new tab)</a></p></DetailLayer></div>
+  </section>;
 }
-
-// Group records by a key, keeping first-seen order.
-function groupBy(list, key) {
-  const groups = new Map();
-  for (const item of list) {
-    const k = item[key];
-    if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push(item);
-  }
-  return [...groups];
+function Archive() {
+  return <section className="archive wrap" aria-labelledby="archive-title">
+    <h3 id="archive-title" className="scene-heading">The continuing practice.</h3>
+    <div className="archive__shelves">
+      <div className="archive__shelf"><span className="archive__subject">Cloud & AI</span><p>AWS, Google Cloud, Microsoft</p><DetailLayer title="Certifications and learning" label="Open the certification archive">{credentials.map(c=><article key={c.title}><h3>{c.title}</h3><p>{c.issuer}</p></article>)}{learningArchive.map(g=><article key={g.group}><h3>{g.group}</h3><ul>{g.items.map(i=><li key={i}>{i}</li>)}</ul></article>)}</DetailLayer></div>
+      <div className="archive__shelf"><span className="archive__subject">2023 to 2026</span><p>Conferences, conversations, contribution</p><DetailLayer title="Events and publication" label="Open events and publication">{appearances.map(a=><article key={a.title+a.year}><h3>{a.title}</h3><p>{a.year} · {a.kind}</p></article>)}<article><h3>{publication.title}</h3><p>{publication.role}. {publication.detail}</p><p><a href={publication.href} target="_blank" rel="noreferrer">View on Amazon (opens in a new tab)</a></p></article></DetailLayer></div>
+    </div>
+  </section>;
 }
-
-/**
- * Certifications as a catalogue: each issuer is a drawer of the archive,
- * named wide, with its certificates set beside it. The drawer at the middle
- * of the screen is under the light; ones already read stay up.
- */
-function Register() {
-  const listRef = useRef(null);
-  const reduce = useReducedMotion();
-  const byIssuer = useMemo(() => groupBy(credentials, "issuer"), []);
-  const focus = useCueFocus(listRef, ".catalogue__drawer", { band: "-40% 0px -48% 0px", enabled: !reduce });
-  const archiveCount = learningArchive.reduce((n, g) => n + g.items.length, 0);
-  return (
-    <section className="register" aria-labelledby="register-title">
-      <h3 id="register-title" className="h3" data-lamp>
-        Certifications
-      </h3>
-      <ul ref={listRef} className="catalogue">
-        {byIssuer.map(([issuer, items], i) => (
-          <li key={issuer} className="catalogue__drawer" data-state={cueState(i, focus, reduce)}>
-            <p className="catalogue__issuer">
-              {issuer}
-              <span className="catalogue__count num" aria-hidden="true">
-                {items.length}
-              </span>
-            </p>
-            <ul className="catalogue__items">
-              {items.map((c) => (
-                <li key={c.title} className="catalogue__item">
-                  <span className="visually-hidden">{issuer}: </span>
-                  {c.title}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-      <details className="fineprint register__archive">
-        <summary>Full learning archive, {archiveCount} more</summary>
-        <div className="register__groups">
-          {learningArchive.map((g) => (
-            <div key={g.group}>
-              <h4 className="label">{g.group}</h4>
-              <ul>
-                {g.items.map((it) => (
-                  <li key={it}>{it}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </details>
-    </section>
-  );
-}
-
-/** Appearances by year, with the book set apart as the one publication. */
-function Appearances() {
-  const byYear = useMemo(() => groupBy(appearances, "year"), []);
-  return (
-    <section className="appearances" aria-labelledby="appearances-title">
-      <h3 id="appearances-title" className="h3" data-lamp>
-        Events and publications
-      </h3>
-      <div className="appearances__grid">
-        <ol className="appearances__years">
-          {byYear.map(([year, items], i) => (
-            <li key={year} className="appearances__year" data-lamp style={{ "--cue": i }}>
-              <p className="appearances__when title-wide num">{year}</p>
-              <ul className="appearances__list">
-                {items.map((a) => (
-                  <li key={a.title} className="appearances__row">
-                    <span className="appearances__title">{a.title}</span>
-                    <span className="appearances__kind">{a.kind}</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
-        <div className="publication" data-lamp style={{ "--cue": 1 }}>
-          <p className="publication__title">{publication.title}</p>
-          <p className="publication__detail">
-            {publication.role}. {publication.detail}
-          </p>
-          <a className="text-link publication__link" href={publication.href} target="_blank" rel="noreferrer">
-            View on Amazon
-            <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
-            <span className="visually-hidden"> (opens in a new tab)</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function Recognition() {
-  return (
-    <section id="recognition" className="chapter recognition" aria-labelledby="recognition-title">
-      <Horizon />
-      <div className="wrap">
-        <h2 id="recognition-title" className="h2" data-lamp>
-          {recognition.heading}
-        </h2>
-      </div>
-
-      <Exhibition />
-
-      {/* The light leaves the award wall and comes down on the archive. */}
-      <div className="archive">
-        <Horizon />
-        <div className="wrap">
-          <Register />
-          <Voices />
-          <Appearances />
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="recognition" className="chapter recognition" aria-labelledby="recognition-title"><Horizon/><Exhibition/><Archive/><Voices/></section>;
 }

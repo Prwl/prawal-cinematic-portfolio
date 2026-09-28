@@ -2,9 +2,7 @@ import { useLayoutEffect, useRef } from "react";
 import { ArrowDown, DownloadSimple } from "@phosphor-icons/react";
 import { profile } from "../data/profile.js";
 import { documents } from "../data/contact.js";
-import { Portrait } from "../components/Portrait.jsx";
-import { CanvasStage } from "../experience/CanvasStage.jsx";
-import { topologyScene } from "../experience/topology.js";
+import { LivingPortrait } from "../components/LivingPortrait.jsx";
 import { useTitleSequence } from "../motion/useTitleSequence.js";
 import { gsap, ScrollTrigger } from "../motion/gsap.js";
 import { prefersReducedMotion } from "../hooks/useReducedMotion.js";
@@ -27,14 +25,11 @@ function TrackedWord({ word, spread }) {
 
 export function Prologue() {
   const scope = useRef(null);
-  const topology = useRef(null);
-  const { settled, skip } = useTitleSequence(scope, topology);
-  const startAwake = typeof document !== "undefined" && !document.documentElement.classList.contains("intro");
+  const { settled, skip } = useTitleSequence(scope);
 
-  // Leaving the opening: the stage drifts away and dims while the camera keeps
-  // pushing in. The horizon does not leave with it. It holds its place on
-  // screen while the set recedes, and the next chapter arrives on it: the
-  // same line becomes chapter I's horizon (see Horizon, variant "handoff").
+  // Leaving the opening: the camera keeps pushing in while the hall gives way
+  // to the next room's light. The horizon does not leave with it. It holds its
+  // place on screen and becomes chapter I's horizon (Horizon, "handoff").
   useLayoutEffect(() => {
     if (!settled || prefersReducedMotion()) return;
     const section = scope.current;
@@ -42,21 +37,33 @@ export function Prologue() {
     const floor = section.querySelector(".prologue__floor");
     const ctx = gsap.context(() => {
       const trigger = { trigger: section, start: "top top", end: "bottom top", scrub: true };
-      gsap.to(".prologue__camera", { yPercent: 10, scale: 1.09, ease: "none", scrollTrigger: trigger });
-      gsap.to(".prologue__topology", { yPercent: -8, ease: "none", scrollTrigger: trigger });
+      gsap.to(".prologue__camera", { yPercent: 8, scale: 1.07, ease: "none", scrollTrigger: trigger });
       gsap.to(".prologue__copy", { y: -90, opacity: 0, ease: "none", scrollTrigger: { ...trigger, end: "60% top" } });
-      gsap.to(".prologue__dim", { opacity: 1, ease: "none", scrollTrigger: trigger });
+      gsap.to(".prologue__camera", { opacity: 0, ease: "none", scrollTrigger: { trigger: section, start: "35% top", end: "bottom top", scrub: true } });
+      // The section's bottom edge would slice through him as it rises; the
+      // camera's lower edge dissolves into the next room's light instead.
+      gsap.fromTo(
+        camera,
+        { "--exit": "0%" },
+        {
+          "--exit": "60%",
+          ease: "none",
+          immediateRender: true,
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "55% top",
+            scrub: true,
+            onToggle: (self) => section.toggleAttribute("data-leaving", self.isActive || self.progress > 0)
+          }
+        }
+      );
 
-      // Where the camera's horizon sits right now, in the section's own space:
-      // the floor line scaled about the camera's transform origin.
       const horizonTop = () => {
         const scale = Number(gsap.getProperty(camera, "scale")) || 1;
-        const originY = (parseFloat(getComputedStyle(camera).transformOrigin.split(" ")[1]) || 0);
+        const originY = parseFloat(getComputedStyle(camera).transformOrigin.split(" ")[1]) || 0;
         return originY + (floor.offsetTop - originY) * scale;
       };
-      // The handoff line starts on the camera's horizon and travels, in the
-      // section's space, to its bottom edge: the top of chapter I. Measured
-      // against the viewport it barely moves.
       gsap.fromTo(
         ".prologue__handoff",
         { y: () => horizonTop() },
@@ -70,7 +77,6 @@ export function Prologue() {
       const early = { trigger: section, start: "top top", end: "12% top", scrub: true };
       gsap.to(".prologue__horizon", { opacity: 0, ease: "none", scrollTrigger: early });
       gsap.fromTo(".prologue__handoff", { opacity: 0 }, { opacity: 1, ease: "none", immediateRender: true, scrollTrigger: early });
-      // Once it lies on chapter I's horizon, that horizon takes over.
       gsap.to(".prologue__handoff-line", {
         opacity: 0,
         ease: "none",
@@ -84,36 +90,19 @@ export function Prologue() {
   return (
     <section ref={scope} className="prologue" aria-labelledby="prologue-title">
       <div className="prologue__camera" aria-hidden="true">
-        <div className="prologue__wall">
-          <span className="prologue__beam prologue__beam--1" />
-          <span className="prologue__beam prologue__beam--2" />
-          <span className="prologue__beam prologue__beam--3" />
-          <span className="prologue__backlight" />
-          <span className="prologue__key" />
-        </div>
-        <div className="prologue__topology">
-          <CanvasStage
-            scene={topologyScene}
-            sceneRef={topology}
-            className="prologue__canvas"
-            label=""
-            options={{ awake: startAwake, focusX: 0.7, focusY: 0.34, reach: 0.78 }}
-          />
+        <div className="prologue__hall">
+          <span className="prologue__recess" />
+          <span className="prologue__pilaster prologue__pilaster--1" />
+          <span className="prologue__pilaster prologue__pilaster--2" />
+          <span className="prologue__shaft" />
         </div>
         <div className="prologue__floor">
+          <span className="prologue__sunpatch" />
           <span className="prologue__horizon" />
         </div>
-        <Portrait
-          className="prologue__figure"
-          priority
-          alt=""
-          sizes="(orientation: portrait) 90vw, 40vw"
-        />
-        <span className="prologue__sweep" />
-        <span className="prologue__haze" />
-        <span className="prologue__vignette" />
+        <LivingPortrait className="prologue__figure" settled={settled} />
+        <span className="prologue__exposure" />
       </div>
-      <span className="prologue__dim" aria-hidden="true" />
       <span className="prologue__handoff" aria-hidden="true">
         <span className="prologue__handoff-line" />
       </span>

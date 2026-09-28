@@ -8,7 +8,8 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: 5rem;
-  scrollbar-color: var(--ghost) var(--stage);
+  scrollbar-color: rgb(27 30 34 / 0.3) var(--stone);
+  background: var(--stone);
   scrollbar-width: thin;
 }
 
@@ -21,8 +22,8 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--stage);
-  color: var(--bone);
+  background: transparent;
+  color: var(--ink);
   font-family: var(--font);
   font-size: var(--text-base);
   line-height: 1.6;
@@ -38,8 +39,8 @@ html.intro-running body {
 }
 
 ::selection {
-  background: var(--tungsten);
-  color: var(--stage);
+  background: var(--ember-ink);
+  color: var(--pale-light);
 }
 
 ::-webkit-scrollbar {
@@ -47,11 +48,11 @@ html.intro-running body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--stage);
+  background: var(--stone);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--ghost);
-  border: 3px solid var(--stage);
+  background: rgb(27 30 34 / 0.3);
+  border: 3px solid var(--stone);
 }
 
 img,
@@ -111,7 +112,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--tungsten);
+  outline: 2px solid var(--ink);
   outline-offset: 4px;
 }
 
@@ -137,8 +138,8 @@ button {
   left: 0.75rem;
   z-index: var(--z-skip);
   padding: 0.75rem 1rem;
-  background: var(--bone);
-  color: var(--stage);
+  background: var(--ink);
+  color: var(--stone-light);
   font-weight: 600;
   text-decoration: none;
   transform: translateY(-160%);
@@ -227,9 +228,9 @@ button {
   background: linear-gradient(
     90deg,
     transparent,
-    rgb(236 233 226 / 0.1) calc(var(--focus) - 44vw),
-    rgb(236 233 226 / 0.34) var(--focus),
-    rgb(236 233 226 / 0.1) calc(var(--focus) + 30vw),
+    color-mix(in srgb, var(--ink) 10%, transparent) calc(var(--focus) - 44vw),
+    color-mix(in srgb, var(--ink) 38%, transparent) var(--focus),
+    color-mix(in srgb, var(--ink) 10%, transparent) calc(var(--focus) + 30vw),
     transparent
   );
   transform-origin: var(--focus) 50%;
@@ -243,18 +244,20 @@ button {
   left: calc(var(--focus) - 9vw);
   width: 18vw;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(243 184 121 / 0.9), transparent);
+  height: 2px;
+  top: -0.5px;
+  background: linear-gradient(90deg, transparent, var(--ember), transparent);
   opacity: 0;
 }
 
-/* The cool wash the horizon throws on the floor of the new scene. */
+/* Daylight falling on the floor of the new scene, just under the line. */
 .horizon__spill {
   position: absolute;
   top: 1px;
   left: 0;
   right: 0;
   height: min(70vh, 44rem);
-  background: radial-gradient(36% 100% at var(--focus) 0%, rgb(159 176 189 / 0.075), transparent 78%);
+  background: radial-gradient(36% 100% at var(--focus) 0%, rgb(250 249 246 / 0.42), transparent 78%);
   opacity: 0.5;
 }
 
@@ -386,13 +389,13 @@ button {
 .lede {
   font-size: var(--text-xl);
   line-height: 1.45;
-  color: var(--bone-2);
+  color: var(--ink-2);
   max-width: 44ch;
   font-weight: 350;
 }
 
 .body {
-  color: var(--bone-2);
+  color: var(--ink-2);
   max-width: var(--measure);
 }
 
@@ -403,7 +406,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--bone-3);
+  color: var(--ink-3);
 }
 
 .num {
@@ -413,8 +416,8 @@ button {
 /* ---------- Actions ---------- */
 
 .action {
-  --action-fg: var(--stage);
-  --action-bg: var(--bone);
+  --action-fg: var(--stone-light);
+  --action-bg: var(--ink);
   display: inline-flex;
   align-items: center;
   gap: 0.625rem;
@@ -445,24 +448,24 @@ button {
 }
 
 .action--ghost {
-  --action-fg: var(--bone);
+  --action-fg: var(--ink);
   --action-bg: transparent;
   box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .action:hover {
-    --action-bg: var(--tungsten);
+    --action-bg: var(--ember-ink);
   }
   .action--ghost:hover {
     --action-bg: transparent;
-    --action-fg: var(--tungsten);
-    box-shadow: inset 0 0 0 1px var(--tungsten);
+    --action-fg: var(--ember-ink);
+    box-shadow: inset 0 0 0 1px var(--ember-ink);
   }
 }
 
 .text-link {
-  color: var(--bone);
+  color: var(--ink);
   text-decoration-color: var(--line-strong);
   transition:
     color var(--hover) ease,
@@ -471,7 +474,7 @@ button {
 
 @media (hover: hover) and (pointer: fine) {
   .text-link:hover {
-    color: var(--tungsten);
+    color: var(--ember-ink);
     text-decoration-color: currentColor;
   }
 }

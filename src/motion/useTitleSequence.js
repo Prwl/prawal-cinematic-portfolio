@@ -31,14 +31,13 @@ function wheelPixels(e) {
  *
  * Returns { settled, skip }.
  */
-export function useTitleSequence(scope, topologyRef) {
+export function useTitleSequence(scope) {
   const [settled, setSettled] = useState(() => typeof document !== "undefined" && !root().classList.contains("intro"));
   const skipRef = useRef(() => {});
   const skip = useCallback(() => skipRef.current(), []);
 
   useLayoutEffect(() => {
     const html = root();
-    // Without the sequence the topology is created already awake.
     if (!html.classList.contains("intro")) return;
     html.classList.add("intro-started", "intro-running");
     const q = gsap.utils.selector(scope);
@@ -51,33 +50,36 @@ export function useTitleSequence(scope, topologyRef) {
       onComplete: finish
     });
 
-    // Darkness. Then a horizon line: the first sign of a stage.
-    tl.fromTo(q(".prologue__horizon"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.6, ease: EASE_IN_OUT }, 0.5)
-      // The back wall and its light come up; the topology starts to glow.
-      .fromTo(q(".prologue__wall"), { opacity: 0 }, { opacity: 1, duration: 2.4 }, 1.3)
-      .add(() => topologyRef.current?.setLevel(0.4), 1.6)
-      // Prawal resolves out of the dark as the key light finds him. He becomes
-      // solid first, as a silhouette, and the light does the rest: a plain
-      // crossfade would show the wall through him while he is half there.
-      .fromTo(q(".prologue__figure"), { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power1.out" }, 2.3)
-      .fromTo(q(".prologue__figure"), { filter: "brightness(0.06)" }, { filter: "brightness(1)", duration: 2.8, ease: "power2.out" }, 2.3)
-      .fromTo(q(".prologue__sweep"), { xPercent: -120, opacity: 0 }, { xPercent: 120, opacity: 1, duration: 2.8, ease: EASE_IN_OUT }, 2.4)
-      // The virtual camera eases in toward him for the whole sequence.
-      .fromTo(q(".prologue__camera"), { scale: 1 }, { scale: 1.035, duration: 7.5, ease: "power2.out" }, 0.5)
+    // Daylight. The hall starts overexposed, as eyes do on stepping into it,
+    // and the exposure comes down while a graphite horizon is drawn.
+    tl.fromTo(q(".prologue__exposure"), { opacity: 1 }, { opacity: 0, duration: 2.6, ease: "power2.out" }, 0.3)
+      .fromTo(q(".prologue__horizon"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.6, ease: EASE_IN_OUT }, 0.5)
+      // The architecture develops out of the light, nearest plane last.
+      .fromTo(q(".prologue__hall > *"), { opacity: 0 }, { opacity: 1, duration: 2.2, stagger: 0.18 }, 0.9)
+      .fromTo(q(".prologue__floor > :not(.prologue__horizon)"), { opacity: 0 }, { opacity: 1, duration: 2.6 }, 1.4)
+      // Prawal develops like a print: a pale, soft latent image comes up to
+      // full density and focus. He is solid before he is sharp.
+      .fromTo(q(".prologue__figure"), { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power1.out" }, 2.0)
+      .fromTo(
+        q(".prologue__figure"),
+        { filter: "brightness(1.5) contrast(0.62) blur(6px)" },
+        { filter: "brightness(1) contrast(1) blur(0px)", duration: 2.8, ease: "power2.out" },
+        2.0
+      )
+      // The camera eases in toward him for the whole sequence.
+      .fromTo(q(".prologue__camera"), { scale: 1 }, { scale: 1.03, duration: 7.5, ease: "power2.out" }, 0.3)
       // Title: letters close up from wide tracking, with a focus pull.
       .fromTo(
         q(".prologue__letter"),
         { x: (i, el) => Number(el.dataset.spread || 0), opacity: 0, filter: "blur(10px)" },
         { x: 0, opacity: 1, filter: "blur(0px)", duration: 1.9, stagger: 0.02 },
-        3.7
+        3.6
       )
-      // The arc lights word by word, like cues called in sequence.
-      .fromTo(q(".prologue__cue"), { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out", stagger: 0.45 }, 4.8)
-      // With "Intelligence", the system behind him wakes.
-      .add(() => topologyRef.current?.wake(), 6.1)
+      // The arc develops word by word, like cues called in sequence.
+      .fromTo(q(".prologue__cue"), { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out", stagger: 0.45 }, 4.7)
       // The actions become reachable the moment they start to come up.
-      .add(() => actions && (actions.inert = false), 6.4)
-      .fromTo(q(".prologue__after"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.12 }, 6.4);
+      .add(() => actions && (actions.inert = false), 6.2)
+      .fromTo(q(".prologue__after"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.12 }, 6.2);
 
     function skip() {
       if (tl.progress() < 1) tl.progress(1);
@@ -87,11 +89,10 @@ export function useTitleSequence(scope, topologyRef) {
       // If the visitor pressed Skip intro, the control is about to leave the
       // page; keep their place by moving focus to the title it revealed.
       const hadFocus = document.activeElement?.classList.contains("prologue__skip");
-      topologyRef.current?.wake(-10);
-      gsap.set(q(".prologue__letter, .prologue__cue, .prologue__after, .prologue__figure, .prologue__wall, .prologue__horizon"), {
-        clearProps: "all"
+      gsap.set(q(".prologue__letter, .prologue__cue, .prologue__after, .prologue__figure, .prologue__hall > *, .prologue__floor > *"), {
+        clearProps: "opacity,filter,transform"
       });
-      gsap.set(q(".prologue__sweep"), { opacity: 0 });
+      gsap.set(q(".prologue__exposure"), { opacity: 0 });
       dark.forEach((el) => (el.inert = false));
       html.classList.remove("intro", "intro-running");
       setSettled(true);
@@ -154,7 +155,7 @@ export function useTitleSequence(scope, topologyRef) {
       dark.forEach((el) => (el.inert = false));
       html.classList.remove("intro-running");
     };
-  }, [scope, topologyRef]);
+  }, [scope]);
 
   return { settled, skip };
 }

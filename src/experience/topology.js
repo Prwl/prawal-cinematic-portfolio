@@ -1,9 +1,10 @@
-// A service topology projected on the back wall like a gobo: tiers of nodes,
-// rectilinear links between neighbouring tiers, and signals travelling along
-// them. It is atmosphere, so it is drawn in the cool backlight, never tungsten.
+// A service topology drawn on the wall like a faint architect's print: tiers
+// of nodes, rectilinear links between neighbouring tiers, and signals
+// travelling along them. It is atmosphere, so it stays in cool graphite at a
+// latent level, never ember.
 
-const BACKLIGHT = [159, 176, 189];
-const BONE = [236, 233, 226];
+const BACKLIGHT = [58, 68, 76];
+const BONE = [27, 30, 34];
 
 function mulberry32(seed) {
   let a = seed;

@@ -20,7 +20,7 @@ const log = (...a) => console.log(...a);
 
   // The title sequence plays on a fresh visit; a key press settles it.
   const introPlayed = await page.evaluate(() => document.documentElement.classList.contains("intro-started"));
-  await page.keyboard.press("Shift");
+  await page.keyboard.press("Escape");
   await page.waitForTimeout(400);
   log(`intro played on first visit: ${introPlayed}`);
 

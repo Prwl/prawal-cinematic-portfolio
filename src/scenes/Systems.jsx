@@ -1,111 +1,12 @@
-import { useCallback, useId, useMemo, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { systemsIntro, caseStudies, workIndex } from "../data/systems.js";
 import { capabilitiesIntro, capabilityGroups, contexts } from "../data/capabilities.js";
-import { CanvasStage } from "../experience/CanvasStage.jsx";
-import { pipelineScene } from "../experience/diagrams/pipeline.js";
-import { transactionsScene } from "../experience/diagrams/transactions.js";
-import { taxonomyScene } from "../experience/diagrams/taxonomy.js";
 import { Horizon } from "../components/Horizon.jsx";
 import "../styles/systems.css";
 
-const scenes = { pipeline: pipelineScene, transactions: transactionsScene, taxonomy: taxonomyScene };
-const layouts = ["band", "split-left", "split-right"];
-
-/**
- * A case study is a small system story told by its diagram: dormant
- * architecture, an input, one path lit through the stages, then the outcome.
- * The diagram reports each beat as a cue, and the stage it is lighting is lit
- * in the text beside it at the same moment. Attributes are written directly so
- * the canvas loop never re-renders React.
- */
-function useStoryCues(ref, stageCount) {
-  return useCallback(
-    (cue) => {
-      const el = ref.current;
-      if (!el) return;
-      el.querySelectorAll(".case__stage").forEach((li, i) => {
-        li.dataset.state = cue < 0 ? "dark" : i === cue ? "current" : i < cue || cue >= stageCount ? "lit" : "dark";
-      });
-      const outcomes = el.querySelector(".case__outcomes");
-      if (outcomes) outcomes.dataset.state = cue < stageCount ? "dark" : cue === stageCount ? "current" : "lit";
-    },
-    [ref, stageCount]
-  );
-}
-
-function CaseStudy({ study, index }) {
-  const layout = layouts[index % layouts.length];
-  const titleId = `case-${study.id}`;
-  const ref = useRef(null);
-  const onCue = useStoryCues(ref, study.stages.length);
-  const options = useMemo(() => ({ onCue }), [onCue]);
-  return (
-    <article ref={ref} className="case" data-layout={layout} aria-labelledby={titleId}>
-      <header className="case__head" data-lamp>
-        <h3 id={titleId} className="h3 case__title">
-          {study.name}
-        </h3>
-        <p className="case__tagline">{study.title}</p>
-      </header>
-
-      <figure className="case__figure" data-lamp style={{ "--cue": 1 }}>
-        <div className="case__diagram">
-          <CanvasStage scene={scenes[study.diagram]} label={study.diagramLabel} className="case__canvas" stillTime={4.2} options={options} />
-        </div>
-        <figcaption className="case__caption">{study.diagramLabel}</figcaption>
-      </figure>
-
-      <div className="case__body">
-        <p className="body case__summary" data-lamp>
-          {study.summary}
-        </p>
-
-        <dl className="case__credits" data-lamp style={{ "--cue": 1 }}>
-          {[
-            ["Domain", study.domain],
-            ["Role", study.role],
-            ["Tenure", study.tenure],
-            ["Team", study.team]
-          ].map(([k, v]) => (
-            <div key={k}>
-              <dt className="label">{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <ol className="case__stages">
-          {study.stages.map((s, i) => (
-            <li key={s.name} className="case__stage" data-lamp style={{ "--cue": i }}>
-              <h4 className="case__stage-name">{s.name}</h4>
-              <p>{s.detail}</p>
-            </li>
-          ))}
-        </ol>
-
-        {study.outcomes.length > 0 && (
-          <dl className="case__outcomes" data-lamp>
-            {study.outcomes.map((o) => (
-              <div key={o.label}>
-                <dt className="case__num title-wide num">{o.figure}</dt>
-                <dd>{o.label}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-
-        <details className="fineprint">
-          <summary>Fine print</summary>
-          <p>
-            <span className="label">Built with</span> {study.stack.join(", ")}
-          </p>
-          <p>Client work under NDA. Descriptions come from the résumé and case-study material; no client screens are shown.</p>
-        </details>
-      </div>
-    </article>
-  );
-}
+import { DetailLayer } from "../components/DetailLayer.jsx";
+import { SystemStory } from "../components/SystemStory.jsx";
 
 function Capabilities() {
   const [selected, setSelected] = useState(null);
@@ -208,18 +109,17 @@ export function Systems() {
             {systemsIntro.heading}
           </h2>
           <p className="lede" data-lamp style={{ "--cue": 1 }}>
-            {systemsIntro.standfirst}
+            Data, payments, dependencies. Three systems, three kinds of responsibility.
           </p>
         </div>
 
         <div className="systems__cases">
-          {caseStudies.map((s, i) => (
-            <CaseStudy key={s.id} study={s} index={i} />
+          {caseStudies.map((s) => (
+            <SystemStory key={s.id} study={s} />
           ))}
         </div>
 
-        <Capabilities />
-        <WorkIndex />
+        <div className="systems__archive"><DetailLayer title="Capabilities and selected work" label="Full toolkit and project archive"><Capabilities /><WorkIndex /></DetailLayer></div>
       </div>
     </section>
   );

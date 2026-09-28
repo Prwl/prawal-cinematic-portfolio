@@ -1,239 +1,27 @@
-.evolution {
-  padding-bottom: 0;
-  overflow-x: clip;
+.evolution { padding-block: 3rem 0; }
+.journey { --run: 300svh; }
+.journey .story-sticky { overflow: clip; }
+.journey__architecture { position: absolute; inset: 17% 0 8%; perspective: 1100px; overflow: hidden; pointer-events: none; }
+.journey__vanishing { position: absolute; inset: 7% 0 0 30%; background: linear-gradient(132deg, transparent 20%, rgb(250 248 239 / .65) 20.2%, transparent 67%); clip-path: polygon(45% 0, 68% 0, 100% 100%, 0 100%); }
+.journey__step { position: absolute; top: 37%; left: 43%; width: 43%; height: 36%; transform: translate(calc(var(--distance) * 15%), calc(var(--distance) * -35%)) translateZ(calc(var(--depth) * -155px)); background: linear-gradient(110deg, #e9e4da, #c4bdae); box-shadow: 18px 28px 34px -18px rgb(27 30 34 / .25); opacity: calc(1 - var(--depth) * .16); transition: transform 750ms var(--ease-out), opacity 650ms ease; z-index: calc(10 - var(--depth)); }
+.journey__step::before { content: ""; position: absolute; bottom: 100%; width: 100%; height: 32%; background: linear-gradient(110deg, #f0ece4, #dbd4c7); transform-origin: bottom; transform: skewX(-42deg); }
+.journey__step::after { content: ""; position: absolute; inset: 0 auto 0 100%; width: 19%; background: #b8b2a6; transform-origin: left; transform: skewY(-48deg); }
+.journey__step span { display: block; padding: 1rem 1.4rem; font-size: clamp(2.5rem, 7vw, 6rem); font-stretch: var(--wide); letter-spacing: -.03em; transition: opacity 450ms ease; }
+.journey__step[data-current="true"] { border-top: 2px solid var(--ember); }
+/* Only the step on stage carries its year: the others read as architecture,
+   not as fragments of numbers peeking out behind it. */
+.journey__step:not([data-current="true"]) span { opacity: 0; }
+.journey__caption { position: relative; margin-block: auto; width: 40%; padding-block: 2rem; }
+.journey__caption h3 { font-size: clamp(2rem, 3.5vw, 3.6rem); margin: .65rem 0 1rem; }
+.journey__scope { margin-top: 1.5rem; color: var(--ember-ink); font-size: 1.2rem; }
+@media(max-width: 699px) {
+ .journey__architecture { inset: 15% -5% 31%; }
+ .journey__step { left: 20%; top: 44%; width: 57%; height: 34%; }
+ .journey__step span { font-size: 3.4rem; padding: .5rem 1rem; }
+ .journey__caption { width: 100%; margin-top: auto; margin-bottom: 0; padding: 0; }
+ .journey__caption h3 { font-size: 1.85rem; max-width: 22ch; margin: .3rem 0; }
+ .journey__caption > p { font-size: .88rem; }
+ .journey__scope { margin-top: .3rem; }
 }
 
-.evolution__head {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.evolution__head .h2 {
-  max-width: 15ch;
-}
-
-/* ---------- List mode: phones, portrait tablets, reduced motion ---------- */
-
-.evolution[data-mode="list"] {
-  padding-bottom: var(--section);
-}
-
-.evolution[data-mode="list"] .evolution__roles {
-  display: grid;
-  gap: clamp(2.75rem, 7vw, 4rem);
-  margin-top: clamp(3.5rem, 8vw, 5.5rem);
-}
-
-.evolution[data-mode="list"] .role {
-  display: grid;
-  grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
-  column-gap: clamp(1.5rem, 4vw, 3.5rem);
-  row-gap: 0.35rem;
-  align-items: baseline;
-}
-
-.evolution[data-mode="list"] .role > :not(.role__period):not(.role__tread) {
-  grid-column: 2;
-}
-
-.evolution[data-mode="list"] .role__period {
-  grid-row: 2 / span 4;
-  grid-column: 1;
-  padding-top: 0.35rem;
-}
-
-/* Each step's tread is longer than the last: the staircase in profile. */
-.evolution[data-mode="list"] .role__tread {
-  grid-column: 1 / -1;
-  display: block;
-  height: 1px;
-  width: calc(22% + var(--step) * 15.6%);
-  margin-bottom: 1.25rem;
-  background: var(--line-strong);
-}
-
-.evolution[data-mode="list"] .role:last-child .role__tread {
-  height: 2px;
-  background: var(--tungsten);
-}
-
-@media (max-width: 699px) {
-  .evolution[data-mode="list"] .role {
-    grid-template-columns: 1fr;
-  }
-  .evolution[data-mode="list"] .role > * {
-    grid-column: 1 !important;
-  }
-  .evolution[data-mode="list"] .role__period {
-    grid-row: auto;
-  }
-}
-
-.role__title {
-  font-size: var(--text-xl);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-.role__org {
-  color: var(--bone-2);
-  font-size: 1rem;
-}
-
-.role__scope {
-  color: var(--bone-3);
-}
-
-.role__points {
-  display: grid;
-  gap: 0.5rem;
-  margin-top: 0.85rem;
-  max-width: 60ch;
-  color: var(--bone-2);
-  font-size: 1rem;
-}
-
-.role__points li {
-  position: relative;
-  padding-left: 1.1rem;
-}
-
-.role__points li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 0.45rem;
-  height: 1px;
-  background: var(--bone-3);
-}
-
-/* ---------- Pinned mode: a staircase of risers, climbed by scrolling ---------- */
-
-.evolution[data-mode="pinned"] .evolution__stage {
-  height: 100vh;
-  margin-top: clamp(2rem, 5vh, 3.5rem);
-}
-
-.evolution[data-mode="pinned"] .evolution__frame {
-  position: relative;
-  height: 100%;
-}
-
-.evolution[data-mode="pinned"] .evolution__roles {
-  position: absolute;
-  top: 12vh;
-  left: var(--gutter);
-  width: min(44%, 36rem);
-  display: grid;
-}
-
-.evolution[data-mode="pinned"] .role {
-  grid-area: 1 / 1;
-  opacity: 0;
-  filter: blur(4px);
-  pointer-events: none;
-  transition:
-    opacity 260ms var(--ease-out),
-    filter 260ms var(--ease-out);
-}
-
-.evolution[data-mode="pinned"] .role[data-state="current"] {
-  opacity: 1;
-  filter: blur(0);
-  pointer-events: auto;
-  transition:
-    opacity 520ms var(--ease-out) 120ms,
-    filter 520ms var(--ease-out) 120ms;
-}
-
-.evolution[data-mode="pinned"] .role__tread {
-  display: none;
-}
-
-.evolution[data-mode="pinned"] .role__title {
-  font-size: var(--text-2xl);
-}
-
-.evolution[data-mode="pinned"] .role__period {
-  margin-top: 0.5rem;
-  color: var(--tungsten);
-}
-
-.risers {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: 0;
-  height: 60vh;
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.riser {
-  position: relative;
-  flex: 1 1 0;
-  height: calc(24% + var(--step) * 15.2%);
-  padding: 1.1rem 1rem 0;
-  background: linear-gradient(180deg, var(--riser), var(--stage) 85%);
-  box-shadow: inset 0 1px 0 var(--riser-edge);
-  transition: box-shadow 500ms ease;
-}
-
-.riser__year {
-  display: block;
-  font-size: clamp(1.5rem, 1rem + 1.2vw, 2.25rem);
-  color: #6e6b64;
-  transition: color 500ms ease;
-}
-
-.riser__scope {
-  display: block;
-  margin-top: 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1.35;
-  text-transform: uppercase;
-  color: var(--bone-3);
-  transition: color 500ms ease;
-}
-
-.riser[data-state="past"] {
-  box-shadow: inset 0 1px 0 var(--line-strong);
-}
-.riser[data-state="past"] .riser__year {
-  color: var(--bone-3);
-}
-.riser[data-state="past"] .riser__scope {
-  color: var(--bone-2);
-}
-
-.riser[data-state="current"] {
-  box-shadow: inset 0 2px 0 var(--tungsten);
-}
-.riser[data-state="current"] .riser__year {
-  color: var(--bone);
-}
-.riser[data-state="current"] .riser__scope {
-  color: var(--tungsten);
-}
-
-/* A follow spot falling on the current tread. */
-.riser__spot {
-  position: absolute;
-  left: -30%;
-  right: -30%;
-  bottom: 100%;
-  height: 80vh;
-  background: linear-gradient(180deg, transparent 10%, rgb(243 184 121 / 0.05));
-  clip-path: polygon(46% 0, 54% 0, 92% 100%, 8% 100%);
-  opacity: 0;
-  transition: opacity 700ms ease;
-  pointer-events: none;
-}
-
-.riser[data-state="current"] .riser__spot {
-  opacity: 1;
-}
+.journey__period { margin-top: .6rem; }

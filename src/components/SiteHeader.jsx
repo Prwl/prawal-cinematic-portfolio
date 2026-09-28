@@ -60,7 +60,7 @@ export function SiteHeader({ active }) {
         <span>{open ? "Close" : "Menu"}</span>
       </button>
 
-      <div id="cue-menu" ref={menuRef} className="cue-menu" data-open={open ? "" : undefined} hidden={!open}>
+      <div id="cue-menu" ref={menuRef} className="cue-menu" data-env="light" data-open={open ? "" : undefined} hidden={!open}>
         <ol className="cue-menu__list">
           {chapters.map((c) => (
             <li key={c.id}>

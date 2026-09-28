@@ -1,12 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#0b0b0c"/>
-  <defs>
-    <radialGradient id="pool" cx="50%" cy="46%" r="42%">
-      <stop offset="0" stop-color="#f3b879"/>
-      <stop offset="0.55" stop-color="#f3b879" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#f3b879" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <ellipse cx="32" cy="30" rx="22" ry="22" fill="url(#pool)"/>
-  <rect x="8" y="46" width="48" height="2" fill="#ece9e2"/>
+  <rect width="64" height="64" fill="#d4d1ca"/>
+  <rect x="14" y="10" width="8" height="36" fill="#e4e1da"/>
+  <rect x="22" y="10" width="3" height="36" fill="#bfbbb3"/>
+  <rect x="8" y="46" width="48" height="2" fill="#1b1e22"/>
+  <rect x="34" y="45" width="14" height="4" fill="#b8602e"/>
 </svg>

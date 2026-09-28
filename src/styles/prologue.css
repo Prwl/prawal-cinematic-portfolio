@@ -1,4 +1,7 @@
-/* ---------- The opening: a black-box stage ---------- */
+/* ---------- The opening: a stone hall in daylight ----------
+   One sun, high at upper left. Every plane is lit on its left face, every
+   shadow falls right and down. Prawal's plate carries its own wall, graded to
+   this stone, so its edges dissolve into the hall rather than framing him. */
 
 .prologue {
   position: relative;
@@ -13,20 +16,233 @@
 .prologue__camera {
   position: absolute;
   inset: 0;
-  transform-origin: 66% 30%;
+  transform-origin: 64% 30%;
   will-change: transform;
 }
 
-.prologue__dim {
+/* Leaving: the lower edge feathers out as the section rises, so the frame's
+   edge never cuts across him (Prologue.jsx drives --exit). Only masked while
+   leaving; at rest the hall composites without a mask. */
+.prologue[data-leaving] .prologue__camera {
+  -webkit-mask-image: linear-gradient(0deg, transparent, #000 var(--exit, 0%));
+  mask-image: linear-gradient(0deg, transparent, #000 var(--exit, 0%));
+}
+
+/* Programmatic focus lands here after Skip intro; the name is not a control. */
+.prologue__name:focus {
+  outline: none;
+}
+
+/* ---------- Architecture ---------- */
+
+.prologue__hall {
+  position: absolute;
+  inset: 0 0 13% 0;
+}
+
+/* The back wall steps back between the pilasters: a shallow recess in shade. */
+.prologue__recess {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 13%;
+  width: 29%;
+  background: linear-gradient(90deg, rgb(27 30 34 / 0.07), rgb(27 30 34 / 0.025) 22%, rgb(255 255 255 / 0.06) 86%, rgb(27 30 34 / 0.04));
+}
+
+/* Pilasters: lit face to the sun, a darker return on the right. */
+.prologue__pilaster {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, #e3e0d9 6%, #dcd9d2 62%, #c7c3bb 88%, #bdb9b1 97%, transparent);
+}
+.prologue__pilaster::after {
+  /* The shadow the pilaster throws on the recess beside it. */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 70%;
+  background: linear-gradient(90deg, rgb(27 30 34 / 0.09), transparent);
+}
+.prologue__pilaster--1 {
+  left: 6%;
+  width: 7%;
+}
+.prologue__pilaster--2 {
+  left: 42%;
+  width: 5.5%;
+}
+
+/* Light from the high window, raking across the recess. */
+.prologue__shaft {
+  position: absolute;
+  inset: -20% -10% 0 -10%;
+  background: linear-gradient(118deg, transparent 22%, rgb(255 255 255 / 0.3) 30%, rgb(255 255 255 / 0.08) 40%, transparent 46%);
+  mix-blend-mode: soft-light;
+}
+
+/* ---------- Floor ---------- */
+
+.prologue__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 87%;
+  bottom: 0;
+  background: linear-gradient(180deg, rgb(27 30 34 / 0.035), rgb(27 30 34 / 0.07));
+}
+
+/* The window's light lands on the floor as a sheared patch. */
+.prologue__sunpatch {
+  position: absolute;
+  top: 8%;
+  left: 17%;
+  width: 26%;
+  height: 70%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.3) 24%, rgb(255 255 255 / 0.22) 70%, transparent);
+  transform: skewX(-34deg);
+  filter: blur(10px);
+}
+
+/* The first line drawn in the film, and the one that carries it. */
+.prologue__horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(27 30 34 / 0.12) 16%, rgb(27 30 34 / 0.42) 64%, rgb(27 30 34 / 0.12) 92%, transparent);
+  transform-origin: 64% 50%;
+}
+
+/* In landscape he stands at the right, in front of the floor's far edge
+   rather than on it: the floor and its line end before him, so no line runs
+   behind his waist. */
+@media (orientation: landscape) {
+  .prologue__floor {
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 58%);
+    mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 58%);
+  }
+}
+
+/* ---------- Prawal ---------- */
+
+.prologue__figure {
+  position: absolute;
+  z-index: 1;
+  right: max(-7vw, calc((100vw - 1880px) / 2));
+  top: max(4.5rem, 10vh);
+  height: max(92vh, 600px);
+  aspect-ratio: 760 / 720;
+}
+
+/* The plate's wall dissolves into the hall on three sides; he is cut by the
+   frame only at the bottom, as a camera would cut him. */
+.living {
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 24%, #000 90%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 14%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 24%, #000 90%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 14%);
+  mask-composite: intersect;
+}
+
+.living__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.living__poster,
+.living__poster img,
+.living__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.living__poster img,
+.living__video {
+  object-fit: cover;
+  user-select: none;
+}
+
+/* The head clip sits on its own poster, over the box the head moves in, and
+   takes over only once the rest pose has decoded: the same picture, so the
+   swap is invisible. Its edges feather into the poster across a margin that
+   never changes. */
+.living__head {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 var(--feather), #000 calc(100% - var(--feather)), transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 var(--feather), #000 calc(100% - var(--feather)), transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 var(--feather), #000 calc(100% - var(--feather)), transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 var(--feather), #000 calc(100% - var(--feather)), transparent 100%);
+  mask-composite: intersect;
+}
+.living[data-live] .living__head {
+  opacity: 1;
+}
+/* With WebGL the stage draws the whole figure (head included) and the head
+   box only feeds it. */
+.living__gl {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  background: var(--stage);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.living[data-live][data-gl] .living__gl {
+  opacity: 1;
+}
+/* The stage draws the poster itself; the <img> would show through its
+   feathered edge twice. */
+.living__poster {
+  transition: opacity 240ms ease;
+}
+.living[data-live][data-gl] .living__poster {
+  opacity: 0;
+}
+.living[data-gl] .living__head {
+  opacity: 0;
+  transition: none;
+}
+/* The canvas shows the blend; the four copies it is drawn from stay hidden
+   (still decoded, so they can be drawn). */
+.living__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.living__video {
+  position: absolute;
+  inset: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-/* The horizon that stays on screen while the set recedes, and becomes the
+/* Overexposure at the start of the title sequence (see useTitleSequence). */
+.prologue__exposure {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #f4f3f0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The horizon that stays on screen while the hall gives way, and becomes the
    first chapter's horizon. Placed by the scroll-away in Prologue.jsx. */
 .prologue__handoff {
   position: absolute;
@@ -42,158 +258,7 @@
 .prologue__handoff-line {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.1) 20%, rgb(236 233 226 / 0.34) 64%, rgb(236 233 226 / 0.1) 90%, transparent);
-}
-
-/* Programmatic focus lands here after Skip intro; the name is not a control. */
-.prologue__name:focus {
-  outline: none;
-}
-
-/* Back wall: three soft beams of cool light between columns, a backlight
-   behind the figure. Architecture suggested by light, not drawn. */
-.prologue__wall {
-  position: absolute;
-  inset: 0;
-}
-
-.prologue__beam {
-  position: absolute;
-  top: -10%;
-  bottom: 18%;
-  width: 9vw;
-  background: linear-gradient(180deg, rgb(159 176 189 / 0.075), rgb(159 176 189 / 0.02) 70%, transparent);
-  filter: blur(24px);
-}
-.prologue__beam--1 {
-  left: 38%;
-}
-.prologue__beam--2 {
-  left: 54%;
-  width: 5vw;
-  opacity: 0.7;
-}
-.prologue__beam--3 {
-  left: 86%;
-  width: 7vw;
-  opacity: 0.8;
-}
-
-.prologue__backlight {
-  position: absolute;
-  left: 66%;
-  top: 34%;
-  width: 70vmax;
-  height: 70vmax;
-  translate: -50% -50%;
-  background: radial-gradient(closest-side, rgb(159 176 189 / 0.16), rgb(159 176 189 / 0.05) 55%, transparent);
-}
-
-.prologue__topology {
-  position: absolute;
-  inset: -4% 0 18% 0;
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 70%, transparent);
-  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 70%, transparent);
-}
-
-.prologue__canvas {
-  width: 100%;
-  height: 100%;
-}
-
-/* Floor: a horizon of light and a faint wash on the boards. */
-.prologue__floor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 80%;
-  bottom: 0;
-  background: radial-gradient(60% 90% at 64% 0%, rgb(159 176 189 / 0.06), transparent 70%);
-}
-
-.prologue__horizon {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(236 233 226 / 0.1) 20%, rgb(236 233 226 / 0.34) 64%, rgb(236 233 226 / 0.1) 90%, transparent);
-  transform-origin: 64% 50%;
-}
-
-/* Warm key light from frame left: the typography side. */
-.prologue__key {
-  position: absolute;
-  left: 50%;
-  top: 8%;
-  width: 46vw;
-  height: 70vh;
-  background: radial-gradient(closest-side, var(--tungsten-glow), transparent);
-}
-
-.prologue__figure {
-  position: absolute;
-  z-index: 1;
-  left: 72%;
-  top: max(4.5rem, 9vh);
-  height: 112vh;
-  aspect-ratio: 2060 / 3862;
-  translate: -50% 0;
-}
-
-.prologue__figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
-  /* A cool rim from the backlight on his shadow side. */
-  filter: drop-shadow(3px -2px 2px rgb(159 176 189 / 0.16));
-}
-
-.prologue__sweep {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 40%;
-  width: 40%;
-  background: linear-gradient(90deg, transparent, rgb(243 184 121 / 0.09) 50%, transparent);
-  mix-blend-mode: screen;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.prologue__haze {
-  position: absolute;
-  z-index: 1;
-  inset: -20%;
-  background:
-    radial-gradient(30% 22% at 30% 70%, rgb(236 233 226 / 0.035), transparent),
-    radial-gradient(26% 20% at 78% 62%, rgb(159 176 189 / 0.05), transparent);
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .prologue__haze {
-    animation: haze-drift 38s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes haze-drift {
-  to {
-    transform: translate3d(4%, -3%, 0);
-  }
-}
-
-.prologue__vignette {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgb(11 11 12 / 0.85), rgb(11 11 12 / 0.35) 34%, transparent 55%),
-    linear-gradient(0deg, var(--stage), rgb(11 11 12 / 0.6) 16%, transparent 38%),
-    radial-gradient(120% 90% at 64% 40%, transparent 55%, rgb(11 11 12 / 0.7));
-  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(27 30 34 / 0.12) 16%, rgb(27 30 34 / 0.42) 64%, rgb(27 30 34 / 0.12) 92%, transparent);
 }
 
 /* ---------- Copy ---------- */
@@ -218,7 +283,7 @@
   display: flex;
   flex-direction: column;
   font-size: clamp(2.625rem, 0.4rem + 6vw, 6rem);
-  color: var(--bone);
+  color: var(--ink);
 }
 
 .prologue__word {
@@ -239,17 +304,17 @@
   font-stretch: var(--semi-wide);
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: var(--bone-2);
+  color: var(--ink-2);
 }
 
 .prologue__cue.is-current {
-  color: var(--tungsten);
+  color: var(--ember-ink);
 }
 
 .prologue__standfirst {
   margin-top: 1.25rem;
   max-width: 40ch;
-  color: var(--bone-2);
+  color: var(--ink-2);
   font-size: var(--text-base);
 }
 
@@ -263,28 +328,33 @@
 .prologue__skip {
   position: absolute;
   z-index: 4;
+  /* Where the header will be: the only corner never occupied by the figure. */
   right: var(--gutter);
-  bottom: clamp(1.5rem, 4vh, 2.5rem);
+  top: calc(env(safe-area-inset-top, 0px) + 0.875rem);
   padding: 0.625rem 0.25rem;
   font-size: var(--text-xs);
   font-stretch: var(--semi-wide);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--bone-3);
+  color: var(--ink-2);
   transition: color var(--hover) ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .prologue__skip:hover {
-    color: var(--bone);
+    color: var(--ink);
   }
 }
 
 /* ---------- Pre-paint state for the title sequence ---------- */
 
+.intro .prologue__exposure {
+  opacity: 1;
+}
+
 .intro .prologue__horizon,
-.intro .prologue__sweep,
-.intro .prologue__wall,
+.intro .prologue__hall > *,
+.intro .prologue__floor > *,
 .intro .prologue__figure,
 .intro .prologue__letter,
 .intro .prologue__cue,
@@ -298,55 +368,57 @@
   pointer-events: none;
 }
 
-/* ---------- Portrait orientation (phones and upright tablets): the figure
-   owns the top of the frame and the title sits in the pool of darkness where
-   his silhouette falls away. ---------- */
+/* ---------- Portrait orientation (phones and upright tablets) ----------
+   He owns the top of the frame; the title sits on the floor of the hall,
+   below where the plate has dissolved into the stone. */
 
 @media (orientation: portrait) {
   .prologue {
     min-height: 100svh;
     min-height: max(100svh, 620px);
   }
-  .prologue__figure {
-    left: 58%;
-    top: max(3.5rem, 5svh);
-    height: min(74svh, 150vw);
-  }
   .prologue__camera {
-    transform-origin: 56% 22%;
+    transform-origin: 54% 22%;
   }
-  .prologue__topology {
-    inset: 0 0 38% 0;
+  .prologue__figure {
+    right: auto;
+    left: 50%;
+    top: max(3.75rem, 5svh);
+    height: auto;
+    width: min(118vw, 62svh);
+    translate: -54% 0;
+  }
+  .living {
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, #000 18%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 12%, #000 54%, transparent 82%);
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 18%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 12%, #000 54%, transparent 82%);
+  }
+  .prologue__hall {
+    inset: 0 0 42% 0;
+  }
+  .prologue__pilaster--1 {
+    left: 0;
+    width: 11%;
+  }
+  .prologue__pilaster--2 {
+    left: 86%;
+    width: 9%;
+  }
+  .prologue__recess {
+    left: 11%;
+    width: 75%;
   }
   .prologue__floor {
     top: 60%;
+    background: linear-gradient(180deg, rgb(27 30 34 / 0.03), rgb(27 30 34 / 0.05));
   }
-  .prologue__backlight {
-    left: 58%;
-    top: 24%;
-  }
-  .prologue__key {
-    left: 12%;
-    top: 2%;
-    width: 90vw;
-    height: 50vh;
-  }
-  .prologue__beam--1 {
-    left: 10%;
-    width: 16vw;
-  }
-  .prologue__beam--2 {
-    left: 30%;
-    width: 9vw;
-  }
-  .prologue__beam--3 {
-    left: 86%;
-    width: 12vw;
-  }
-  .prologue__vignette {
-    background:
-      linear-gradient(0deg, var(--stage) 12%, rgb(11 11 12 / 0.92) 36%, rgb(11 11 12 / 0.4) 50%, transparent 62%),
-      radial-gradient(140% 80% at 58% 26%, transparent 50%, rgb(11 11 12 / 0.7));
+  .prologue__sunpatch {
+    left: 4%;
+    width: 44%;
+    height: 30%;
   }
   .prologue__copy {
     padding-bottom: clamp(2rem, 6svh, 4.5rem);
@@ -376,9 +448,5 @@
   .prologue__actions .action {
     flex: 1 1 auto;
     justify-content: center;
-  }
-  .prologue__skip {
-    top: calc(env(safe-area-inset-top, 0px) + 1rem);
-    bottom: auto;
   }
 }

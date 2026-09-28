@@ -1,9 +1,13 @@
+// Daylight inks. Names keep their roles: "bone" is the primary ink (now
+// graphite on a light wall), "tungsten" the key that marks the path lit now
+// (now ember). Dormant architecture is the same graphite at low alpha: latent
+// lines that develop as the story reaches them.
 export const INK = {
-  bone: [236, 233, 226],
-  bone3: [138, 134, 126],
-  line: [236, 233, 226],
-  tungsten: [243, 184, 121],
-  backlight: [159, 176, 189]
+  bone: [27, 30, 34],
+  bone3: [81, 84, 88],
+  line: [27, 30, 34],
+  tungsten: [184, 96, 46],
+  backlight: [70, 82, 92]
 };
 
 export const rgba = ([r, g, b], a) => `rgba(${r},${g},${b},${a})`;

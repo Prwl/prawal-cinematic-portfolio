@@ -14,10 +14,13 @@ await mkdir(media("awards"), { recursive: true });
 await mkdir(pub("documents"), { recursive: true });
 
 /**
- * Stage-grades the cutout: erodes the fringe left by the original white wall,
- * softens the matte, lets the key light fall off across the body and fades the
- * figure out below the waist so he stands in a pool of light.
+ * Grades the cutout for the dusk room of the close: erodes the matte slightly,
+ * lets the evening light fall off gently across the body, blends the fringe
+ * (which still carries the original white wall) toward the room's own mineral
+ * ground rather than toward black, and fades the figure out below the waist
+ * so he stands in the room instead of in a frame.
  */
+const DUSK = [196, 203, 197];
 async function gradePortrait({ crop, fadeStart, fadeEnd, keyFalloff, out, widths }) {
   const cutout = sharp(src("portrait-cutout.png")).extract(crop);
   const alpha = await cutout.clone().extractChannel("alpha").erode(4).blur(1.2).raw().toBuffer();
@@ -37,12 +40,13 @@ async function gradePortrait({ crop, fadeStart, fadeEnd, keyFalloff, out, widths
       const g = data[i * 3 + 1];
       const b = data[i * 3 + 2];
       // Defringe: semi-transparent edge pixels still carry the white wall they
-      // were cut from, so pull them toward the stage as coverage drops.
-      const edge = alpha[i] < 250 ? Math.pow(alpha[i] / 255, 1.6) : 1;
-      // Gentle grade: slightly lower exposure, a touch of warmth from a tungsten key.
-      rgba[i * 4] = clamp(r * 0.88 * key * edge);
-      rgba[i * 4 + 1] = clamp(g * 0.85 * key * edge);
-      rgba[i * 4 + 2] = clamp(b * 0.8 * key * edge);
+      // were cut from, so pull them toward the dusk ground as coverage drops.
+      const edge = alpha[i] < 250 ? 1 - Math.pow(alpha[i] / 255, 1.6) : 0;
+      // Gentle evening grade: a little warmth, exposure held.
+      const R = r * 0.97 * key, G = g * 0.95 * key, B = b * 0.9 * key;
+      rgba[i * 4] = clamp(R + (DUSK[0] - R) * edge);
+      rgba[i * 4 + 1] = clamp(G + (DUSK[1] - G) * edge);
+      rgba[i * 4 + 2] = clamp(B + (DUSK[2] - B) * edge);
       rgba[i * 4 + 3] = clamp(alpha[i] * fade);
     }
   }
@@ -65,22 +69,13 @@ function clamp(v) {
   return Math.max(0, Math.min(255, Math.round(v)));
 }
 
-// Full-height figure for the opening. Crop keeps generous air above the head.
-await gradePortrait({
-  crop: { left: 380, top: 170, width: 2060, height: 3862 },
-  fadeStart: 0.56,
-  fadeEnd: 0.97,
-  keyFalloff: 0.42,
-  out: "prawal-stage",
-  widths: [560, 900, 1300]
-});
-
-// Closer framing for the epilogue: the camera has moved in by the end.
+// The close: the real photograph, the camera closer than at the opening.
+// (The opening is the living portrait; see scripts/prepare-video.mjs.)
 await gradePortrait({
   crop: { left: 420, top: 200, width: 1980, height: 2240 },
-  fadeStart: 0.62,
-  fadeEnd: 0.99,
-  keyFalloff: 0.4,
+  fadeStart: 0.6,
+  fadeEnd: 0.97,
+  keyFalloff: 0.16,
   out: "prawal-close",
   widths: [640, 1100]
 });

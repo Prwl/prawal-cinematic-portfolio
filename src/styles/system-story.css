@@ -1,0 +1,57 @@
+.system-story { --run: 240svh; }
+.system-story__tagline { margin-top: .6rem; color: var(--ink-2); font-size: 1.05rem; }
+.system-story__visual { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.system-story__visual::before { content: ""; position: absolute; inset: 10% -2% 5%; z-index: -1; background: linear-gradient(150deg, rgb(239 244 243 / .6), transparent 60%); clip-path: polygon(8% 0, 100% 0, 90% 100%, 0 100%); }
+/* Shrinks with the room left in the frame, so its caption never rides up into the narrative. */
+.system-drawing { flex: 0 1 auto; min-height: 0; width: 100%; max-height: 51svh; overflow: visible; }
+.system-drawing text { font: 15px var(--font); fill: var(--ink-2); }
+.system-drawing path { fill: none; stroke: #89979e; stroke-width: 1; }
+.system-source { opacity: .3; transition: opacity 500ms ease; }
+.system-source rect, .system-packet { fill: #9caab1; }
+.system-source[data-lit="true"] { opacity: 1; }
+.system-source[data-lit="true"] rect, .system-packet[data-lit="true"] { fill: var(--ember-ink); }
+.system-drawing .system-route { stroke: #aab6ba; stroke-width: 3; stroke-dasharray: 1; }
+.system-drawing .system-route[data-lit="true"] { stroke: var(--ember-ink); stroke-dashoffset: 0; animation: route-arrive 700ms var(--ease-out) both; }
+.system-gate { opacity: 1; transition: opacity 400ms ease; }
+.system-gate[data-lit="true"] { opacity: 1; }
+.system-drawing .system-gate__shadow { fill: rgb(27 30 34 / .09); stroke: none; }
+.system-drawing .system-gate path[fill] { stroke: none; }
+.system-drawing .system-gate__edge { stroke: #7b8a91; stroke-width: 1.5; }
+.system-gate[data-lit="true"] .system-gate__edge { stroke: var(--ember-ink); stroke-width: 2; }
+.system-gate__core { fill: #89979e; }
+.system-gate[data-lit="true"] .system-gate__core { fill: var(--ink); }
+.system-destination, .system-held { opacity: 1; transition: opacity 400ms ease; }
+.system-destination[data-lit="true"], .system-held[data-lit="true"] { opacity: 1; }
+.system-destination rect { fill: #687d87; }
+.system-held rect { fill: var(--ember-ink); }
+.system-held[data-lit="true"] path { stroke: var(--ember-ink); stroke-width: 2; }
+.system-story__visual figcaption { font-size: .75rem; color: var(--ink-3); margin-top: .5rem; }
+.system-story__narrative { font-size: clamp(1.25rem, 2.6vw, 2rem); max-width: 36ch; min-height: 3.2em; line-height: 1.2; margin-block: 1rem; }
+@keyframes route-arrive { from { stroke-dashoffset: 1; } }
+@media(max-width: 699px) {
+ .system-story .story-sticky { min-height: 760px; }
+ .system-story__visual { margin: .8rem 0; }
+ .system-drawing { max-height: 44svh; }
+ .system-drawing text { font-size: 11px; }
+ .system-story__tagline { font-size: .9rem; }
+ .system-story__narrative { font-size: 1.3rem; margin-block: .5rem; min-height: 3.6em; }
+ .system-story .scene-footer { margin-top: 0; }
+}
+
+.taxonomy-drawing .taxonomy-edge { stroke: #9aa9ae; stroke-width: 2; }
+.taxonomy-edge[data-lit="true"] { stroke: var(--ember-ink); animation: route-arrive 650ms var(--ease-out) both; stroke-dasharray: 1; }
+.taxonomy-cell rect { fill: #c0cdd1; stroke: #94a5ad; }
+.taxonomy-cell[data-lit="true"] rect { fill: #e4ebeb; stroke: var(--ink-2); }
+.taxonomy-cell[data-edited="true"][data-lit="true"] rect { fill: #d0b29a; stroke: var(--ember-ink); }
+.taxonomy-cell path { stroke: var(--ember-ink); stroke-width: 2; }
+.taxonomy-output { opacity: 1; transition: opacity 400ms ease; }
+.taxonomy-output[data-lit="true"] { opacity: 1; }
+.taxonomy-output rect { fill: var(--ink); }
+.taxonomy-output text { fill: #eae7e2; }
+@media(max-width:699px) { .system-drawing text { font-size: 12px; } .system-destination text { font-size: 10px; } }
+
+.system-gate:not([data-lit="true"]) path, .system-gate:not([data-lit="true"]) rect { opacity: .35; }
+.system-destination:not([data-lit="true"]) path, .system-destination:not([data-lit="true"]) rect { opacity: .35; }
+.taxonomy-output:not([data-lit="true"]) text { fill: var(--ink); }
+
+.taxonomy-output:not([data-lit="true"]) rect { fill: #b5c2c8; }

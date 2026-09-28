@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "assets": "node scripts/prepare-assets.mjs",
+    "video": "node scripts/prepare-video.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

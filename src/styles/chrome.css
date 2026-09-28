@@ -11,8 +11,14 @@
   gap: 1.5rem;
   height: 4.25rem;
   padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
-  background: linear-gradient(180deg, rgb(11 11 12 / 0.92), rgb(11 11 12 / 0.55) 60%, transparent);
+  /* The header stands in the room's own light, so it follows each cue. */
+  background: linear-gradient(180deg, color-mix(in oklab, var(--env-ground) 94%, transparent), color-mix(in oklab, var(--env-ground) 62%, transparent) 60%, transparent);
   transition: opacity 900ms var(--ease-out);
+}
+
+/* Over the darker passage the header stands in graphite. */
+.site-header[data-env="dark"] {
+  background: linear-gradient(180deg, rgb(31 34 36 / 0.94), rgb(31 34 36 / 0.62) 60%, transparent);
 }
 
 .site-header__mark {
@@ -25,7 +31,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--bone);
+  color: var(--ink);
   white-space: nowrap;
 }
 
@@ -43,18 +49,18 @@
   padding-block: 0.5rem;
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--bone-2);
+  color: var(--ink-2);
   text-decoration: none;
   transition: color var(--hover) ease;
 }
 
 .site-header__link[aria-current="true"] {
-  color: var(--tungsten);
+  color: var(--ember-ink);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .site-header__link:hover {
-    color: var(--bone);
+    color: var(--ink);
   }
 }
 
@@ -80,7 +86,7 @@
   flex-direction: column;
   gap: 2rem;
   padding: 1.5rem var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px));
-  background: var(--stage);
+  background: var(--stone);
   overflow-y: auto;
 }
 
@@ -113,18 +119,18 @@
   font-size: var(--text-2xl);
   font-stretch: var(--semi-wide);
   font-weight: 500;
-  color: var(--bone);
+  color: var(--ink);
   text-decoration: none;
 }
 
 .cue-menu__link[aria-current="true"] {
-  color: var(--tungsten);
+  color: var(--ember-ink);
 }
 
 .cue-menu__numeral {
   width: 2.5rem;
   font-size: var(--text-sm);
-  color: var(--bone-3);
+  color: var(--ink-3);
 }
 
 .cue-menu__resume {
@@ -192,7 +198,7 @@ html.menu-open body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--bone-3);
+  color: var(--ink-3);
   transition: color 400ms ease;
 }
 
@@ -203,7 +209,7 @@ html.menu-open body {
   top: 0.3rem;
   bottom: 0.3rem;
   width: 1px;
-  background: var(--tungsten);
+  background: var(--ember);
   opacity: 0;
   transition: opacity 400ms ease;
 }
@@ -215,14 +221,14 @@ html.menu-open body {
 }
 
 .cue-rail__cue[data-state="past"] {
-  color: var(--bone-2);
+  color: var(--ink-2);
 }
 
 .cue-rail__cue[data-state="current"] {
-  color: var(--bone);
+  color: var(--ink);
 }
 .cue-rail__cue[data-state="current"] .cue-rail__numeral {
-  color: var(--tungsten);
+  color: var(--ember-ink);
 }
 .cue-rail__cue[data-state="current"]::before {
   opacity: 1;
@@ -230,7 +236,7 @@ html.menu-open body {
 
 @media (hover: hover) and (pointer: fine) {
   .cue-rail__cue:hover {
-    color: var(--bone);
+    color: var(--ink);
   }
 }
 
@@ -249,7 +255,7 @@ html.menu-open body {
 
 .cue-rail:not([data-cue], [data-near], :focus-within, :hover) {
   & ol {
-    border-left-color: rgb(236 233 226 / 0.05);
+    border-left-color: color-mix(in srgb, var(--ink) 6%, transparent);
   }
   & .cue-rail__cue:not([data-state="current"]) .cue-rail__title {
     opacity: 0;
@@ -258,7 +264,7 @@ html.menu-open body {
     opacity: 0.55;
   }
   & .cue-rail__cue[data-state="current"] .cue-rail__title {
-    color: var(--bone-2);
+    color: var(--ink-2);
   }
 }
 

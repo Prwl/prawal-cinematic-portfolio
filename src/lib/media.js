@@ -1,7 +1,9 @@
+import livingGrid from "../assets/media/living/prawal-living.json";
+
 // Resolves image keys to hashed build URLs. Files are produced by
 // scripts/prepare-assets.mjs into src/assets/media.
 
-const files = import.meta.glob("../assets/media/**/*.{avif,webp}", {
+const files = import.meta.glob("../assets/media/**/*.{avif,webp,mp4,png}", {
   eager: true,
   query: "?url",
   import: "default"
@@ -18,14 +20,6 @@ function srcset(base, widths, ext) {
 }
 
 export const portraits = {
-  stage: {
-    widths: [560, 900, 1300],
-    avif: srcset("prawal-stage", [560, 900, 1300], "avif"),
-    webp: srcset("prawal-stage", [560, 900, 1300], "webp"),
-    fallback: url("prawal-stage-900.webp"),
-    width: 2060,
-    height: 3862
-  },
   close: {
     widths: [640, 1100],
     avif: srcset("prawal-close", [640, 1100], "avif"),
@@ -34,6 +28,20 @@ export const portraits = {
     width: 1980,
     height: 2240
   }
+};
+
+// The living portrait: a grid of head poses as a clip of the head box, the
+// grid's layout, the rest pose as the poster, and the body map the page moves
+// him by (scripts/prepare-video.mjs).
+export const living = {
+  video: url("living/prawal-living.mp4"),
+  avif: url("living/prawal-living-poster.avif"),
+  webp: url("living/prawal-living-poster.webp"),
+  body: url("living/prawal-living-body.png"),
+  alpha: url("living/prawal-living-alpha.png"),
+  width: 1520,
+  height: 1440,
+  grid: livingGrid
 };
 
 export function awardImage(key) {

@@ -152,7 +152,7 @@ if (mode === "evidence") {
       if (y === 0) await page.addStyleTag({ content: ".site-header, .cue-rail { visibility: hidden !important; }" });
     }
     const height = Math.min(total, tiles.at(-1).top + vp.height);
-    await sharp({ create: { width: vp.width, height, channels: 3, background: "#0b0b0c" } })
+    await sharp({ create: { width: vp.width, height, channels: 3, background: "#d4d1ca" } })
       .composite(tiles.map((t) => ({ input: t.input, top: t.top, left: 0 })))
       .png()
       .toFile(path.join(path.dirname(out), file));
