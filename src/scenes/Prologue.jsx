@@ -3,6 +3,8 @@ import { ArrowDown, DownloadSimple } from "@phosphor-icons/react";
 import { profile } from "../data/profile.js";
 import { documents } from "../data/contact.js";
 import { LivingPortrait } from "../components/LivingPortrait.jsx";
+import { AtlasPortrait } from "../components/AtlasPortrait.jsx";
+import { heroVariant } from "../lib/atlasMedia.js";
 import { useTitleSequence } from "../motion/useTitleSequence.js";
 import { gsap, ScrollTrigger } from "../motion/gsap.js";
 import { prefersReducedMotion } from "../hooks/useReducedMotion.js";
@@ -22,6 +24,10 @@ function TrackedWord({ word, spread }) {
     </span>
   );
 }
+
+// Experiment: ?hero=atlas swaps in the directional-atlas portrait. Without the
+// flag the page is exactly production.
+const HeroPortrait = heroVariant() === "atlas" ? AtlasPortrait : LivingPortrait;
 
 export function Prologue() {
   const scope = useRef(null);
@@ -100,7 +106,7 @@ export function Prologue() {
           <span className="prologue__sunpatch" />
           <span className="prologue__horizon" />
         </div>
-        <LivingPortrait className="prologue__figure" settled={settled} />
+        <HeroPortrait className="prologue__figure" settled={settled} />
         <span className="prologue__exposure" />
       </div>
       <span className="prologue__handoff" aria-hidden="true">

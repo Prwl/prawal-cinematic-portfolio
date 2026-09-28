@@ -1,0 +1,118 @@
+[
+  {
+    "variant": "living",
+    "readyMs": 178,
+    "neutral": {
+      "headUpdatesWhileStill": 0,
+      "restDriftLevels": 0
+    },
+    "sweep": {
+      "headUpdates": 86,
+      "updatesPerSecond": 6.8,
+      "frameGapP95ms": 365.8,
+      "stepMedian": 9.9,
+      "stepP95": 15.72,
+      "stepMax": 21.72,
+      "pops": 0,
+      "popRatio": 1.59
+    },
+    "response": {
+      "firstPictureMs": 48,
+      "settleMs": 432
+    },
+    "faceSharpness": {
+      "median": 57.5,
+      "min": 24.2,
+      "perPose": [
+        55.9,
+        67.5,
+        60.6,
+        62.6,
+        69.9,
+        57.5,
+        24.2,
+        39.6,
+        52.5
+      ]
+    },
+    "cost": {
+      "scriptMsDuringSweep": 215,
+      "taskMsDuringSweep": 970,
+      "jsHeapMB": 61.7,
+      "downloadMB": 5.76,
+      "files": {
+        "prawal-living.mp4": 5763142
+      }
+    },
+    "atlasStats": null
+  },
+  {
+    "variant": "atlas",
+    "readyMs": 64,
+    "neutral": {
+      "headUpdatesWhileStill": 0,
+      "restDriftLevels": 0
+    },
+    "sweep": {
+      "headUpdates": 107,
+      "updatesPerSecond": 8.6,
+      "frameGapP95ms": 467.1,
+      "stepMedian": 5.49,
+      "stepP95": 22.93,
+      "stepMax": 38.17,
+      "pops": 5,
+      "popRatio": 4.18
+    },
+    "response": {
+      "firstPictureMs": 49,
+      "settleMs": 316
+    },
+    "faceSharpness": {
+      "median": 63.2,
+      "min": 46.2,
+      "perPose": [
+        60.8,
+        66.5,
+        63.2,
+        76,
+        67.3,
+        57.6,
+        75.1,
+        46.2,
+        56.4
+      ]
+    },
+    "cost": {
+      "scriptMsDuringSweep": 334,
+      "taskMsDuringSweep": 1076,
+      "jsHeapMB": 62.7,
+      "downloadMB": 1.05,
+      "files": {
+        "atlas-centre.webp": 24808,
+        "atlas-down-passing.webp": 75084,
+        "atlas-down-stops.webp": 89954,
+        "atlas-downright-passing.webp": 73836,
+        "atlas-downright-stops.webp": 84202,
+        "atlas-left-passing.webp": 42874,
+        "atlas-left-stops.webp": 90084,
+        "atlas-right-passing.webp": 52014,
+        "atlas-right-stops.webp": 87134,
+        "atlas-up-passing.webp": 43184,
+        "atlas-up-stops.webp": 89124,
+        "atlas-upleft-passing.webp": 73380,
+        "atlas-upleft-stops.webp": 83078,
+        "atlas-upright-passing.webp": 71808,
+        "atlas-upright-stops.webp": 67338
+      }
+    },
+    "atlasStats": {
+      "paints": 457,
+      "blended": 276,
+      "dissolves": 14,
+      "viaRest": 5,
+      "heldOffStop": 0,
+      "loadMs": 21,
+      "blinkSkips": 12
+    }
+  }
+]

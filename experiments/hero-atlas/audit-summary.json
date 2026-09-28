@@ -1,0 +1,788 @@
+{
+ "selected": [
+  "hero-down-v2.mp4",
+  "hero-down.mp4",
+  "hero-downright-v2.mp4",
+  "hero-downright.mp4",
+  "hero-fill-down.mp4",
+  "hero-fill-downleft.mp4",
+  "hero-fill-downright.mp4",
+  "hero-orbit.mp4",
+  "hero-pitch.mp4",
+  "hero-right.mp4",
+  "hero-up-v2.mp4",
+  "hero-up.mp4",
+  "hero-upright-v2.mp4",
+  "hero-upright.mp4"
+ ],
+ "excluded": {
+  "Man_performing_vertical_head_mov\u2026_20260925133357.mp4": [
+   "does not start on the shared rest frame (different generation/set)",
+   "background inconsistent",
+   "the body turns with the head",
+   "too few clean frames"
+  ],
+  "Man_rotating_head_horizontally_v\u2026_20260925133109.mp4": [
+   "does not start on the shared rest frame (different generation/set)"
+  ],
+  "Man_tilting_head_up_down_20260925151811.mp4": [
+   "likeness drifts from the rest face"
+  ],
+  "Vertical_head_motion_technical_r\u2026_20260925133910.mp4": [
+   "does not start on the shared rest frame (different generation/set)",
+   "background inconsistent",
+   "the body turns with the head",
+   "too few clean frames"
+  ],
+  "hero-yaw.mp4": [
+   "the body turns with the head"
+  ]
+ },
+ "rest": {
+  "yaw": -0.08549999999999999,
+  "pitch": 1.877,
+  "roll": 0.205,
+  "max_likeness": 0.0014720654507322751
+ },
+ "takes": {
+  "Man_performing_vertical_head_mov\u2026_20260925133357.mp4": {
+   "overall": 5.7,
+   "scores": {
+    "likeness": 10.0,
+    "eyes": 9.5,
+    "face_stability": 9.9,
+    "blazer": 0.0,
+    "background": 1.0,
+    "motion": 9.7,
+    "usefulness": 0.0
+   },
+   "clean": 0,
+   "frames": 192,
+   "blinks": 0,
+   "reach": {},
+   "rejects": {
+    "body moved": 192,
+    "background drift": 192,
+    "likeness drift": 24,
+    "lids down": 9
+   },
+   "raw": {
+    "geo": 0.0001,
+    "jitter": 0.00031,
+    "spread_jitter": 0.001,
+    "wall": 9.79,
+    "drift": 54.45,
+    "torso": 43.05,
+    "torso90": 43.86,
+    "roll90": 2.97,
+    "slow": 1.0
+   }
+  },
+  "Man_rotating_head_horizontally_v\u2026_20260925133109.mp4": {
+   "overall": 8.4,
+   "scores": {
+    "likeness": 7.4,
+    "eyes": 8.2,
+    "face_stability": 7.2,
+    "blazer": 6.9,
+    "background": 10.0,
+    "motion": 9.0,
+    "usefulness": 10
+   },
+   "clean": 109,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 21.0,
+    "right": 20.7,
+    "up": 3.1,
+    "down": 1.4
+   },
+   "rejects": {
+    "likeness drift": 82,
+    "body moved": 12,
+    "eyes closed": 7,
+    "motion smear": 7,
+    "background drift": 5
+   },
+   "raw": {
+    "geo": 0.0012,
+    "jitter": 0.0008,
+    "spread_jitter": 0.0018,
+    "wall": 0.8,
+    "drift": 0.17,
+    "torso": 4.01,
+    "torso90": 6.73,
+    "roll90": 5.14,
+    "slow": 0.964
+   }
+  },
+  "Man_tilting_head_up_down_20260925151811.mp4": {
+   "overall": 7.8,
+   "scores": {
+    "likeness": 5.7,
+    "eyes": 7.5,
+    "face_stability": 7.3,
+    "blazer": 6.0,
+    "background": 9.9,
+    "motion": 9.8,
+    "usefulness": 8.5
+   },
+   "clean": 89,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 2.9,
+    "right": 0.0,
+    "up": 7.0,
+    "down": 10.6
+   },
+   "rejects": {
+    "likeness drift": 103,
+    "lids down": 34,
+    "body moved": 21,
+    "eyes closed": 3,
+    "motion smear": 3,
+    "background drift": 1
+   },
+   "raw": {
+    "geo": 0.0019,
+    "jitter": 0.00079,
+    "spread_jitter": 0.0033,
+    "wall": 1.12,
+    "drift": 0.2,
+    "torso": 5.52,
+    "torso90": 7.04,
+    "roll90": 1.26,
+    "slow": 0.984
+   }
+  },
+  "Vertical_head_motion_technical_r\u2026_20260925133910.mp4": {
+   "overall": 5.7,
+   "scores": {
+    "likeness": 8.1,
+    "eyes": 8.2,
+    "face_stability": 9.7,
+    "blazer": 0.0,
+    "background": 4.9,
+    "motion": 8.8,
+    "usefulness": 0.0
+   },
+   "clean": 0,
+   "frames": 240,
+   "blinks": 2,
+   "reach": {},
+   "rejects": {
+    "body moved": 240,
+    "background drift": 240,
+    "head roll": 46,
+    "likeness drift": 29,
+    "eyes closed": 9
+   },
+   "raw": {
+    "geo": 0.0009,
+    "jitter": 0.00035,
+    "spread_jitter": 0.001,
+    "wall": 16.56,
+    "drift": 0.31,
+    "torso": 18.17,
+    "torso90": 27.29,
+    "roll90": 9.08,
+    "slow": 1.0
+   }
+  },
+  "hero-down-v2.mp4": {
+   "overall": 8.6,
+   "scores": {
+    "likeness": 9.5,
+    "eyes": 5.7,
+    "face_stability": 9.5,
+    "blazer": 8.1,
+    "background": 10.0,
+    "motion": 8.0,
+    "usefulness": 9.2
+   },
+   "clean": 105,
+   "frames": 192,
+   "blinks": 0,
+   "reach": {
+    "left": 7.7,
+    "right": 0.1,
+    "up": 2.3,
+    "down": 19.0
+   },
+   "rejects": {
+    "lids down": 83,
+    "likeness drift": 76,
+    "head roll": 69,
+    "motion smear": 15,
+    "background drift": 3
+   },
+   "raw": {
+    "geo": 0.0003,
+    "jitter": 0.00039,
+    "spread_jitter": 0.0013,
+    "wall": 0.71,
+    "drift": 0.11,
+    "torso": 3.23,
+    "torso90": 4.23,
+    "roll90": 10.75,
+    "slow": 0.922
+   }
+  },
+  "hero-down.mp4": {
+   "overall": 8.5,
+   "scores": {
+    "likeness": 7.9,
+    "eyes": 5.3,
+    "face_stability": 9.8,
+    "blazer": 8.9,
+    "background": 10.0,
+    "motion": 8.9,
+    "usefulness": 8.4
+   },
+   "clean": 106,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 5.1,
+    "right": 0.3,
+    "up": 2.9,
+    "down": 15.6
+   },
+   "rejects": {
+    "likeness drift": 84,
+    "lids down": 80,
+    "motion smear": 14,
+    "eyes closed": 2
+   },
+   "raw": {
+    "geo": 0.001,
+    "jitter": 0.00034,
+    "spread_jitter": 0.0008,
+    "wall": 0.68,
+    "drift": 0.08,
+    "torso": 2.5,
+    "torso90": 3.08,
+    "roll90": 5.2,
+    "slow": 0.927
+   }
+  },
+  "hero-downright-v2.mp4": {
+   "overall": 7.8,
+   "scores": {
+    "likeness": 10.0,
+    "eyes": 7.7,
+    "face_stability": 5.0,
+    "blazer": 8.2,
+    "background": 10.0,
+    "motion": 8.4,
+    "usefulness": 5.4
+   },
+   "clean": 105,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 10.2,
+    "right": 0.3,
+    "up": 0.9,
+    "down": 1.7
+   },
+   "rejects": {
+    "likeness drift": 55,
+    "motion smear": 34,
+    "lids down": 27,
+    "body moved": 13,
+    "eyes closed": 6,
+    "head roll": 3,
+    "background drift": 1
+   },
+   "raw": {
+    "geo": 0.0001,
+    "jitter": 0.00122,
+    "spread_jitter": 0.002,
+    "wall": 0.7,
+    "drift": 0.14,
+    "torso": 2.04,
+    "torso90": 5.88,
+    "roll90": 4.45,
+    "slow": 0.823
+   }
+  },
+  "hero-downright.mp4": {
+   "overall": 8.0,
+   "scores": {
+    "likeness": 9.8,
+    "eyes": 7.1,
+    "face_stability": 7.0,
+    "blazer": 5.1,
+    "background": 10.0,
+    "motion": 9.3,
+    "usefulness": 7.4
+   },
+   "clean": 88,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 1.1,
+    "right": 14.1,
+    "up": 1.0,
+    "down": 3.7
+   },
+   "rejects": {
+    "body moved": 82,
+    "likeness drift": 75,
+    "lids down": 22,
+    "motion smear": 16,
+    "eyes closed": 9,
+    "background drift": 2
+   },
+   "raw": {
+    "geo": 0.0002,
+    "jitter": 0.00084,
+    "spread_jitter": 0.0013,
+    "wall": 0.69,
+    "drift": 0.18,
+    "torso": 4.3,
+    "torso90": 11.77,
+    "roll90": 2.5,
+    "slow": 0.917
+   }
+  },
+  "hero-fill-down.mp4": {
+   "overall": 6.6,
+   "scores": {
+    "likeness": 8.8,
+    "eyes": 5.1,
+    "face_stability": 6.5,
+    "blazer": 6.0,
+    "background": 10.0,
+    "motion": 7.3,
+    "usefulness": 2.3
+   },
+   "clean": 84,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 0.8,
+    "right": 0.1,
+    "up": 2.9,
+    "down": 1.7
+   },
+   "rejects": {
+    "lids down": 83,
+    "likeness drift": 76,
+    "head roll": 75,
+    "body moved": 70,
+    "motion smear": 23,
+    "eyes closed": 3
+   },
+   "raw": {
+    "geo": 0.0006,
+    "jitter": 0.00094,
+    "spread_jitter": 0.0024,
+    "wall": 0.7,
+    "drift": 0.16,
+    "torso": 4.14,
+    "torso90": 9.23,
+    "roll90": 26.97,
+    "slow": 0.88
+   }
+  },
+  "hero-fill-downleft.mp4": {
+   "overall": 7.5,
+   "scores": {
+    "likeness": 9.7,
+    "eyes": 5.2,
+    "face_stability": 9.1,
+    "blazer": 4.0,
+    "background": 10.0,
+    "motion": 7.2,
+    "usefulness": 7.6
+   },
+   "clean": 100,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 8.5,
+    "right": 0.0,
+    "up": 0.8,
+    "down": 8.9
+   },
+   "rejects": {
+    "lids down": 84,
+    "head roll": 75,
+    "body moved": 38,
+    "background drift": 28,
+    "motion smear": 25,
+    "likeness drift": 13,
+    "eyes closed": 1
+   },
+   "raw": {
+    "geo": 0.0003,
+    "jitter": 0.00045,
+    "spread_jitter": 0.001,
+    "wall": 0.69,
+    "drift": 0.11,
+    "torso": 2.88,
+    "torso90": 20.84,
+    "roll90": 21.1,
+    "slow": 0.87
+   }
+  },
+  "hero-fill-downright.mp4": {
+   "overall": 7.5,
+   "scores": {
+    "likeness": 8.0,
+    "eyes": 5.4,
+    "face_stability": 7.5,
+    "blazer": 4.2,
+    "background": 10.0,
+    "motion": 7.5,
+    "usefulness": 10
+   },
+   "clean": 98,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 5.1,
+    "right": 23.2,
+    "up": 0.2,
+    "down": 14.5
+   },
+   "rejects": {
+    "lids down": 66,
+    "likeness drift": 64,
+    "head roll": 52,
+    "body moved": 37,
+    "background drift": 26,
+    "motion smear": 22,
+    "eyes closed": 4
+   },
+   "raw": {
+    "geo": 0.001,
+    "jitter": 0.00076,
+    "spread_jitter": 0.0018,
+    "wall": 0.7,
+    "drift": 0.14,
+    "torso": 2.56,
+    "torso90": 24.01,
+    "roll90": 13.0,
+    "slow": 0.885
+   }
+  },
+  "hero-orbit.mp4": {
+   "overall": 8.9,
+   "scores": {
+    "likeness": 9.5,
+    "eyes": 8.2,
+    "face_stability": 7.9,
+    "blazer": 8.1,
+    "background": 10.0,
+    "motion": 8.7,
+    "usefulness": 10
+   },
+   "clean": 88,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 33.0,
+    "right": 1.2,
+    "up": 13.4,
+    "down": 18.3
+   },
+   "rejects": {
+    "likeness drift": 55,
+    "head roll": 43,
+    "eyes closed": 7,
+    "motion smear": 5
+   },
+   "raw": {
+    "geo": 0.0004,
+    "jitter": 0.00067,
+    "spread_jitter": 0.0018,
+    "wall": 0.69,
+    "drift": 0.11,
+    "torso": 2.91,
+    "torso90": 4.77,
+    "roll90": 7.56,
+    "slow": 0.974
+   }
+  },
+  "hero-pitch.mp4": {
+   "overall": 8.3,
+   "scores": {
+    "likeness": 9.8,
+    "eyes": 6.7,
+    "face_stability": 6.8,
+    "blazer": 7.1,
+    "background": 10.0,
+    "motion": 7.5,
+    "usefulness": 10
+   },
+   "clean": 91,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 13.6,
+    "right": 0.4,
+    "up": 19.7,
+    "down": 15.0
+   },
+   "rejects": {
+    "head roll": 76,
+    "likeness drift": 43,
+    "lids down": 40,
+    "motion smear": 31,
+    "body moved": 15,
+    "eyes closed": 12
+   },
+   "raw": {
+    "geo": 0.0002,
+    "jitter": 0.00087,
+    "spread_jitter": 0.0029,
+    "wall": 0.69,
+    "drift": 0.12,
+    "torso": 3.54,
+    "torso90": 6.69,
+    "roll90": 10.73,
+    "slow": 0.839
+   }
+  },
+  "hero-right.mp4": {
+   "overall": 7.5,
+   "scores": {
+    "likeness": 8.8,
+    "eyes": 6.9,
+    "face_stability": 5.1,
+    "blazer": 5.2,
+    "background": 10.0,
+    "motion": 6.6,
+    "usefulness": 10
+   },
+   "clean": 49,
+   "frames": 192,
+   "blinks": 3,
+   "reach": {
+    "left": 23.2,
+    "right": 1.2,
+    "up": 6.4,
+    "down": 17.5
+   },
+   "rejects": {
+    "likeness drift": 73,
+    "head roll": 56,
+    "body moved": 40,
+    "motion smear": 38,
+    "eyes closed": 17,
+    "lids down": 5
+   },
+   "raw": {
+    "geo": 0.0006,
+    "jitter": 0.00118,
+    "spread_jitter": 0.0022,
+    "wall": 0.56,
+    "drift": 0.14,
+    "torso": 4.6,
+    "torso90": 11.07,
+    "roll90": 17.99,
+    "slow": 0.802
+   }
+  },
+  "hero-up-v2.mp4": {
+   "overall": 8.7,
+   "scores": {
+    "likeness": 9.5,
+    "eyes": 6.1,
+    "face_stability": 7.8,
+    "blazer": 8.5,
+    "background": 10.0,
+    "motion": 9.2,
+    "usefulness": 10
+   },
+   "clean": 124,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 10.0,
+    "right": 0.0,
+    "up": 26.6,
+    "down": 9.7
+   },
+   "rejects": {
+    "likeness drift": 60,
+    "lids down": 32,
+    "eyes closed": 23,
+    "motion smear": 17,
+    "background drift": 2
+   },
+   "raw": {
+    "geo": 0.0004,
+    "jitter": 0.0007,
+    "spread_jitter": 0.0023,
+    "wall": 0.69,
+    "drift": 0.14,
+    "torso": 2.73,
+    "torso90": 3.94,
+    "roll90": 2.94,
+    "slow": 0.911
+   }
+  },
+  "hero-up.mp4": {
+   "overall": 8.3,
+   "scores": {
+    "likeness": 7.8,
+    "eyes": 6.8,
+    "face_stability": 6.7,
+    "blazer": 8.7,
+    "background": 10.0,
+    "motion": 8.4,
+    "usefulness": 10
+   },
+   "clean": 135,
+   "frames": 192,
+   "blinks": 2,
+   "reach": {
+    "left": 11.5,
+    "right": 0.3,
+    "up": 36.3,
+    "down": 13.6
+   },
+   "rejects": {
+    "likeness drift": 48,
+    "motion smear": 30,
+    "lids down": 26,
+    "eyes closed": 13
+   },
+   "raw": {
+    "geo": 0.001,
+    "jitter": 0.0009,
+    "spread_jitter": 0.0038,
+    "wall": 0.67,
+    "drift": 0.12,
+    "torso": 2.41,
+    "torso90": 3.7,
+    "roll90": 5.24,
+    "slow": 0.844
+   }
+  },
+  "hero-upright-v2.mp4": {
+   "overall": 9.1,
+   "scores": {
+    "likeness": 9.9,
+    "eyes": 8.8,
+    "face_stability": 8.6,
+    "blazer": 8.0,
+    "background": 10.0,
+    "motion": 8.3,
+    "usefulness": 10
+   },
+   "clean": 101,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 26.2,
+    "right": 0.1,
+    "up": 13.6,
+    "down": 0.2
+   },
+   "rejects": {
+    "head roll": 86,
+    "eyes closed": 10,
+    "motion smear": 4,
+    "background drift": 1
+   },
+   "raw": {
+    "geo": 0.0002,
+    "jitter": 0.00054,
+    "spread_jitter": 0.001,
+    "wall": 0.65,
+    "drift": 0.14,
+    "torso": 2.95,
+    "torso90": 5.14,
+    "roll90": 10.96,
+    "slow": 0.979
+   }
+  },
+  "hero-upright.mp4": {
+   "overall": 8.7,
+   "scores": {
+    "likeness": 10.0,
+    "eyes": 9.1,
+    "face_stability": 6.6,
+    "blazer": 8.0,
+    "background": 10.0,
+    "motion": 7.5,
+    "usefulness": 10
+   },
+   "clean": 91,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 18.3,
+    "right": 24.5,
+    "up": 16.8,
+    "down": 1.2
+   },
+   "rejects": {
+    "head roll": 83,
+    "motion smear": 23,
+    "eyes closed": 3,
+    "likeness drift": 2
+   },
+   "raw": {
+    "geo": 0.0,
+    "jitter": 0.00092,
+    "spread_jitter": 0.0017,
+    "wall": 0.7,
+    "drift": 0.14,
+    "torso": 3.13,
+    "torso90": 4.79,
+    "roll90": 12.57,
+    "slow": 0.88
+   }
+  },
+  "hero-yaw.mp4": {
+   "overall": 5.7,
+   "scores": {
+    "likeness": 7.2,
+    "eyes": 9.1,
+    "face_stability": 4.4,
+    "blazer": 0.0,
+    "background": 10.0,
+    "motion": 6.2,
+    "usefulness": 3.2
+   },
+   "clean": 57,
+   "frames": 192,
+   "blinks": 1,
+   "reach": {
+    "left": 6.0,
+    "right": 0.9,
+    "up": 0.4,
+    "down": 0.4
+   },
+   "rejects": {
+    "body moved": 123,
+    "likeness drift": 88,
+    "motion smear": 57,
+    "background drift": 36,
+    "head roll": 32,
+    "mouth open": 18,
+    "no face": 10,
+    "eyes closed": 2
+   },
+   "raw": {
+    "geo": 0.0013,
+    "jitter": 0.00164,
+    "spread_jitter": 0.006,
+    "wall": 0.74,
+    "drift": 0.17,
+    "torso": 22.79,
+    "torso90": 43.35,
+    "roll90": 12.52,
+    "slow": 0.687
+   }
+  }
+ }
+}

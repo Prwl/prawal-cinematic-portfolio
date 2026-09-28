@@ -1,0 +1,802 @@
+{
+ "version": 2,
+ "extents": {
+  "yaw": 15.0,
+  "up": 10.0,
+  "down": 6.0
+ },
+ "tile": {
+  "width": 500,
+  "height": 584
+ },
+ "passing": {
+  "width": 276,
+  "height": 322
+ },
+ "box": {
+  "left": 0.3078947368421053,
+  "top": 0.019444444444444445,
+  "width": 0.32894736842105265,
+  "height": 0.40555555555555556,
+  "feather": 0.048
+ },
+ "centre": "atlas-centre.webp",
+ "spokes": [
+  {
+   "direction": "right",
+   "usable": true,
+   "take": "hero-fill-downright.mp4",
+   "files": {
+    "stops": "atlas-right-stops.webp",
+    "passing": "atlas-right-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 18,
+     "r": 0.0613,
+     "yaw": -0.92,
+     "pitch": 0.09,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 19,
+     "r": 0.1387,
+     "yaw": -2.08,
+     "pitch": 0.4,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 20,
+     "r": 0.2493,
+     "yaw": -3.74,
+     "pitch": 0.27,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 21,
+     "r": 0.3833,
+     "yaw": -5.75,
+     "pitch": 0.32,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 22,
+     "r": 0.5313,
+     "yaw": -7.97,
+     "pitch": 0.05,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 4
+    },
+    {
+     "frame": 23,
+     "r": 0.6573,
+     "yaw": -9.86,
+     "pitch": 0.22,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 24,
+     "r": 0.792,
+     "yaw": -11.88,
+     "pitch": 0.35,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 25,
+     "r": 0.912,
+     "yaw": -13.68,
+     "pitch": 0.51,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 26,
+     "r": 1.0153,
+     "yaw": -15.23,
+     "pitch": 0.53,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 4.4,
+   "restMismatch": 4.24
+  },
+  {
+   "direction": "upright",
+   "usable": true,
+   "take": "hero-upright.mp4",
+   "files": {
+    "stops": "atlas-upright-stops.webp",
+    "passing": "atlas-upright-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 8,
+     "r": 0.072,
+     "yaw": -1.08,
+     "pitch": -0.51,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 9,
+     "r": 0.14,
+     "yaw": -2.1,
+     "pitch": -0.82,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 10,
+     "r": 0.2327,
+     "yaw": -3.49,
+     "pitch": -1.45,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 11,
+     "r": 0.3453,
+     "yaw": -5.18,
+     "pitch": -2.04,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 12,
+     "r": 0.4873,
+     "yaw": -7.31,
+     "pitch": -2.67,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 14,
+     "r": 0.83,
+     "yaw": -12.45,
+     "pitch": -4.11,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 15,
+     "r": 1.0067,
+     "yaw": -15.1,
+     "pitch": -5.3,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 4
+    },
+    {
+     "frame": 16,
+     "r": 1.158,
+     "yaw": -17.37,
+     "pitch": -6.42,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 5
+    },
+    {
+     "frame": 17,
+     "r": 1.3007,
+     "yaw": -19.51,
+     "pitch": -7.78,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 6
+    },
+    {
+     "frame": 18,
+     "r": 1.428,
+     "yaw": -21.42,
+     "pitch": -8.85,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    }
+   ],
+   "offAxisDeg": 15.9,
+   "restMismatch": 4.52
+  },
+  {
+   "direction": "up",
+   "usable": true,
+   "take": "hero-up.mp4",
+   "files": {
+    "stops": "atlas-up-stops.webp",
+    "passing": "atlas-up-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 22,
+     "r": 0.094,
+     "yaw": -0.22,
+     "pitch": -0.94,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 23,
+     "r": 0.148,
+     "yaw": -0.09,
+     "pitch": -1.48,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 24,
+     "r": 0.235,
+     "yaw": 0.13,
+     "pitch": -2.35,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 25,
+     "r": 0.36,
+     "yaw": 0.35,
+     "pitch": -3.6,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 26,
+     "r": 0.501,
+     "yaw": 0.55,
+     "pitch": -5.01,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 27,
+     "r": 0.686,
+     "yaw": 0.81,
+     "pitch": -6.86,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 28,
+     "r": 0.875,
+     "yaw": 1.36,
+     "pitch": -8.75,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 29,
+     "r": 1.074,
+     "yaw": 1.79,
+     "pitch": -10.74,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 4.9,
+   "restMismatch": 2.3
+  },
+  {
+   "direction": "upleft",
+   "usable": true,
+   "take": "hero-upright-v2.mp4",
+   "files": {
+    "stops": "atlas-upleft-stops.webp",
+    "passing": "atlas-upleft-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 7,
+     "r": 0.0753,
+     "yaw": 1.13,
+     "pitch": -0.6,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 9,
+     "r": 0.1593,
+     "yaw": 2.39,
+     "pitch": -1.38,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 10,
+     "r": 0.2167,
+     "yaw": 3.25,
+     "pitch": -1.87,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 11,
+     "r": 0.2787,
+     "yaw": 4.18,
+     "pitch": -2.51,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 13,
+     "r": 0.3887,
+     "yaw": 5.83,
+     "pitch": -3.75,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 15,
+     "r": 0.54,
+     "yaw": 8.01,
+     "pitch": -5.4,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 16,
+     "r": 0.623,
+     "yaw": 9.17,
+     "pitch": -6.23,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 4
+    },
+    {
+     "frame": 17,
+     "r": 0.6973,
+     "yaw": 10.46,
+     "pitch": -6.71,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 5
+    },
+    {
+     "frame": 18,
+     "r": 0.792,
+     "yaw": 11.88,
+     "pitch": -6.94,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 20,
+     "r": 0.9767,
+     "yaw": 14.65,
+     "pitch": -7.96,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 6
+    },
+    {
+     "frame": 21,
+     "r": 1.054,
+     "yaw": 15.81,
+     "pitch": -8.18,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 2.7,
+   "restMismatch": 4.52
+  },
+  {
+   "direction": "left",
+   "usable": true,
+   "take": "hero-orbit.mp4",
+   "files": {
+    "stops": "atlas-left-stops.webp",
+    "passing": "atlas-left-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 21,
+     "r": 0.0713,
+     "yaw": 1.07,
+     "pitch": -0.14,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 22,
+     "r": 0.1347,
+     "yaw": 2.02,
+     "pitch": -0.15,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 23,
+     "r": 0.208,
+     "yaw": 3.12,
+     "pitch": -0.21,
+     "stop": false,
+     "blink": true,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 24,
+     "r": 0.3047,
+     "yaw": 4.57,
+     "pitch": -0.07,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 25,
+     "r": 0.3967,
+     "yaw": 5.95,
+     "pitch": -0.07,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 26,
+     "r": 0.5093,
+     "yaw": 7.64,
+     "pitch": -0.17,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 27,
+     "r": 0.6033,
+     "yaw": 9.05,
+     "pitch": -0.22,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 28,
+     "r": 0.7047,
+     "yaw": 10.57,
+     "pitch": -0.17,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 1.5,
+   "restMismatch": 4.23
+  },
+  {
+   "direction": "downleft",
+   "usable": false,
+   "frames": []
+  },
+  {
+   "direction": "down",
+   "usable": true,
+   "take": "hero-up.mp4",
+   "files": {
+    "stops": "atlas-down-stops.webp",
+    "passing": "atlas-down-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 178,
+     "r": 0.0817,
+     "yaw": 0.26,
+     "pitch": 0.49,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 176,
+     "r": 0.1367,
+     "yaw": 0.42,
+     "pitch": 0.82,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 174,
+     "r": 0.2083,
+     "yaw": 0.52,
+     "pitch": 1.25,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 173,
+     "r": 0.2717,
+     "yaw": 0.54,
+     "pitch": 1.63,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 171,
+     "r": 0.3683,
+     "yaw": 0.61,
+     "pitch": 2.21,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 170,
+     "r": 0.4167,
+     "yaw": 0.67,
+     "pitch": 2.5,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 4
+    },
+    {
+     "frame": 169,
+     "r": 0.4967,
+     "yaw": 0.83,
+     "pitch": 2.98,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 167,
+     "r": 0.62,
+     "yaw": 0.87,
+     "pitch": 3.72,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 5
+    },
+    {
+     "frame": 165,
+     "r": 0.8017,
+     "yaw": 1.12,
+     "pitch": 4.81,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 164,
+     "r": 0.9,
+     "yaw": 1.19,
+     "pitch": 5.4,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 6
+    },
+    {
+     "frame": 163,
+     "r": 1.035,
+     "yaw": 1.33,
+     "pitch": 6.21,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 5.8,
+   "restMismatch": 2.3
+  },
+  {
+   "direction": "downright",
+   "usable": true,
+   "take": "hero-downright.mp4",
+   "files": {
+    "stops": "atlas-downright-stops.webp",
+    "passing": "atlas-downright-passing.webp"
+   },
+   "frames": [
+    {
+     "frame": 136,
+     "r": 0.085,
+     "yaw": 0.08,
+     "pitch": 0.51,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 0
+    },
+    {
+     "frame": 134,
+     "r": 0.135,
+     "yaw": -0.52,
+     "pitch": 0.81,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 1
+    },
+    {
+     "frame": 132,
+     "r": 0.2033,
+     "yaw": -1.41,
+     "pitch": 1.22,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 2
+    },
+    {
+     "frame": 130,
+     "r": 0.26,
+     "yaw": -2.45,
+     "pitch": 1.56,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 0
+    },
+    {
+     "frame": 129,
+     "r": 0.3017,
+     "yaw": -2.87,
+     "pitch": 1.81,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 3
+    },
+    {
+     "frame": 127,
+     "r": 0.395,
+     "yaw": -4.05,
+     "pitch": 2.37,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 4
+    },
+    {
+     "frame": 124,
+     "r": 0.468,
+     "yaw": -7.02,
+     "pitch": 2.75,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 1
+    },
+    {
+     "frame": 123,
+     "r": 0.5467,
+     "yaw": -8.2,
+     "pitch": 2.89,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 5
+    },
+    {
+     "frame": 121,
+     "r": 0.718,
+     "yaw": -10.77,
+     "pitch": 3.13,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 2
+    },
+    {
+     "frame": 120,
+     "r": 0.822,
+     "yaw": -12.33,
+     "pitch": 3.75,
+     "stop": false,
+     "blink": false,
+     "strip": "passing",
+     "k": 6
+    },
+    {
+     "frame": 119,
+     "r": 0.9367,
+     "yaw": -14.05,
+     "pitch": 3.65,
+     "stop": true,
+     "blink": false,
+     "strip": "stops",
+     "k": 3
+    }
+   ],
+   "offAxisDeg": 7.8,
+   "restMismatch": 4.58
+  }
+ ]
+}
