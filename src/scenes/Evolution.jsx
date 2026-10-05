@@ -8,7 +8,6 @@ import "../styles/evolution.css";
 // Each step rises higher than the last: the weight a role carried, made into
 // stone. Rises in cqh, cumulative to each tread.
 // The two leadership arrivals hold longest; the earlier steps keep the climb.
-const CAREER_CUT = [0, 1, 2, 3, 4, 5, 5];
 
 const RISE = [13, 15, 17.5, 20.5, 24, 28];
 const TOP = RISE.map((_, i) => RISE.slice(0, i + 1).reduce((a, b) => a + b, 0));
@@ -20,7 +19,7 @@ const TOP = RISE.map((_, i) => RISE.slice(0, i + 1).reduce((a, b) => a + b, 0));
  * frame, the ones still ahead rise out of it into haze.
  */
 export function Evolution() {
-  const { ref, reduce, active, confirmed, select } = useStory(risers.length, risers.length - 1, CAREER_CUT);
+  const { ref, reduce, active, confirmed, select } = useStory(risers.length, risers.length - 1);
   const role = risers[confirmed];
   return (
     <section id="evolution" className="chapter evolution bleed" aria-labelledby="evolution-title">
@@ -53,6 +52,7 @@ export function Evolution() {
           <div className="scene-footer">
             <StoryControls labels={risers.map((r) => r.years)} active={confirmed} onSelect={select} label="Career stages" />
             <DetailLayer title="The complete career" label="Roles and responsibilities" chapter="II">
+              <ol className="evidence-ascent" aria-label="Responsibility progression">{risers.map((r, i) => <li key={r.id} style={{ "--step": i }}><span>{r.years}</span><strong>{r.title}</strong></li>)}</ol>
               {risers.map((r) => (
                 <article key={r.id} className="detail-role">
                   <p className="detail-role__year num">{r.years}</p>

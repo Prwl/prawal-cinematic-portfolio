@@ -25,11 +25,9 @@ function Face({ voice }) {
  * slip past, the ones ahead wait further down the wall. The year is painted
  * on the wall behind the print, as exhibitions do.
  */
-const AWARD_CUT = [0, 0, 2, 4, 4, 7, 9];
-const VOICE_CUT = [0, 2, 3];
 
 function Exhibition() {
-  const { ref, reduce, active, confirmed, select } = useStory(awards.length, 0, AWARD_CUT);
+  const { ref, reduce, live, active, confirmed, select } = useStory(awards.length, 0);
   const award = awards[confirmed];
   return (
     <div ref={ref} className="story-run exhibition" data-reduced={reduce}>
@@ -45,7 +43,7 @@ function Exhibition() {
                 <figure key={a.image} className="exhibition__print" data-state={i < active ? "passed" : i === active ? "current" : "ahead"} style={{ "--i": i, "--d": Math.abs(i - active), "--h": [1, 0.84, 0.92][i % 3] }}>
                   <span className="exhibition__year">{year(a.date)}</span>
                   <span className="exhibition__pool" />
-                  <Still set="awards" name={a.image} width="960" height="720" eager={true} />
+                  <Still set="awards" name={a.image} width="960" height="720" eager={live && Math.abs(i - active) <= 1} />
                 </figure>
               ))}
             </div>
@@ -114,7 +112,7 @@ function Study() {
                     style={{ "--n": i, "--odd": i % 2, "--tri": (i % 3) - 1, "--col": i % 4, "--row": Math.floor(i / 4) }}
                     onClick={() => { setLifted((l) => ({ ...l, [s.id]: i })); select(si); }}
                   >
-                    <Still set={s.set} name={item.image} eager={s.set === "events" || (live && si === active && lifted[s.id] === i)} />
+                    <Still set={s.set} name={item.image} eager={live && si === active && lifted[s.id] === i} />
                   </button>
                 ))}
               </div>
@@ -164,7 +162,7 @@ function Study() {
  * from the latent row into the light.
  */
 function Voices() {
-  const { ref, reduce, active, select } = useStory(recommendations.length, 0, VOICE_CUT);
+  const { ref, reduce, active, select } = useStory(recommendations.length, 0);
   const voice = recommendations[active];
   return (
     <div ref={ref} className="story-run voices" data-reduced={reduce}>

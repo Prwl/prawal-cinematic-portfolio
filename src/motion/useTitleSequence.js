@@ -100,10 +100,9 @@ export function useTitleSequence(scope) {
       if (hadFocus) q(".prologue__name")[0]?.focus({ preventScroll: true });
     }
 
-    // Escape is the one key that means "skip". Everything else, including
-    // Tab and any combination with Cmd, Ctrl, Option or Shift, is ignored.
+    // Keyboard navigation resolves immediately; modified browser shortcuts pass through.
     function onKey(e) {
-      if (e.key === "Escape" && !e.metaKey && !e.ctrlKey && !e.altKey) skip();
+      if (["Escape", "Tab", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey) skip();
     }
 
     let wheelTravel = 0;

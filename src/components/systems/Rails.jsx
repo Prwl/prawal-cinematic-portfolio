@@ -56,6 +56,7 @@ export function Rails({ active, compact, live = true, reduce = false }) {
   }, [live, reduce]);
   // The held transaction makes its one journey each time the screen is reached.
   useEffect(() => {
+    if (active !== 2) return;
     svg.current?.querySelectorAll('animateMotion[begin="indefinite"]').forEach((a) => a.beginElement?.());
   }, [active]);
 
@@ -113,18 +114,18 @@ export function Rails({ active, compact, live = true, reduce = false }) {
       {/* Transactions in motion, once there is somewhere to go. */}
       {active >= 1 && !reduce && (
         <g key={active} className="rails__traffic">
-          {Array.from({ length: active >= 3 ? 7 : 4 }, (_, i) => {
-            const dur = active >= 3 ? 7 : 3.4;
+          {Array.from({ length: active >= 3 ? 3 : 1 }, (_, i) => {
+            const dur = active >= 3 ? 12 : .7;
             return (
               <circle key={i} className="rails__packet" r="7">
-                <animateMotion dur={`${dur}s`} begin={`-${(i * dur) / (active >= 3 ? 7 : 4)}s`} repeatCount="indefinite" path={path(0, end, 0, 60)} />
-                <animate attributeName="r" values={`8;${(8 * sc(end)).toFixed(1)}`} dur={`${dur}s`} begin={`-${(i * dur) / (active >= 3 ? 7 : 4)}s`} repeatCount="indefinite" />
+                <animateMotion dur={`${dur}s`} begin={`-${(i * dur) / (active >= 3 ? 3 : 1)}s`} repeatCount="indefinite" path={path(0, end, 0, 60)} />
+                <animate attributeName="r" values={`8;${(8 * sc(end)).toFixed(1)}`} dur={`${dur}s`} begin={`-${(i * dur) / (active >= 3 ? 3 : 1)}s`} repeatCount="indefinite" />
               </circle>
             );
           })}
-          {active >= 2 && (
+          {active === 2 && (
             <circle className="rails__packet rails__packet--held" r={(7 * sc(GATES[2].t)).toFixed(1)}>
-              <animateMotion dur="3s" begin="indefinite" fill="freeze" path={`${path(0, GATES[2].t, 0, 40)} L${sx.toFixed(1)},${sy.toFixed(1)} C${(sx + 10).toFixed(1)},${(sy + 50).toFixed(1)} ${(hold[0] - 30).toFixed(1)},${hold[1].toFixed(1)} ${hold[0].toFixed(1)},${hold[1].toFixed(1)}`} />
+              <animateMotion dur="1.1s" begin="indefinite" fill="freeze" path={`${path(0, GATES[2].t, 0, 40)} L${sx.toFixed(1)},${sy.toFixed(1)} C${(sx + 10).toFixed(1)},${(sy + 50).toFixed(1)} ${(hold[0] - 30).toFixed(1)},${hold[1].toFixed(1)} ${hold[0].toFixed(1)},${hold[1].toFixed(1)}`} />
             </circle>
           )}
         </g>

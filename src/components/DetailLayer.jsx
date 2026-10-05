@@ -29,7 +29,7 @@ export function DetailLayer({ title, label = "Explore the detail", chapter, chil
   }, [open]);
   return <>
     <button ref={trigger} type="button" className="detail-link" aria-haspopup="dialog" onClick={() => setOpen(true)}>{label}<ArrowUpRight size={18} aria-hidden="true" /></button>
-    {open && createPortal(<dialog ref={ref} className="detail-layer" aria-labelledby={id} onKeyDown={e => {
+    {open && createPortal(<dialog ref={ref} className="detail-layer" data-keyboard={document.activeElement?.matches(":focus-visible")} aria-labelledby={id} onKeyDown={e => {
       if (e.key !== "Tab") return;
       const stops = [...e.currentTarget.querySelectorAll('a[href], button:not([disabled]), summary, [tabindex="0"]')].filter(el => el.getClientRects().length);
       const first = stops[0], last = stops.at(-1);

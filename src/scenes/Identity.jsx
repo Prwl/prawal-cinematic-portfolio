@@ -10,7 +10,6 @@ import "../styles/identity.css";
 // measured module (structure), laid courses (trust), a plumb line (judgment).
 // Clarity is also on stage while the hall arrives; Judgment closes the hall
 // and leads into the framework, so it holds as long.
-const IDENTITY_CUT = [0, 0, 1, 2, 3];
 
 const principles = [
   { word: "Clarity", mark: "slit", line: "Give teams clarity before adding process." },
@@ -25,7 +24,7 @@ const principles = [
  * past the lens, the ones ahead wait in haze.
  */
 export function Identity() {
-  const { ref, reduce, active, confirmed, select } = useStory(principles.length, 0, IDENTITY_CUT, 1300);
+  const { ref, reduce, active, confirmed, select } = useStory(principles.length, 0);
   const current = principles[confirmed];
   return (
     <section id="identity" className="chapter identity bleed" aria-labelledby="identity-title">
@@ -55,6 +54,7 @@ export function Identity() {
           <div className="scene-footer">
             <StoryControls labels={principles.map((p) => p.word)} active={confirmed} onSelect={select} label="Leadership principles" />
             <DetailLayer title="Leadership and background" label="Leadership, education and background" chapter="I">
+              <div className="evidence-principles">{principles.map(p => <div key={p.word}><strong>{p.word}</strong><p>{p.line}</p></div>)}</div>
               <p className="detail-lede">{identity.heading}</p>
               {identity.paragraphs.map((p) => <p key={p}>{p}</p>)}
               <dl>{identity.credits.map((c) => <div key={c.label}><dt>{c.label}</dt><dd>{c.value}</dd></div>)}</dl>

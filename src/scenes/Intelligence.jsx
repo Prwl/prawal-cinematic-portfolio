@@ -9,7 +9,6 @@ import { useStory } from "../hooks/useStory.js";
 import { useMediaQuery } from "../hooks/useMediaQuery.js";
 import "../styles/intelligence.css";
 
-const FRAMEWORK_CUT = [0, 1, 2, 3, 4, 4, 4];
 
 const short = ["Remove delivery friction.", "Keep engineering accountable.", "Make adoption repeatable.", "Measure stakeholder-visible results."];
 // Where each principle is set around the core, in plan (x, y), and the
@@ -24,7 +23,7 @@ const COS = Math.cos(Math.PI / 6), SIN = Math.sin(Math.PI / 6);
  * joins. At the last beat a ring binds all four and the model is whole.
  */
 export function Intelligence() {
-  const { ref, reduce, active, confirmed, select } = useStory(5, 4, FRAMEWORK_CUT, 1100);
+  const { ref, reduce, active, confirmed, select } = useStory(5, 4);
   const compact = useMediaQuery("(max-width: 699px)");
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const complete = active === 4;
@@ -116,6 +115,7 @@ export function Intelligence() {
             <StoryControls labels={["Leverage", "Judgment", "Adoption", "Outcomes", "Full model"]} active={confirmed} onSelect={select} label="Framework principles" />
             <div className="assembly__links">
               <DetailLayer title="AI Engineering Leadership Framework" label="Framework and practice" chapter="V">
+                <figure className="evidence-framework"><strong>Engineering judgment</strong><div>{pillars.map(p => <span key={p.title}>{p.title}</span>)}</div><figcaption>AI Engineering Leadership Framework</figcaption></figure>
                 <blockquote className="detail-quote"><p>“{intelligence.quote}”</p></blockquote>
                 <p>{intelligence.standfirst}</p>
                 {pillars.map((p, i) => <article key={p.title} className="detail-role"><p className="detail-role__year num">{String(i + 1).padStart(2, "0")}</p><div><h3>{p.title}</h3><p>{p.detail}</p></div></article>)}

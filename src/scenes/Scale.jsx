@@ -92,7 +92,6 @@ function Columns() {
   ));
 }
 const events = [Dial, Sources, Days, Lift, Level, Columns];
-const SCALE_CUT = [0, 0, 0, 1, 2, 3, 3, 3, 4, 5, 5];
 
 /**
  * The one darker passage. Each figure has its moment: the room goes dark
@@ -100,7 +99,7 @@ const SCALE_CUT = [0, 0, 0, 1, 2, 3, 3, 3, 4, 5, 5];
  * figure itself is lit.
  */
 export function Scale() {
-  const { ref, reduce, active, confirmed, select } = useStory(figures.length, 0, SCALE_CUT, 700);
+  const { ref, reduce, active, confirmed, select } = useStory(figures.length, 0);
   const metric = figures[confirmed];
   const coreRef = useRef(null);
 
@@ -146,6 +145,7 @@ export function Scale() {
           <div className="scene-footer">
             <StoryControls labels={["Payments", "Sources", "Onboarding", "AI delivery", "Trust", "Experience"]} active={confirmed} onSelect={select} label="Scale metrics" />
             <DetailLayer title="Scale, with context" label="Evidence behind the figures" chapter="IV">
+              <div className="evidence-scale"><strong>{figures[0].figure}</strong><p>{figures[0].lead}</p><span>{figures[0].rest}</span></div>
               {figures.map((f) => <article key={f.figure} className="detail-figure"><p className="detail-figure__num num">{f.figure}</p><p><strong>{f.lead}</strong> {f.rest}</p></article>)}
             </DetailLayer>
           </div>
