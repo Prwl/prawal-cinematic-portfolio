@@ -22,21 +22,39 @@ export const awards = [
 
 export const awardsIssuer = "Successive Digital";
 
-// Proctored exams and professional certifications.
+// Examined credentials, as printed on each certificate (checked 2026-09-28
+// against the source documents). `earned` is the issue or achievement date;
+// `until` is the printed expiry or active-through date, where the document
+// carries one. The published images are sanitized derivatives with their
+// validation and certification identifiers painted out
+// (scripts/sanitize-credentials.mjs). Current and non-expiring credentials
+// come first, expired ones last.
 export const credentials = [
-  { title: "AWS Certified Solutions Architect, Associate", issuer: "Amazon Web Services", image: "aws-solutions-architect" },
-  { title: "AWS Certified Developer, Associate", issuer: "Amazon Web Services", image: "aws-developer" },
-  { title: "AWS Certified AI Practitioner", issuer: "Amazon Web Services", image: "aws-ai-practitioner" },
-  { title: "Google Cloud Certified Cloud Digital Leader", issuer: "Google Cloud", image: "gcp-digital-leader" },
-  { title: "Microsoft Certified: Azure Fundamentals", issuer: "Microsoft", image: "azure-fundamentals" },
-  { title: "Microsoft Certified: Azure Data Fundamentals", issuer: "Microsoft", image: "azure-data" },
-  { title: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft", image: "azure-ai" },
-  { title: "Microsoft Certified: Security, Compliance, and Identity Fundamentals", issuer: "Microsoft", image: "azure-security" },
-  { title: "Certified Agile Leadership Essentials (CAL-E)", issuer: "Scrum Alliance", image: "scrum-cal-e" },
-  { title: "Graph Developer, Professional", issuer: "Apollo GraphQL", image: "apollo-professional" },
-  { title: "Graph Developer, Associate", issuer: "Apollo GraphQL", image: "apollo-associate" },
-  { title: "Artificial Intelligence and Machine Learning Program", issuer: "ICTRD", image: "ictrd-ai-ml" }
+  { title: "AWS Certified AI Practitioner", issuer: "Amazon Web Services", image: "aws-ai-practitioner", earned: "May 2025", until: "May 2028" },
+  { title: "Artificial Intelligence and Machine Learning Program", issuer: "ICTRD", image: "ictrd-ai-ml", earned: "April 2026" },
+  { title: "Graph Developer, Professional", issuer: "Apollo GraphQL", image: "apollo-professional", earned: "December 2022", noExpiry: true },
+  { title: "Graph Developer, Associate", issuer: "Apollo GraphQL", image: "apollo-associate", earned: "January 2022", noExpiry: true },
+  { title: "Microsoft Certified: Security, Compliance, and Identity Fundamentals", issuer: "Microsoft", image: "azure-security", earned: "May 2022" },
+  { title: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft", image: "azure-ai", earned: "February 2022" },
+  { title: "Microsoft Certified: Azure Data Fundamentals", issuer: "Microsoft", image: "azure-data", earned: "December 2021" },
+  { title: "Microsoft Certified: Azure Fundamentals", issuer: "Microsoft", image: "azure-fundamentals", earned: "October 2021" },
+  { title: "Certified Agile Leadership Essentials (CAL-E)", issuer: "Scrum Alliance", image: "scrum-cal-e", earned: "November 2023", until: "November 2025" },
+  { title: "Google Cloud Certified Cloud Digital Leader", issuer: "Google Cloud", image: "gcp-digital-leader", earned: "February 2023", until: "February 2026" },
+  { title: "AWS Certified Developer, Associate", issuer: "Amazon Web Services", image: "aws-developer", earned: "November 2022", until: "November 2025" },
+  { title: "AWS Certified Solutions Architect, Associate", issuer: "Amazon Web Services", image: "aws-solutions-architect", earned: "September 2021", until: "September 2024" }
 ];
+
+// A credential's standing on a given day, in words, from its printed dates only.
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const monthEnd = (label) => {
+  const [month, year] = label.split(" ");
+  return new Date(Number(year), MONTHS.indexOf(month) + 1, 0);
+};
+export function credentialStanding(c, today = new Date()) {
+  if (c.noExpiry) return `Earned ${c.earned}. Does not expire`;
+  if (!c.until) return `Earned ${c.earned}`;
+  return monthEnd(c.until) < today ? `Earned ${c.earned}. Expired ${c.until}` : `Earned ${c.earned}. Valid until ${c.until}`;
+}
 
 // The long tail, grouped. Full titles from profile.certifications.
 export const learningArchive = [
@@ -103,6 +121,11 @@ export const learningArchive = [
     ]
   }
 ];
+
+// The recommenders' own LinkedIn portraits, as published on the source
+// portfolio. They show third parties: set false to replace every portrait
+// with the person's initials if any of them should not appear.
+export const showVoicePortraits = true;
 
 export const recommendations = [
   { name: "Amit Bora", image: "amit-bora", role: "Specialist Engineer", date: "2025", quote: "Prawal exemplifies the qualities of a forward-thinking and highly effective technology leader, with well-rounded cloud expertise across Azure, AWS, and GCP." },

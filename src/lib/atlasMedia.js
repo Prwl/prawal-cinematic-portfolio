@@ -12,6 +12,3 @@ export const atlas = {
   centre: url(manifest.centre),
   files: Object.fromEntries(manifest.spokes.flatMap((s) => Object.values(s.files ?? {})).map((f) => [f, url(f)]))
 };
-
-// The hero variant for this page load: ?hero=atlas opts into the experiment.
-export const heroVariant = () => (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("hero") === "atlas" ? "atlas" : "living");

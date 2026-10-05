@@ -6,7 +6,7 @@ const out = "artifacts/qa/final";
 await mkdir(out,{recursive:true});
 const browser = await chromium.launch({channel:"chrome"});
 const results = [], errors = [];
-const sizes = [[1440,900],[1366,768],[1280,800],[1024,1366],[820,1180],[430,932],[390,844],[360,800]];
+const sizes = [[1440,900],[1366,768],[1280,720],[1024,768],[820,1180],[430,932],[390,844],[360,800]];
 for (const [width,height] of sizes) {
  const context = await browser.newContext({viewport:{width,height},hasTouch:width<1100,isMobile:width<1100});
  const page = await context.newPage();
@@ -25,11 +25,11 @@ for (const [width,height] of sizes) {
  for(let i=0;i<await scenes.count();i++) {
   const scene=scenes.nth(i);
   await scene.evaluate(el=>window.scrollTo({top:el.getBoundingClientRect().top+scrollY+(el.offsetHeight-innerHeight)*.56,behavior:"instant"}));
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1600);
   const info=await scene.evaluate(el=>{
    const stick=el.querySelector(".story-sticky");const r=stick.getBoundingClientRect();
    const controls=[...stick.querySelectorAll("button,a")].filter(e=>!e.disabled&&e.tabIndex>=0);
-   return {kind:el.className,top:r.top,bottom:r.bottom,overflow:document.documentElement.scrollWidth-innerWidth,offscreen:controls.filter(e=>{const b=e.getBoundingClientRect();return b.left<0||b.right>innerWidth+1||b.bottom>innerHeight+2}).map(e=>e.textContent)};
+   return {kind:el.className,top:r.top,bottom:r.bottom,overflow:document.documentElement.scrollWidth-innerWidth,offscreen:controls.filter(e=>{const b=e.getBoundingClientRect();return b.left<0||b.right>innerWidth+1||b.bottom>innerHeight+2}).map(e=>({name:e.getAttribute("aria-label")||e.textContent,rect:e.getBoundingClientRect().toJSON()}))};
   });
   if(info.overflow>0||info.offscreen.length)errors.push(`${width}: ${JSON.stringify(info)}`);
   if([1440,390,360,820].includes(width))await page.screenshot({path:`${out}/${width}-scene-${i}.png`});

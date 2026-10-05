@@ -222,3 +222,40 @@
     margin-left: 0;
   }
 }
+
+/* Fit the entire concluding composition beneath the fixed header. */
+@media (min-width: 900px) and (orientation: landscape) {
+  .epilogue { min-height: 100svh; }
+  .epilogue__copy { gap: 1.1rem; padding-block: 6rem 2rem; }
+  .epilogue__title { font-size: clamp(2.5rem, min(5vw, 8svh), 5.5rem); }
+  .epilogue__lede { font-size: clamp(1.15rem, 2.8svh, 1.75rem); }
+  .epilogue__actions { margin-top: .5rem; }
+  .epilogue__direct { margin-top: .5rem; padding-top: 1rem; }
+  .site-footer { padding-block: 1rem; }
+  .epilogue__figure { height: 85%; }
+}
+
+@media (max-width: 699px) {
+  .epilogue__copy { gap: 1rem; padding-bottom: 2rem; }
+  .epilogue__title { font-size: clamp(2.25rem, 9.5vw, 2.5rem); line-height: 1.05; }
+  .epilogue__lede { font-size: 1.15rem; }
+  .epilogue__actions { gap: .5rem; margin-top: 0; }
+  .epilogue__direct { gap: .75rem 1.5rem; margin-top: .5rem; padding-top: .75rem; }
+  .site-footer { padding-block: 1rem calc(1rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* The horizon belongs to the floor, below the invitation and portrait. */
+.epilogue__horizon { display: none; }
+.epilogue > .horizon { display: none; }
+.epilogue__figure img { filter: drop-shadow(12px 10px 18px rgb(27 30 34 / .1)); }
+@media (max-width: 699px) {
+ .epilogue { min-height: 100svh; padding-top: 0; }
+ .epilogue__stage { position: relative; height: 170px; margin-top: 5rem; grid-row: 1; }
+ .epilogue__figure { height: 100%; }
+ .epilogue__copy { gap: .85rem; padding-top: 0; padding-bottom: 1rem; }
+ .epilogue__direct { font-size: .85rem; }
+ .site-footer { font-size: .75rem; gap: .2rem 1rem; }
+}
+
+.epilogue__floor { background: linear-gradient(180deg, transparent, rgb(27 30 34 / .07)); }
+.epilogue .site-footer { border-top: 0; }

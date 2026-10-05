@@ -15,17 +15,19 @@ const media = (...p) => path.join(root, "src", "assets", "media", ...p);
 // small portrait frames; everything else keeps its whole composition.
 const sets = [
   { dir: "events", width: 900, height: 900, fit: "inside" },
-  { dir: "credentials", width: 1100, height: 900, fit: "inside" },
+  // Credentials publish from the sanitized derivatives, never the originals
+  // (scripts/sanitize-credentials.mjs paints out their identifiers).
+  { dir: "credentials", from: "credentials-public", width: 1100, height: 900, fit: "inside" },
   { dir: "book", width: 760, height: 900, fit: "inside" },
   { dir: "voices", width: 280, height: 350, fit: "cover", position: "attention" }
 ];
 
 for (const set of sets) {
   await mkdir(media(set.dir), { recursive: true });
-  for (const file of await readdir(src(set.dir))) {
+  for (const file of await readdir(src(set.from ?? set.dir))) {
     if (file.startsWith(".")) continue;
     const name = file.replace(/\.(png|jpe?g|webp)$/i, "");
-    const base = sharp(src(set.dir, file))
+    const base = sharp(src(set.from ?? set.dir, file))
       .rotate()
       .resize({ width: set.width, height: set.height, fit: set.fit, position: set.position, withoutEnlargement: true })
       .flatten({ background: "#e9e4dd" });

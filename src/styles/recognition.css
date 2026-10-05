@@ -7,32 +7,32 @@
    One long gallery wall receding to the right. The track slides along the
    wall's own axis, so the whole hang moves as one: the print on stage comes
    to the near end of the wall, into its pool of light. */
-.exhibition { --run: 430svh; }
+.exhibition { --run: 330svh; }
 .exhibition__space {
   container-type: size;
   perspective: 1250px;
   perspective-origin: 26% 44%;
   z-index: 0;
   pointer-events: none;
-  overflow: clip;
+  overflow: clip visible;
 }
 .exhibition__floor {
   position: absolute;
-  inset: 76% 0 0;
-  background: linear-gradient(180deg, rgb(120 106 88 / .06), rgb(120 106 88 / .2));
+  inset: 86% 0 -40vh;
+  background: linear-gradient(180deg, rgb(120 106 88 / .06), rgb(120 106 88 / .2) 40%);
 }
 .exhibition__wall {
   --step: 46cqw;
   position: absolute;
   left: 15cqw;
-  top: 12cqh;
+  top: 2cqh;
   width: 480cqw;
-  height: 60cqh;
+  height: 92cqh;
   transform-origin: left center;
   transform: rotateY(32deg);
   transform-style: preserve-3d;
   /* The wall catches the window's light nearest the viewer and greys off down its length. */
-  background: linear-gradient(90deg, rgb(255 252 246 / .5), rgb(255 252 246 / .12) 18%, transparent 40%);
+  background: linear-gradient(90deg, rgb(255 252 246 / .5), rgb(255 252 246 / .12) 18%, transparent 40%, rgb(110 96 78 / .07) 100%);
 }
 .exhibition__track {
   position: absolute;
@@ -46,7 +46,7 @@
   position: absolute;
   left: -6cqw;
   right: 0;
-  bottom: -14cqh;
+  bottom: -3cqh;
   height: 1px;
   background: rgb(27 30 34 / .22);
   box-shadow: 0 1px 0 rgb(255 255 255 / .4);
@@ -121,7 +121,7 @@
    One long table seen from above at an angle. Three stations lie along it;
    the camera tracks across, one station per beat. At each station one piece
    is lifted off the table and turned to the viewer to be read. */
-.study { --run: 330svh; }
+.study { --run: 270svh; }
 .study__space {
   container-type: size;
   perspective: 1500px;
@@ -132,9 +132,9 @@
 .study__table {
   position: absolute;
   left: 0;
-  top: 27cqh;
+  top: 10cqh;
   width: 300cqw;
-  height: 96cqh;
+  height: 130cqh;
   transform-origin: 50% 0;
   transform: translateX(calc(var(--at) * -100cqw)) rotateX(50deg);
   transform-style: preserve-3d;
@@ -192,7 +192,7 @@
   left: calc(28cqw + var(--n) * 3.9cqw);
   top: calc(4cqh + var(--odd) * 12cqh);
 }
-.study__station--credentials .study__piece[data-lifted="true"] { left: 46cqw; top: 26cqh; width: 22cqw; }
+.study__station--credentials .study__piece[data-lifted="true"] { left: 44cqw; top: 46cqh; width: 22cqw; transform: translateZ(2cqh) rotateX(-34deg) scale(1.12); }
 
 /* Events: prints laid out to dry, latent until the camera reaches them. */
 .study__station--rooms .study__piece {
@@ -204,11 +204,12 @@
   filter: grayscale(1) contrast(.8) brightness(1.1);
 }
 .study__station--rooms[data-current="true"] .study__piece { filter: grayscale(.35) contrast(.95); }
-.study__station--rooms .study__piece[data-lifted="true"] { filter: none; transform: translateZ(2cqh) scale(1.45); }
+.study__station--rooms .study__piece[data-lifted="true"] { filter: none; transform-origin: 50% 0; transform: translateZ(3cqh) scale(1.4); }
 
 /* The book: the cover, and the contributors' stage beside it. */
-.study__station--book .study__piece:nth-child(1) { width: 10cqw; left: 44cqw; top: 26cqh; --turn: -3deg; }
-.study__station--book .study__piece:nth-child(2) { width: 22cqw; left: 60cqw; top: 4cqh; --turn: 2deg; padding: .6cqw; }
+.study__station--book .study__piece:nth-child(1) { width: 10cqw; left: 42cqw; top: 44cqh; --turn: -3deg; }
+.study__station--book .study__piece:nth-child(1)[data-lifted="true"] { transform: translateZ(2cqh) rotateX(-34deg) scale(1.12); }
+.study__station--book .study__piece:nth-child(2) { width: 22cqw; left: 58cqw; top: 12cqh; --turn: 2deg; padding: .6cqw; }
 
 .study__caption {
   position: relative;
@@ -224,7 +225,7 @@
 .study__details { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: flex-end; }
 
 /* ---------- Voices ---------- */
-.voices { --run: 520svh; }
+.voices { --run: 380svh; }
 .voices__light {
   z-index: 0;
   pointer-events: none;
@@ -272,6 +273,10 @@
 .voices__row button[aria-pressed="true"] { opacity: 1; filter: none; transform: translateY(-6px); box-shadow: 0 2px 0 var(--ember); }
 @media (hover: hover) { .voices__row button:hover { opacity: .9; filter: grayscale(.3); } }
 
+/* Initials, when portraits are withheld: a plate in the gallery's stone. */
+.voices__initials { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 5; background: linear-gradient(135deg, #e7e1d7, #cfc7ba); color: var(--ink-2); font-weight: 600; font-stretch: var(--wide); font-size: clamp(1rem, 3vw, 2.4rem); letter-spacing: .02em; }
+.voices__row .voices__initials { font-size: .8rem; }
+
 /* ---------- The detail layer's plates ---------- */
 .detail-plate { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
 .detail-plate img { width: 100%; height: auto; margin: 0; box-shadow: 12px 18px 22px -14px rgb(27 30 34 / .35); }
@@ -282,13 +287,13 @@
 
 @media (max-width: 699px) {
   .exhibition__space { perspective: 900px; perspective-origin: 30% 40%; }
-  .exhibition__wall { --step: 84cqw; left: 8cqw; top: 20cqh; height: 42cqh; transform: rotateY(26deg); }
+  .exhibition__wall { --step: 84cqw; left: 8cqw; top: 6cqh; height: 84cqh; transform: rotateY(26deg); }
   .exhibition__year { font-size: 22cqh; }
   .exhibition__label { min-height: 6.5rem; }
   .study__space { perspective: 900px; }
-  .study__table { top: 18cqh; height: 70cqh; }
-  .study__station--credentials .study__piece { width: 34cqw; left: calc(6cqw + var(--n) * 4.8cqw); top: calc(10cqh + var(--odd) * 12cqh); }
-  .study__station--credentials .study__piece[data-lifted="true"] { left: 24cqw; width: 52cqw; top: 16cqh; }
+  .study__table { top: 6cqh; height: 110cqh; }
+  .study__station--credentials .study__piece { width: 34cqw; left: calc(6cqw + var(--n) * 4.4cqw); top: calc(10cqh + var(--odd) * 12cqh); }
+  .study__station--credentials .study__piece[data-lifted="true"] { left: 22cqw; width: 54cqw; top: 40cqh; }
   .study__station--rooms .study__piece { width: 15cqw; left: calc(16cqw + var(--col) * 18cqw); top: calc(2cqh + var(--row) * 14cqh); }
   .study__station--book .study__piece:nth-child(1) { width: 30cqw; left: 10cqw; }
   .study__station--book .study__piece:nth-child(2) { width: 46cqw; left: 46cqw; }
@@ -304,3 +309,38 @@
 @media (prefers-reduced-motion: reduce) {
   .exhibition__track, .exhibition__print, .exhibition__pool, .exhibition__year, .study__table, .study__piece, .voices__row button { transition: none; }
 }
+
+/* Selected evidence holds the journey; the archive preserves every entry. */
+.exhibition { --run: 300svh; }
+.voices { --run: 230svh; }
+.exhibition__print[data-state="ahead"] { opacity: max(.18, calc(1 - var(--d) * .22)); filter: saturate(.15) contrast(.82) brightness(.96); }
+.study__piece:not([data-lifted="true"]) { filter: saturate(.55) brightness(.92); }
+.study__piece[data-lifted="true"] { filter: none; }
+.voices__quote p { max-width: 30ch; }
+
+/* Keep all event prints inside the camera's usable field. */
+.study__station--rooms .study__piece { width: 11cqw; left: calc(12cqw + var(--col) * 12cqw + var(--row) * 3cqw); top: calc(4cqh + var(--row) * 26cqh); }
+@media (max-width: 699px) {
+  .study__station--rooms .study__piece { width: 15cqw; left: calc(7cqw + var(--col) * 17cqw + var(--row) * 2cqw); top: calc(3cqh + var(--row) * 22cqh); }
+}
+
+.study__station--rooms .study__piece[data-lifted="true"] { left: 34cqw; top: 26cqh; width: 14cqw; transform-origin: 50% 100%; transform: translateZ(2cqh) rotateX(-34deg) scale(1.12); }
+@media (max-width: 699px) {
+  .study__station--rooms .study__piece[data-lifted="true"] { left: 30cqw; top: 26cqh; width: 32cqw; }
+  .study__station--book .study__piece:nth-child(1) { left: 22cqw; top: 26cqh; width: 26cqw; }
+  .study__station--book .study__piece:nth-child(2) { left: 48cqw; width: 40cqw; }
+}
+
+/* Evidence stays intact; camera confirmation and edges become quieter. */
+.exhibition__track, .study__table { transition-duration: var(--shot-duration); }
+.exhibition__print, .exhibition__pool, .exhibition__year { transition-duration: 600ms; }
+.study { --run: 225svh; }
+.study__space { overflow: visible clip; }
+.study__table { background: radial-gradient(ellipse at 50% 30%, rgb(255 253 248 / .15), transparent 70%); box-shadow: none; }
+.study__table::after { display: none; }
+@media (min-width: 700px) and (max-width: 1399px) { .exhibition__wall { left: calc(var(--rail-width) + 2.5cqw); } }
+
+/* Plaster frames and a rail-safe wall, continuous with the sage room. */
+.exhibition__print { border: 1px solid #a79c8c; background: #e8e2d8; }
+@media (min-width: 700px) { .exhibition__wall { left: calc(var(--rail-width) + 3cqw); } }
+.recognition { background: linear-gradient(180deg, rgb(201 213 199 / .25), transparent 35svh); }

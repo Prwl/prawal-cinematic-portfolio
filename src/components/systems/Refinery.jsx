@@ -1,5 +1,13 @@
 import { useId, useMemo } from "react";
 import { mulberry32 } from "../../lib/random.js";
+import { camera } from "./camera.js";
+
+// Where the camera looks on each beat: the loose streams arriving, the recipe
+// screens at work, the fan-out, then the whole refinery.
+const SHOTS = {
+  wide: [[435, 260, 1.85], [345, 305, 1.65], [630, 320, 1.8], [865, 320, 1.02], [610, 320, .96]],
+  compact: [[300, 300, 1.25], [300, 200, 1.15], [300, 410, 1.15], [300, 555, .94], null]
+};
 
 // The Data Refinery as a machine that turns disorder into order. Two hundred
 // sources arrive as loose, uneven streams; Connectors gathers them; three
@@ -28,9 +36,14 @@ export function Refinery({ active, compact }) {
   const uid = useId();
   const hatch = `${uid.replace(/[^a-zA-Z0-9_-]/g, "")}-hatch`;
   const { w, h, P } = frame(compact);
+  const shot = SHOTS[compact ? "compact" : "wide"][active];
+  const inShot = (x, y, pad = 70) => {
+    const [fx, fy, scale] = shot ?? [w / 2, h / 2, 1];
+    return Math.abs(x - fx) < w / (2 * scale) - pad && Math.abs(y - fy) < h / (2 * scale) - 24;
+  };
   const labelAt = (u, v) => {
-    const [x, y] = compact ? P(u, 150) : P(u, v);
-    return compact ? { x, y: y + 7, textAnchor: "end" } : { x, y, textAnchor: "middle" };
+    const [x, y] = compact ? P(u, 320) : P(u, v);
+    return { x, y: compact ? y - 28 : y, textAnchor: "middle", style: { opacity: inShot(x, compact ? y - 28 : y) ? 1 : 0 } };
   };
   const pt = (u, v) => P(u, v).map((n) => n.toFixed(1)).join(",");
   const poly = (pts) => pts.map(([u, v]) => pt(u, v)).join(" ");
@@ -55,7 +68,8 @@ export function Refinery({ active, compact }) {
   return (
     <svg className="machine refinery" viewBox={`0 0 ${w} ${h}`} role="img" aria-labelledby={uid} data-beat={active}>
       <title id={uid}>Conceptual abstraction: many loose source streams converge into Connectors, are straightened by Trifacta recipe screens into a few governed lanes, and Data Serve fans them out to AWS S3, GCP, Azure ADLS, Snowflake, SFTP and analytics.</title>
-      <text className="machine__figure" data-lit={lit(1)} x={compact ? 570 : 34} y={compact ? 96 : 612} textAnchor={compact ? "end" : "start"}>200+</text>
+      <text className="machine__figure" data-lit={lit(1)} x={compact ? 570 : 40} y={compact ? 800 : 610} textAnchor={compact ? "end" : "start"}>{active === 4 ? "87+ live" : active === 1 ? "200+" : ""}</text>
+      <g className="machine__camera" style={camera(w, h, SHOTS[compact ? "compact" : "wide"][active])}>
 
       {/* Loose streams, and the flow along them once lit. */}
       <g className="machine__group" data-lit={lit(1)}>
@@ -69,8 +83,9 @@ export function Refinery({ active, compact }) {
       </g>
 
       {/* Connectors: the intake that gathers every stream. */}
-      <g className="machine__stage" data-lit={lit(1)}>
-        <polygon className="machine__slab" points={poly([[A - 12, 160], [A + 12, 160], [A + 12, 480], [A - 12, 480]])} />
+      <g className="machine__stage refinery__intake" data-lit={true}>
+        <polygon className="machine__return" points={poly([[A + 26, 150], [A + 58, 176], [A + 58, 516], [A + 26, 490]])} />
+        <polygon className="machine__slab" style={{ fill: `url(#${hatch}-intake)` }} points={poly([[A - 26, 150], [A + 26, 150], [A + 26, 490], [A - 26, 490]])} />
         {Array.from({ length: 8 }, (_, i) => <line key={i} className="machine__port" x1={P(A - 12, 190 + i * (260 / 7))[0]} y1={P(A - 12, 190 + i * (260 / 7))[1]} x2={P(A + 12, 190 + i * (260 / 7))[0]} y2={P(A + 12, 190 + i * (260 / 7))[1]} />)}
         <text className="machine__label" {...labelAt(A, 130)}>Connectors</text>
       </g>
@@ -87,14 +102,16 @@ export function Refinery({ active, compact }) {
       <g className="machine__stage" data-lit={lit(2)}>
         {SCREENS.map((u, i) => (
           <g key={u} className="machine__screen" style={{ "--step": i }}>
-            <polygon className="machine__lattice" points={poly([[u - 5, 200], [u + 5, 200], [u + 5, 440], [u - 5, 440]])} style={{ fill: `url(#${hatch})` }} />
+            <polygon className="machine__return" points={poly([[u + 12, 200], [u + 34, 214], [u + 34, 454], [u + 12, 440]])} />
+            <polygon className="machine__lattice" points={poly([[u - 12, 200], [u + 12, 200], [u + 12, 440], [u - 12, 440]])} style={{ fill: `url(#${hatch})` }} />
           </g>
         ))}
-        <text className="machine__label" {...labelAt(625, 170)}>{compact ? "Recipes" : "Trifacta recipes"}</text>
+        <text className="machine__label" {...labelAt(595, 170)}>{compact ? "Recipes" : "Trifacta recipes"}</text>
       </g>
 
       {/* Data Serve and the fan-out to destinations. */}
       <g className="machine__stage" data-lit={lit(3)}>
+        <polygon className="machine__return" points={poly([[S + 12, 210], [S + 32, 228], [S + 32, 448], [S + 12, 430]])} />
         <polygon className="machine__slab" points={poly([[S - 12, 210], [S + 12, 210], [S + 12, 430], [S - 12, 430]])} />
         <text className="machine__label" {...labelAt(S, 180)}>Data Serve</text>
       </g>
@@ -107,12 +124,16 @@ export function Refinery({ active, compact }) {
               <path className="machine__wire" d={d} />
               <path className="machine__flow machine__flow--out" d={d} style={{ animationDelay: `-${j * 0.31}s` }} />
               <rect className="machine__dest" x={x - 5} y={y - 5} width="10" height="10" />
-              <text className="machine__name" x={compact ? x : x + 20} y={compact ? y + (j % 2 ? 58 : 32) : y + 5} textAnchor={compact ? "middle" : "start"}>{name}</text>
+              <text className="machine__name" style={{ opacity: inShot(x, y, compact ? 48 : 100) ? 1 : 0 }} x={compact ? x : x + 20} y={compact ? y + (j % 2 ? 58 : 32) : y + 5} textAnchor={compact ? "middle" : "start"}>{name}</text>
             </g>
           );
         })}
       </g>
+      </g>
       <defs>
+        <linearGradient id={`${hatch}-intake`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#687d87" /><stop offset=".5" stopColor="#3e505a" /><stop offset="1" stopColor="#25333b" />
+        </linearGradient>
         <pattern id={hatch} width="10" height="7" patternUnits="userSpaceOnUse">
           <rect width="10" height="7" fill="var(--machine-slab)" />
           <line x1="0" y1="0.5" x2="10" y2="0.5" stroke="var(--machine-line)" />

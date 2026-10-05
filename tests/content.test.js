@@ -9,7 +9,7 @@ import { risers } from "../src/data/experience.js";
 import { caseStudies, workIndex } from "../src/data/systems.js";
 import { figures } from "../src/data/scale.js";
 import { pillars, practice } from "../src/data/intelligence.js";
-import { awards, credentials, recommendations, appearances, publication } from "../src/data/recognition.js";
+import { awards, credentials, credentialStanding, recommendations, appearances, publication } from "../src/data/recognition.js";
 import { capabilityGroups, contexts } from "../src/data/capabilities.js";
 import { REST_FRAME, frameAt, gridPosition } from "../src/hooks/useLivingPortrait.js";
 import livingGrid from "../src/assets/media/living/prawal-living.json";
@@ -59,6 +59,29 @@ describe("content", () => {
     for (const [set, keys] of sets) {
       expect(keys.every(Boolean)).toBe(true);
       for (const k of keys) for (const ext of ["webp", "avif"]) expect(existsSync(path.join(root, "src/assets/media", set, `${k}.${ext}`))).toBe(true);
+    }
+  });
+
+  it("never presents a lapsed credential as current", () => {
+    const day = new Date("2026-09-28");
+    for (const c of credentials) {
+      expect(c.earned).toMatch(/^[A-Z][a-z]+ \d{4}$/);
+      const standing = credentialStanding(c, day);
+      if (c.until && new Date(`${c.until} 1`) < day) expect(standing).toContain(`Expired ${c.until}`);
+      if (!c.until && !c.noExpiry) expect(standing).not.toMatch(/valid|active|expire/i);
+    }
+    // As printed: these four have lapsed by the audit date.
+    const lapsed = credentials.filter((c) => credentialStanding(c, day).includes("Expired")).map((c) => c.image).sort();
+    expect(lapsed).toEqual(["aws-developer", "aws-solutions-architect", "gcp-digital-leader", "scrum-cal-e"]);
+  });
+
+  it("publishes credentials only from sanitized derivatives", () => {
+    const pipeline = readFileSync(path.join(root, "scripts/prepare-archive.mjs"), "utf8");
+    expect(pipeline).toMatch(/dir: "credentials", from: "credentials-public"/);
+    const redactions = readFileSync(path.join(root, "scripts/sanitize-credentials.mjs"), "utf8");
+    for (const c of credentials) {
+      expect(redactions).toContain(`"${c.image}.png"`);
+      expect(existsSync(path.join(root, "assets-src/credentials-public", `${c.image}.png`))).toBe(true);
     }
   });
 

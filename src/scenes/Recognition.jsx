@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
-import { awards, awardsIssuer, credentials, learningArchive, recommendations, recommendationsSource, appearances, publication } from "../data/recognition.js";
+import { awards, awardsIssuer, credentials, credentialStanding, learningArchive, recommendations, recommendationsSource, showVoicePortraits, appearances, publication } from "../data/recognition.js";
 import { Horizon } from "../components/Horizon.jsx";
 import { DetailLayer } from "../components/DetailLayer.jsx";
 import { StoryControls } from "../components/StoryControls.jsx";
@@ -9,6 +9,14 @@ import { useStory } from "../hooks/useStory.js";
 import "../styles/recognition.css";
 
 const year = (date) => date.slice(-4);
+const initials = (name) => name.split(" ").filter((w, i, a) => i === 0 || i === a.length - 1).map((w) => w[0]).join("");
+
+/** A recommender's portrait, or their initials when portraits are withheld. */
+function Face({ voice }) {
+  return showVoicePortraits
+    ? <Still set="voices" name={voice.image} width="280" height="350" />
+    : <span className="voices__initials" aria-hidden="true">{initials(voice.name)}</span>;
+}
 
 /**
  * The exhibition. Real award photographs hang along one long gallery wall
@@ -17,13 +25,17 @@ const year = (date) => date.slice(-4);
  * slip past, the ones ahead wait further down the wall. The year is painted
  * on the wall behind the print, as exhibitions do.
  */
+const AWARD_CUT = [0, 0, 2, 4, 4, 7, 9];
+const VOICE_CUT = [0, 2, 3];
+
 function Exhibition() {
-  const { ref, reduce, active, select } = useStory(awards.length);
-  const award = awards[active];
+  const { ref, reduce, active, confirmed, select } = useStory(awards.length, 0, AWARD_CUT);
+  const award = awards[confirmed];
   return (
     <div ref={ref} className="story-run exhibition" data-reduced={reduce}>
       <div className="story-sticky wrap">
         <h2 id="recognition-title" className="scene-heading">Recognition, earned over time.</h2>
+        <div className="scene-band">
         <div className="exhibition__space stage-bleed" aria-hidden="true">
           <span className="exhibition__floor" />
           <div className="exhibition__wall">
@@ -33,14 +45,15 @@ function Exhibition() {
                 <figure key={a.image} className="exhibition__print" data-state={i < active ? "passed" : i === active ? "current" : "ahead"} style={{ "--i": i, "--d": Math.abs(i - active), "--h": [1, 0.84, 0.92][i % 3] }}>
                   <span className="exhibition__year">{year(a.date)}</span>
                   <span className="exhibition__pool" />
-                  <Still set="awards" name={a.image} width="960" height="720" />
+                  <Still set="awards" name={a.image} width="960" height="720" eager={true} />
                 </figure>
               ))}
             </div>
           </div>
         </div>
+        </div>
         <div className="exhibition__label" aria-live="polite" aria-atomic="true">
-          <div key={active} className="beat">
+          <div key={confirmed} className="beat">
             <h3>{award.title}</h3>
             <p>{award.date} · {awardsIssuer}</p>
           </div>
@@ -48,7 +61,7 @@ function Exhibition() {
         <div className="scene-footer">
           <div className="gallery-controls">
             <button type="button" onClick={() => select(active - 1)} disabled={active === 0} aria-label="Previous award"><ArrowLeft size={20} /></button>
-            <span className="num">{String(active + 1).padStart(2, "0")} / {awards.length}</span>
+            <span className="num">{String(confirmed + 1).padStart(2, "0")} / {awards.length}</span>
             <button type="button" onClick={() => select(active + 1)} disabled={active === awards.length - 1} aria-label="Next award"><ArrowRight size={20} /></button>
           </div>
           <DetailLayer title="The awards archive" label="All ten awards and their stories" chapter="VI">
@@ -69,20 +82,21 @@ function Exhibition() {
 // The camera tracks across it, one station per beat, and one piece at each
 // station is lifted into the light to be read.
 const stations = [
-  { id: "credentials", title: "Twelve credentials.", line: "Cloud, data, AI and agile leadership, examined.", items: credentials, set: "credentials", name: (c) => c.title, meta: (c) => c.issuer },
+  { id: "credentials", title: "Twelve credentials.", line: "Cloud, data, AI and agile leadership, earned 2021 to 2026.", items: credentials, set: "credentials", name: (c) => c.title, meta: (c) => `${c.issuer}. ${credentialStanding(c)}.` },
   { id: "rooms", title: "In the room.", line: "Eight industry events, 2023 to 2026.", items: appearances, set: "events", name: (a) => a.title, meta: (a) => `${a.year} · ${a.kind}` },
   { id: "book", title: "On the page.", line: `${publication.role}, ${publication.title}.`, items: [{ image: publication.cover, title: publication.title }, { image: publication.stage, title: "The contributors, on stage at the launch" }], set: "book", name: (b) => b.title, meta: () => publication.detail }
 ];
 
 function Study() {
-  const { ref, reduce, active, select } = useStory(stations.length);
+  const { ref, reduce, live, active, confirmed, select } = useStory(stations.length);
   const [lifted, setLifted] = useState({ credentials: 0, rooms: 0, book: 0 });
-  const station = stations[active];
+  const station = stations[confirmed];
   const piece = station.items[lifted[station.id]];
   return (
     <div ref={ref} className="story-run study" data-reduced={reduce}>
       <div className="story-sticky wrap">
         <h3 id="archive-title" className="scene-heading">The continuing practice.</h3>
+        <div className="scene-band">
         <div className="study__space stage-bleed">
           <div className="study__table" style={{ "--at": active }}>
             {stations.map((s, si) => (
@@ -100,25 +114,27 @@ function Study() {
                     style={{ "--n": i, "--odd": i % 2, "--tri": (i % 3) - 1, "--col": i % 4, "--row": Math.floor(i / 4) }}
                     onClick={() => { setLifted((l) => ({ ...l, [s.id]: i })); select(si); }}
                   >
-                    <Still set={s.set} name={item.image} />
+                    <Still set={s.set} name={item.image} eager={s.set === "events" || (live && si === active && lifted[s.id] === i)} />
                   </button>
                 ))}
               </div>
             ))}
           </div>
         </div>
+        </div>
         <div className="study__caption" aria-live="polite" aria-atomic="true">
-          <div key={active} className="beat"><p className="study__title">{station.title}</p><p className="study__line">{station.line}</p></div>
-          <p key={`${active}-${lifted[station.id]}`} className="study__piece-name beat beat--late"><strong>{station.name(piece)}</strong> {station.meta(piece)}</p>
+          <div key={confirmed} className="beat"><p className="study__title">{station.title}</p><p className="study__line">{station.line}</p></div>
+          <p key={`${confirmed}-${lifted[station.id]}`} className="study__piece-name beat beat--late"><strong>{station.name(piece)}</strong> {station.meta(piece)}</p>
         </div>
         <div className="scene-footer">
-          <StoryControls labels={["Credentials", "Events", "Publication"]} active={active} onSelect={select} label="Archive" />
+          <StoryControls labels={["Credentials", "Events", "Publication"]} active={confirmed} onSelect={select} label="Archive" />
           <div className="study__details">
             <DetailLayer title="Certifications and learning" label="Certification archive" chapter="VI">
+              <p className="detail-note">Dates as printed on each certificate. Validation and certification identifiers are withheld from the published images.</p>
               {credentials.map((c) => (
                 <article key={c.title} className="detail-plate detail-plate--document">
                   <Still set="credentials" name={c.image} alt={`${c.title} certificate`} width="1100" height="780" />
-                  <div><h3>{c.title}</h3><p className="label">{c.issuer}</p></div>
+                  <div><h3>{c.title}</h3><p className="label">{c.issuer}</p><p>{credentialStanding(c)}.</p></div>
                 </article>
               ))}
               {learningArchive.map((g) => <article key={g.group}><h3>{g.group}</h3><ul>{g.items.map((i) => <li key={i}>{i}</li>)}</ul></article>)}
@@ -148,7 +164,7 @@ function Study() {
  * from the latent row into the light.
  */
 function Voices() {
-  const { ref, reduce, active, select } = useStory(recommendations.length);
+  const { ref, reduce, active, select } = useStory(recommendations.length, 0, VOICE_CUT);
   const voice = recommendations[active];
   return (
     <div ref={ref} className="story-run voices" data-reduced={reduce}>
@@ -156,7 +172,7 @@ function Voices() {
         <h3 id="voices-title" className="scene-heading">In their words.</h3>
         <span className="voices__light stage-bleed" aria-hidden="true" />
         <figure className="voices__stage" aria-live="polite" aria-atomic="true">
-          <div key={`${active}-face`} className="voices__face beat" aria-hidden="true"><Still set="voices" name={voice.image} width="280" height="350" /></div>
+          <div key={`${active}-face`} className="voices__face beat" aria-hidden="true"><Face voice={voice} /></div>
           <blockquote key={active} className="voices__quote beat"><p>“{voice.quote}”</p></blockquote>
           <figcaption key={`${active}-by`} className="voices__by beat beat--late"><strong>{voice.name}</strong><span>{voice.role} · {voice.date}</span></figcaption>
         </figure>
@@ -164,14 +180,14 @@ function Voices() {
           <nav className="voices__row" aria-label="Recommendations">
             {recommendations.map((r, i) => (
               <button key={r.name} type="button" aria-pressed={i === active} aria-label={r.name} onClick={() => select(i)}>
-                <Still set="voices" name={r.image} width="280" height="350" />
+                <Face voice={r} />
               </button>
             ))}
           </nav>
           <DetailLayer title="Professional recommendations" label="All 12 voices" chapter="VI">
             {recommendations.map((r) => (
               <article key={r.name} className="detail-voice">
-                <Still set="voices" name={r.image} width="280" height="350" />
+                <Face voice={r} />
                 <div><h3>{r.name}</h3><p className="label">{r.role} · {r.date}</p><blockquote><p>“{r.quote}”</p></blockquote></div>
               </article>
             ))}

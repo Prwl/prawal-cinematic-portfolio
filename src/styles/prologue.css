@@ -37,7 +37,11 @@
 
 .prologue__hall {
   position: absolute;
-  inset: 0 0 13% 0;
+  inset: 0;
+  /* The wall owns the whole set. Its returns soften into floor atmosphere
+     rather than terminating at the floor's choreography anchor. */
+  -webkit-mask-image: linear-gradient(180deg, #000 66%, rgb(0 0 0 / .72) 84%, rgb(0 0 0 / .3));
+  mask-image: linear-gradient(180deg, #000 66%, rgb(0 0 0 / .72) 84%, rgb(0 0 0 / .3));
 }
 
 /* The back wall steps back between the pilasters: a shallow recess in shade. */
@@ -92,19 +96,31 @@
   right: 0;
   top: 87%;
   bottom: 0;
-  background: linear-gradient(180deg, rgb(27 30 34 / 0.035), rgb(27 30 34 / 0.07));
+  /* Keep this anchor for the existing horizon handoff. The atmosphere
+     extends upward into the wall, so there is no painted edge at 87%. */
+  background: none;
+}
+
+.prologue__floor::before {
+  content: "";
+  position: absolute;
+  inset: -150% 0 0;
+  background:
+    radial-gradient(ellipse 42% 48% at 72% 105%, rgb(27 30 34 / .055), transparent 78%),
+    radial-gradient(ellipse 70% 70% at 23% 90%, rgb(255 255 255 / .09), transparent 80%),
+    linear-gradient(180deg, transparent, rgb(27 30 34 / .006) 45%, rgb(27 30 34 / .027));
 }
 
 /* The window's light lands on the floor as a sheared patch. */
 .prologue__sunpatch {
   position: absolute;
-  top: 8%;
-  left: 17%;
-  width: 26%;
-  height: 70%;
+  top: -105%;
+  left: 12%;
+  width: 31%;
+  height: 180%;
   background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.3) 24%, rgb(255 255 255 / 0.22) 70%, transparent);
   transform: skewX(-34deg);
-  filter: blur(10px);
+  filter: blur(24px);
 }
 
 /* The first line drawn in the film, and the one that carries it. */
@@ -114,19 +130,14 @@
   right: 0;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(27 30 34 / 0.12) 16%, rgb(27 30 34 / 0.42) 64%, rgb(27 30 34 / 0.12) 92%, transparent);
+  /* Leave the action bay free of a rule; only the far edges catch it. */
+  background: linear-gradient(90deg, transparent, rgb(27 30 34 / .07) 7%, transparent 17%, transparent 75%, rgb(27 30 34 / .06) 94%, transparent);
+  filter: blur(1.5px);
   transform-origin: 64% 50%;
 }
 
-/* In landscape he stands at the right, in front of the floor's far edge
-   rather than on it: the floor and its line end before him, so no line runs
-   behind his waist. */
-@media (orientation: landscape) {
-  .prologue__floor {
-    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 58%);
-    mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 58%);
-  }
-}
+/* The lower atmosphere spans the set, including beneath the portrait.
+   Only the horizon's paint is interrupted around the actions. */
 
 /* ---------- Prawal ---------- */
 
@@ -397,7 +408,7 @@
       linear-gradient(180deg, transparent 0%, #000 12%, #000 54%, transparent 82%);
   }
   .prologue__hall {
-    inset: 0 0 42% 0;
+    inset: 0;
   }
   .prologue__pilaster--1 {
     left: 0;
@@ -413,12 +424,15 @@
   }
   .prologue__floor {
     top: 60%;
-    background: linear-gradient(180deg, rgb(27 30 34 / 0.03), rgb(27 30 34 / 0.05));
+  }
+  .prologue__floor::before {
+    inset: -35% 0 0;
   }
   .prologue__sunpatch {
+    top: -35%;
     left: 4%;
     width: 44%;
-    height: 30%;
+    height: 95%;
   }
   .prologue__copy {
     padding-bottom: clamp(2rem, 6svh, 4.5rem);

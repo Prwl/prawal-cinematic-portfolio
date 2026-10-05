@@ -51,8 +51,10 @@ export function wallKey(r, g, b, body) {
 // there everything past it is wall, however dark (the photograph's pillar edge
 // beside his arm is), and goes to stone. `headBox` is in plate fractions;
 // `reach`, if given, is a grey image of everywhere the head goes in any pose,
-// which the figure mask then covers too.
-export async function makeFigure(still, headBox, reach) {
+// which the figure mask then covers too. `dir` is where the maps and poster
+// are written; production's living/ unless an experiment says otherwise.
+export async function makeFigure(still, headBox, reach, dir = out()) {
+  const dest = (file) => path.join(dir, file);
   const work = await mkdtemp(path.join(os.tmpdir(), "living-figure-"));
   try {
     const bin = path.join(work, "cutout");
@@ -84,7 +86,7 @@ export async function makeFigure(still, headBox, reach) {
       return dst;
     };
     const map = (buf, sigma, file) =>
-      sharp(buf, { raw: { ...MAP, channels: 1 } }).blur(sigma).extractChannel(0).png({ compressionLevel: 9 }).toFile(out(file));
+      sharp(buf, { raw: { ...MAP, channels: 1 } }).blur(sigma).extractChannel(0).png({ compressionLevel: 9 }).toFile(dest(file));
     await map(grow(small, 1), SOFTEN, "prawal-living-body.png");
     let matte = small;
     if (reach) {
@@ -97,13 +99,13 @@ export async function makeFigure(still, headBox, reach) {
     const { data, info } = await sharp(still).removeAlpha().raw().toBuffer({ resolveWithObject: true });
     const { width, height } = info;
     const full = async (file) => (await sharp(file).resize(width, height, { fit: "fill", kernel: "cubic" }).extractChannel(0).raw().toBuffer());
-    const body = await full(out("prawal-living-body.png"));
+    const body = await full(dest("prawal-living-body.png"));
     // His outline at full resolution, barely softened, for the wall past it.
     // (sharp orders operations itself: a second extractChannel in one pipeline
     // replaces the first, so the alpha is taken out before it is blurred.)
     const outlineRaw = await sharp(cut).extractChannel("alpha").raw().toBuffer();
     const outline = await sharp(outlineRaw, { raw: { width, height, channels: 1 } }).blur(1.2).extractChannel(0).raw().toBuffer();
-    const alpha = await full(out("prawal-living-alpha.png"));
+    const alpha = await full(dest("prawal-living-alpha.png"));
     const rgba = Buffer.alloc(width * height * 4);
     const hx0 = headBox.left * width;
     const hx1 = (headBox.left + headBox.width) * width;
@@ -122,8 +124,8 @@ export async function makeFigure(still, headBox, reach) {
       rgba[p * 4 + 3] = alpha[p];
     }
     const poster = sharp(rgba, { raw: { width, height, channels: 4 } });
-    await poster.clone().avif({ quality: 62, effort: 6 }).toFile(out("prawal-living-poster.avif"));
-    await poster.clone().webp({ quality: 86, alphaQuality: 90, effort: 6 }).toFile(out("prawal-living-poster.webp"));
+    await poster.clone().avif({ quality: 62, effort: 6 }).toFile(dest("prawal-living-poster.avif"));
+    await poster.clone().webp({ quality: 86, alphaQuality: 90, effort: 6 }).toFile(dest("prawal-living-poster.webp"));
   } finally {
     await rm(work, { recursive: true });
   }

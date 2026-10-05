@@ -9,19 +9,25 @@ import "../styles/system-story.css";
 
 const beats = ["Dormant", "Input", "Processing", "Output", "Impact"];
 const narratives = {
-  pipeline: ["A fragmented starting point.", "200+ sources enter through Connectors.", "Trifacta recipes straighten them into governed lanes.", "Data Serve distributes to cloud and analytics.", "87+ sources live. Each onboarded in 1-2 days."],
+  pipeline: ["A fragmented starting point.", "200+ sources enter through Connectors.", "Trifacta recipes straighten them into governed lanes.", "Data Serve distributes to cloud and analytics.", "87+ sources live. Each onboarded in 1⁠–⁠2 days."],
   transactions: ["Payment rails, waiting for a transaction.", "A merchant enters through enrollment APIs.", "Identity is verified, then scored and screened. One is held.", "Screened transactions settle through ACH and reporting.", "160K+ transactions a day. 99.9% uptime."],
   taxonomy: ["Campaign fields, bound by dependencies.", "One field changes.", "Every field that depends on it responds.", "The sheet resolves one campaign identifier.", "Naming stays consistent as dependencies change."]
 };
+// Processing is the refinery/payment peak; taxonomy culminates in resolution.
+// Each machine's three primary moments (input, processing, output) hold for
+// at least about a quarter of its run, wider than one ordinary trackpad swipe
+// at most sizes. Dormant and Impact are seen as the scene arrives and leaves,
+// so they need only a short pinned window.
+const SYSTEM_CUTS = { pipeline: [0, 1, 1, 2, 2, 2, 3, 4, 4], transactions: [0, 1, 2, 2, 2, 2, 3, 4, 4], taxonomy: [0, 1, 2, 2, 3, 3, 3, 4, 4] };
 const machines = { pipeline: Refinery, transactions: Rails, taxonomy: Lattice };
 
 /** Published system concepts only; each machine is an abstraction, not architecture. */
 export function SystemStory({ study }) {
-  const { ref, reduce, live, active, select } = useStory(5, 4);
+  const { ref, reduce, live, active, confirmed, select } = useStory(5, 4, SYSTEM_CUTS[study.diagram], study.diagram === "taxonomy" ? 1350 : 940);
   const compact = useMediaQuery("(max-width: 699px)");
   const Machine = machines[study.diagram];
   return (
-    <article ref={ref} className="story-run system-story" data-kind={study.diagram} data-live={live} data-reduced={reduce} aria-labelledby={`case-${study.id}`}>
+    <article ref={ref} className="story-run system-story" data-kind={study.diagram} data-beat={active} data-live={live} data-reduced={reduce} aria-labelledby={`case-${study.id}`}>
       <div className="story-sticky wrap">
         <span className="system-story__room stage-bleed" aria-hidden="true" />
         <header className="system-story__head">
@@ -30,11 +36,11 @@ export function SystemStory({ study }) {
         </header>
         <figure className="system-story__visual">
           <Machine active={active} compact={compact} live={live} reduce={reduce} />
-          <figcaption>Conceptual abstraction of the published system.</figcaption>
+          <figcaption>{study.diagram === "pipeline" ? "All three scenes are conceptual abstractions of published systems." : ""}</figcaption>
         </figure>
-        <p className="system-story__narrative" aria-live="polite" aria-atomic="true"><span key={active} className="beat">{narratives[study.diagram][active]}</span></p>
+        <p className="system-story__narrative" aria-live="polite" aria-atomic="true"><span key={confirmed} className="beat">{narratives[study.diagram][confirmed]}</span></p>
         <div className="scene-footer">
-          <StoryControls labels={beats} active={active} onSelect={select} label={`${study.name} story`} />
+          <StoryControls labels={beats} active={confirmed} onSelect={select} label={`${study.name} story`} />
           <DetailLayer title={study.name} label="Case study and technology" chapter="III">
             <p className="detail-lede">{study.summary}</p>
             <dl>{[["Domain", study.domain], ["Role", study.role], ["Tenure", study.tenure], ["Team", study.team]].map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>

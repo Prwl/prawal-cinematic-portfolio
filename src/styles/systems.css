@@ -16,3 +16,5 @@
 .index__group { margin-bottom: 2rem; }
 .index__name { display: inline-flex; align-items: center; gap: .5rem; }
 .index__detail { display: block; }
+
+.systems__archive { padding-block: .5rem; }

@@ -7,6 +7,9 @@ import "../styles/evolution.css";
 
 // Each step rises higher than the last: the weight a role carried, made into
 // stone. Rises in cqh, cumulative to each tread.
+// The two leadership arrivals hold longest; the earlier steps keep the climb.
+const CAREER_CUT = [0, 1, 2, 3, 4, 5, 5];
+
 const RISE = [13, 15, 17.5, 20.5, 24, 28];
 const TOP = RISE.map((_, i) => RISE.slice(0, i + 1).reduce((a, b) => a + b, 0));
 
@@ -17,14 +20,15 @@ const TOP = RISE.map((_, i) => RISE.slice(0, i + 1).reduce((a, b) => a + b, 0));
  * frame, the ones still ahead rise out of it into haze.
  */
 export function Evolution() {
-  const { ref, reduce, active, select } = useStory(risers.length, risers.length - 1);
-  const role = risers[active];
+  const { ref, reduce, active, confirmed, select } = useStory(risers.length, risers.length - 1, CAREER_CUT);
+  const role = risers[confirmed];
   return (
     <section id="evolution" className="chapter evolution bleed" aria-labelledby="evolution-title">
       <Horizon />
-      <div ref={ref} className="story-run ascent" data-reduced={reduce}>
+      <div ref={ref} className="story-run ascent" data-complete={active === risers.length - 1} data-reduced={reduce}>
         <div className="story-sticky wrap">
           <h2 id="evolution-title" className="scene-heading">Each step carried more weight.</h2>
+          <div className="scene-band">
           <div className="ascent__space stage-bleed" aria-hidden="true">
             <span className="ascent__ground" />
             <div className="ascent__stair" style={{ "--x": active, "--top": TOP[active] }}>
@@ -37,15 +41,17 @@ export function Evolution() {
               ))}
             </div>
           </div>
+          </div>
           <div className="ascent__caption" aria-live="polite" aria-atomic="true">
-            <div key={active} className="beat">
+            <div key={confirmed} className="beat">
               <h3>{role.title}</h3>
               <p>{role.org}</p>
+              <p className="ascent__detail">{role.scope}</p>
               <p className="label">{role.period}</p>
             </div>
           </div>
           <div className="scene-footer">
-            <StoryControls labels={risers.map((r) => r.years)} active={active} onSelect={select} label="Career stages" />
+            <StoryControls labels={risers.map((r) => r.years)} active={confirmed} onSelect={select} label="Career stages" />
             <DetailLayer title="The complete career" label="Roles and responsibilities" chapter="II">
               {risers.map((r) => (
                 <article key={r.id} className="detail-role">

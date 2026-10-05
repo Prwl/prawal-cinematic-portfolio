@@ -3,7 +3,7 @@
    judgment; four stone principles slide in along their own axes and lock
    against it. Channels are cut as each joins; a ring binds the whole. */
 .intelligence { padding-block: 3rem 0; }
-.assembly { --run: 330svh; }
+.assembly { --run: 300svh; }
 .assembly .story-sticky { overflow: visible; }
 .assembly .scene-footer { margin-top: 0; }
 
@@ -44,7 +44,19 @@
 .assembly__block[data-state="arriving"] .face-top { fill: #f7f9f5; stroke: var(--ember); stroke-width: 2; }
 .assembly__num { font-size: 13px; font-weight: 600; letter-spacing: .1em; fill: var(--ink-3); }
 .assembly__block[data-state="arriving"] .assembly__num { fill: var(--ember-ink); }
-.assembly__name { font-size: 17px; fill: var(--ink); opacity: 0; transition: opacity 600ms ease 500ms; }
+.assembly__name { font-size: 20px; fill: var(--ink); opacity: 0; transition: opacity 600ms ease 500ms; }
+/* The explanation sits with the block it explains, as it arrives. */
+.assembly__line { font-size: 15px; fill: var(--ink-2); opacity: 0; transition: opacity 600ms ease 700ms; }
+.assembly__block[data-state="arriving"] .assembly__line { opacity: 1; }
+svg[data-complete="true"] .assembly__name { font-size: 17px; }
+/* Resolved: the core takes the key light and the ring binds the four. */
+svg[data-complete="true"] .assembly__core .face-top { stroke: var(--ember); stroke-width: 2; }
+svg[data-complete="true"] .assembly__plinth .face-top { fill: #edf2ea; }
+/* On a wide frame the principle is named in the model; the caption below
+   speaks only for the whole. It stays in the live region for screen readers. */
+@media (min-width: 700px) {
+  .assembly__caption:not([data-complete="true"]) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 .assembly__block[data-state="arriving"] .assembly__name, svg[data-complete="true"] .assembly__name { opacity: 1; }
 
 .assembly__channel { fill: none; stroke: var(--ember-ink); stroke-width: 2.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 900ms var(--ease-out) 700ms; }
@@ -60,7 +72,7 @@
 
 @media (max-width: 699px) {
   .assembly__model svg { max-height: 50svh; }
-  .assembly__name { display: none; }
+  .assembly__name, .assembly__line { display: none; }
   .assembly__num { font-size: 18px; }
   .assembly__shadow { fill: rgb(40 56 44 / .12); }
 .assembly__core-name { font-size: 19px; }
@@ -69,4 +81,63 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .assembly__block, .assembly__channel, .assembly__ring, .assembly__name, .assembly__light { transition: none; }
+}
+
+/* Raking light and a heavier plinth anchor the completed assembly. */
+.assembly__plinth .face-left { fill: #b9c6b9; }
+.assembly__plinth .face-right { fill: #92a495; }
+.assembly__shadow { fill: rgb(40 56 44 / .2); }
+.face-left { fill: #c6d2c4; }
+.face-right { fill: #9daf9e; }
+.assembly__core .face-left { fill: #41494a; }
+.assembly__core .face-right { fill: #1b2022; }
+.assembly__light { background: radial-gradient(55% 65% at 28% 18%, rgb(252 253 250 / .72), transparent 75%), linear-gradient(145deg, transparent 40%, rgb(78 103 85 / .2)); }
+
+/* The assembly resolves into a closer, heavier architectural frame. */
+.assembly { --run: 280svh; }
+.assembly__model { overflow: clip; margin-block: .25rem; }
+.assembly__model svg { max-height: none; }
+.assembly__camera { transform-origin: 0 0; transform-box: view-box; transition: transform 1000ms var(--ease-in-out); }
+.assembly__block { transition: transform 1000ms var(--ease-out), opacity 450ms ease; }
+.assembly__block .face-top { stroke: rgb(249 252 246 / .7); stroke-width: 1.2; }
+.assembly__shadow { fill: rgb(28 45 33 / .24); }
+.assembly__core .face-top { fill: #687477; stroke: rgb(235 241 236 / .65); stroke-width: 1; }
+.assembly__core .face-right { fill: #1b2022; }
+.assembly__core-name { font-size: 17px; letter-spacing: .06em; }
+.assembly__name, .assembly__line { transition: opacity 180ms ease 900ms; }
+.assembly__ring { stroke-width: 3; transition: stroke-dashoffset 1000ms var(--ease-in-out); }
+.assembly__channel { stroke-width: 3; transition-delay: 100ms; }
+.assembly__light { transition-duration: 1000ms; opacity: .45; }
+.assembly__light[data-complete="true"] { opacity: 1; background: linear-gradient(118deg, transparent 22%, rgb(252 253 250 / .58) 34%, transparent 49%), linear-gradient(145deg, transparent 36%, rgb(59 82 66 / .24)); }
+svg[data-complete="true"] .assembly__core .face-top { stroke: var(--ember-ink); stroke-width: 3; }
+svg[data-complete="true"] .assembly__name { font-size: 16px; }
+@media (min-width: 700px) {
+ .assembly__caption { position: absolute; left: var(--gutter); bottom: 5.6rem; margin: 0; min-height: 0; max-width: 21ch; }
+ .assembly__caption h3 { font-size: clamp(2rem, 3.5vw, 3.25rem); max-width: 12ch; }
+ .assembly__caption p { font-size: .9rem; max-width: 25ch; }
+}
+@media (max-width: 699px) {
+ .assembly__model svg { max-height: 50svh; }
+ .assembly__core-name { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .assembly__camera { transition: none; } }
+
+/* Final shot: reserve a type bay beside the complete model. */
+.assembly .story-sticky { display: grid; grid-template-columns: minmax(0, 29%) minmax(0, 71%); grid-template-rows: auto minmax(0, 1fr) auto; }
+.assembly .scene-heading, .assembly .scene-footer { grid-column: 1 / -1; }
+.assembly__model { grid-column: 1 / -1; grid-row: 2; width: 71%; margin-left: 29%; height: 100%; overflow: clip; }
+.assembly[data-complete="true"] .assembly__model { width: 71%; margin-left: 29%; }
+.assembly__caption[data-complete="true"] { position: relative; grid-column: 1; grid-row: 2; left: auto; bottom: auto; align-self: center; max-width: 100%; padding-right: .5rem; }
+.assembly__caption[data-complete="true"] h3 { font-size: clamp(2.4rem, 4.3vw, 4rem); font-stretch: var(--wide); font-weight: 600; line-height: 1.02; max-width: 10ch; }
+.assembly[data-complete="true"] .assembly__shadow { fill: rgb(28 45 33 / .32); }
+.assembly[data-complete="true"] .assembly__core { filter: drop-shadow(10px 16px 8px rgb(28 45 33 / .14)); }
+.assembly__model svg { display: block; }
+svg[data-complete="true"] .assembly__name { font-size: 20px; }
+svg[data-complete="true"] .assembly__num { opacity: 0; }
+.assembly__light { background: radial-gradient(55% 65% at 28% 18%, rgb(252 253 250 / .72), transparent 75%), linear-gradient(145deg, transparent 40%, rgb(78 103 85 / .2)); }
+@media (max-width: 699px) {
+ .assembly .story-sticky { display: flex; }
+ .assembly .assembly__model, .assembly[data-complete="true"] .assembly__model { width: 100%; margin-left: 0; }
+ .assembly__caption[data-complete="true"] { align-self: stretch; }
+ .assembly__caption[data-complete="true"] h3 { font-size: 2rem; max-width: none; }
 }

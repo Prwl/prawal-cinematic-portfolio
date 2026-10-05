@@ -4,7 +4,7 @@ import { profile } from "../data/profile.js";
 import { documents } from "../data/contact.js";
 import { LivingPortrait } from "../components/LivingPortrait.jsx";
 import { AtlasPortrait } from "../components/AtlasPortrait.jsx";
-import { heroVariant } from "../lib/atlasMedia.js";
+import { SequencePortrait } from "../components/SequencePortrait.jsx";
 import { useTitleSequence } from "../motion/useTitleSequence.js";
 import { gsap, ScrollTrigger } from "../motion/gsap.js";
 import { prefersReducedMotion } from "../hooks/useReducedMotion.js";
@@ -25,9 +25,13 @@ function TrackedWord({ word, spread }) {
   );
 }
 
-// Experiment: ?hero=atlas swaps in the directional-atlas portrait. Without the
-// flag the page is exactly production.
-const HeroPortrait = heroVariant() === "atlas" ? AtlasPortrait : LivingPortrait;
+// The hero is the image-sequence portrait (SequencePortrait). For comparison,
+// ?hero=living brings back the previous video-scrubbed portrait and
+// ?hero=atlas the directional-atlas experiment; ?hero=sequence still names
+// the default, so older links keep working.
+const HEROES = { living: LivingPortrait, atlas: AtlasPortrait, sequence: SequencePortrait };
+const heroFlag = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("hero") : null;
+const HeroPortrait = HEROES[heroFlag] ?? SequencePortrait;
 
 export function Prologue() {
   const scope = useRef(null);

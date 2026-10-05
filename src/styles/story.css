@@ -73,4 +73,17 @@ html { scrollbar-gutter: stable; }
 /* Full-bleed scenes: the stage runs under the cue rail to the window edge,
    and nothing in it can widen the page. */
 .bleed { margin-left: calc(var(--rail-width) * -1); padding-left: var(--rail-width); overflow-x: clip; }
+.scene-band { position: relative; flex: 1; min-height: 0; margin-block: .75rem; }
+/* A band's stage clips at the frame's top and bottom but runs out to the
+   window's sides; the band itself only fixes the stage's height. */
+.story-sticky:has(> .scene-band) { overflow: visible clip; }
+@media (max-height: 820px) and (min-width: 700px) { .story-sticky { padding-top: 5.25rem; padding-bottom: 1.25rem; } }
 .stage-bleed { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; margin-left: calc((100vw + var(--rail-width)) / -2); }
+
+/* A shot confirms its words only after the subject has arrived. */
+.story-run { --shot-duration: 880ms; }
+:is(.ascent__caption, .system-story__narrative, .exhibition__label, .study__caption, .scale-scene__metric, .assembly__caption, .hall__line) { transition: opacity 160ms ease; }
+.story-run[data-moving="true"] :is(.ascent__caption, .system-story__narrative, .exhibition__label, .study__caption, .scale-scene__metric, .assembly__caption, .hall__line) { opacity: 0; }
+.story-run .beat { animation: none; }
+.story-run[data-reduced="true"] :is(.ascent__caption, .system-story__narrative, .exhibition__label, .study__caption, .scale-scene__metric, .assembly__caption, .hall__line) { opacity: 1; }
+

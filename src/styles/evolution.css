@@ -4,19 +4,26 @@
    climbs: the stair is translated so the step on stage sits at one focal
    point, then viewed from a fixed angle above and to the left. */
 .evolution { padding-block: 3rem 0; }
-.ascent { --run: 380svh; }
+.ascent { --run: 330svh; }
 .ascent .story-sticky { overflow: visible; }
 .ascent .scene-footer { margin-top: 0; }
 
 .ascent__space {
-  --R: 21cqw;
-  --W: 30cqw;
+  --R: 18.5cqw;
+  --stride: 27.3cqw;
+  --W: 26.4cqw;
+  /* Rises scale with the band, so a short window still climbs steep steps. */
+  --rise: 1.55;
   container-type: size;
-  perspective: 1500px;
-  perspective-origin: 46% 40%;
+  perspective: 2200px;
+  perspective-origin: 52% 38%;
   overflow: clip;
   z-index: 0;
   pointer-events: none;
+  /* Climbed steps sink into floor haze before they reach the caption; the
+     steps ahead rise into the haze under the heading. */
+  -webkit-mask: linear-gradient(180deg, transparent, #000 10%, #000 94%, transparent);
+  mask: linear-gradient(180deg, transparent, #000 10%, #000 94%, transparent);
 }
 /* The hall floor falling into shade toward the viewer. */
 .ascent__ground {
@@ -26,17 +33,18 @@
 }
 .ascent__stair {
   position: absolute;
-  left: 57%;
-  top: 60%;
+  left: 60%;
+  top: 54%;
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  transform: rotateX(-14deg) rotateY(30deg) translate3d(calc((var(--x) + .5) * var(--R) * -1), calc(var(--top) * 1cqh), 0);
+  transform: rotateX(-14deg) rotateY(23deg) translate3d(calc(var(--x) * var(--stride) * -1 - var(--R) * .5), calc(var(--top) * var(--rise) * 1cqh), calc(var(--x) * 7cqw));
   transition: transform 1400ms var(--ease-in-out);
 }
 .ascent__step {
   position: absolute;
-  left: calc(var(--i) * var(--R));
+  left: calc(var(--i) * var(--stride));
+  transform: translateZ(calc(var(--i) * -7cqw));
   top: 0;
   width: var(--R);
   height: 0;
@@ -45,22 +53,23 @@
 .ascent__step > span {
   position: absolute;
   left: 0;
-  top: calc(var(--t) * -1cqh);
+  top: calc(var(--t) * var(--rise) * -1cqh);
   transition: opacity 900ms var(--ease-out);
 }
 /* The face toward the viewer, turned from the sun: the step's mass. */
 .ascent__front {
   width: var(--R);
-  height: calc(var(--t) * 1cqh);
+  height: calc(var(--t) * var(--rise) * 1cqh);
   transform: translateZ(calc(var(--W) / 2));
-  background: linear-gradient(180deg, #d6cfc3, #bcb4a6 70%);
-  box-shadow: inset 1px 0 0 rgb(255 255 255 / .35);
+  background: linear-gradient(180deg, #d1c9bc, #b1a898 70%);
+  /* The arris where face meets tread catches the light. */
+  box-shadow: inset 1px 0 0 rgb(255 255 255 / .35), inset 0 2px 0 rgb(255 255 255 / .45);
   padding: 1.6cqh 1.6cqw;
 }
 /* The riser, lit from the left by the window. */
 .ascent__riser {
   width: var(--W);
-  height: calc(var(--t) * 1cqh);
+  height: calc(var(--t) * var(--rise) * 1cqh);
   transform-origin: left;
   transform: translateZ(calc(var(--W) / 2)) rotateY(90deg);
   background: linear-gradient(180deg, #ece6db, #d9d2c5 70%);
@@ -73,11 +82,11 @@
   transform: translateZ(calc(var(--W) / -2)) rotateX(90deg);
   background: linear-gradient(0deg, #f3efe7, #e7e1d6);
 }
-.ascent__step[data-state="current"] .ascent__tread { box-shadow: inset 0 -3px 0 var(--ember); }
+.ascent__step[data-state="current"] .ascent__tread { box-shadow: inset 0 -3px 0 var(--ember); background: radial-gradient(60% 70% at 40% 60%, rgb(255 251 242 / .9), transparent 75%), linear-gradient(0deg, #f3efe7, #e7e1d6); }
 
 .ascent__year {
   display: block;
-  font-size: min(9cqh, 7.5cqw);
+  font-size: min(11cqh, 6.2cqw);
   font-weight: 500;
   font-stretch: var(--wide);
   line-height: .9;
@@ -88,7 +97,7 @@
 .ascent__scope {
   display: block;
   margin-top: 1.2cqh;
-  font-size: min(1.9cqh, 1.25cqw);
+  font-size: min(1.8cqh, 1.05cqw);
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -100,12 +109,11 @@
 
 /* Climbed steps fall away; the ones ahead rise into haze. */
 .ascent__step[data-state="passed"] > span { opacity: .5; }
-.ascent__step[data-state="ahead"] > span { opacity: calc(1 - var(--d) * .2); }
+.ascent__step[data-state="ahead"] > span { opacity: calc(1 - var(--d) * .16); filter: contrast(calc(1 - var(--d) * .12)) brightness(calc(1 + var(--d) * .03)); }
 
 .ascent__caption {
   position: relative;
   z-index: 5;
-  margin-top: auto;
   margin-bottom: 1.25rem;
   min-height: 7rem;
   max-width: 24ch;
@@ -115,8 +123,8 @@
 .ascent__caption .label { margin-top: .35rem; color: var(--ink-3); }
 
 @media (max-width: 699px) {
-  .ascent__space { --R: 38cqw; --W: 44cqw; perspective: 900px; perspective-origin: 50% 36%; }
-  .ascent__stair { left: 50%; top: 46%; transform: rotateX(-14deg) rotateY(26deg) translate3d(calc((var(--x) + .5) * var(--R) * -1), calc(var(--top) * 1cqh), 0); }
+  .ascent__space { --R: 33.5cqw; --stride: 49.4cqw; --W: 38.7cqw; perspective: 900px; perspective-origin: 50% 36%; }
+  .ascent__stair { left: 50%; top: 60%; transform: rotateX(-14deg) rotateY(26deg) translate3d(calc(var(--x) * var(--stride) * -1 - var(--R) * .5), calc(var(--top) * var(--rise) * 1cqh), calc(var(--x) * 7cqw)); }
   .ascent__year { font-size: 11cqw; }
   .ascent__scope { font-size: 2.6cqw; }
   .ascent__caption { min-height: 8.5rem; }
@@ -125,3 +133,47 @@
 @media (prefers-reduced-motion: reduce) {
   .ascent__stair, .ascent__step > span { transition: none; }
 }
+
+/* The tread receives the sun; the face holds the mass of each stage. */
+.ascent__front { background: linear-gradient(145deg, #c9bfae, #a29888 76%); box-shadow: inset 1px 0 0 rgb(255 255 255 / .4), inset 0 2px 0 rgb(255 255 255 / .65); }
+.ascent__riser { background: linear-gradient(135deg, #e6ded0, #c5bbaa); }
+.ascent__tread { background: linear-gradient(12deg, #e8e1d5, #d1c7b7); }
+.ascent__step[data-state="ahead"] > span { opacity: calc(1 - var(--d) * .1); filter: contrast(calc(1 - var(--d) * .06)) brightness(calc(1 + var(--d) * .025)); }
+.ascent__step[data-state="passed"] > span { opacity: .65; }
+.ascent__ground { background: linear-gradient(180deg, transparent, rgb(88 76 59 / .23)); }
+
+/* Separate landings: one foreground stage, one next stage, one distant cue. */
+.ascent__step[data-state="passed"] > span { opacity: 0; }
+.ascent__step[data-state="ahead"] > span {
+  opacity: max(0, calc(.9 - var(--d) * .32));
+  filter: contrast(.65) brightness(1.1);
+}
+.ascent__step[data-state="current"] .ascent__front {
+  box-shadow: inset 1px 0 0 rgb(255 255 255 / .55), inset 0 2px 0 rgb(255 255 255 / .85), 14px 24px 30px -18px rgb(55 45 33 / .3);
+}
+.ascent__scope { max-width: 100%; text-wrap: balance; }
+
+/* Preserve the separated landings; establish the year before its role. */
+.ascent { --run: 285svh; }
+.ascent__stair { transition-duration: var(--shot-duration); }
+.ascent__step > span { transition-duration: 450ms; }
+.ascent__year, .ascent__scope { transition-duration: 450ms; }
+.ascent__space { -webkit-mask: linear-gradient(180deg, transparent, #000 8%, #000 98%, transparent); mask: linear-gradient(180deg, transparent, #000 8%, #000 98%, transparent); }
+.ascent__ground { inset: 76% 0 0; background: linear-gradient(180deg, transparent, rgb(88 76 59 / .14)); }
+.ascent__front { background: linear-gradient(155deg, #d3cbbb, #b6ab98 48%, #938877); }
+.ascent[data-complete="true"] .ascent__step[data-state="current"] .ascent__front { background: linear-gradient(145deg, #d5cdbc, #a59a85 64%, #817764); }
+.ascent[data-complete="true"] .ascent__step[data-state="current"] .ascent__tread { box-shadow: inset 0 -3px 0 var(--ember-ink), 16px 24px 30px -20px rgb(55 45 33 / .3); }
+
+/* The landing has finite mass; the camera climbs cumulative elevations. */
+.ascent__front, .ascent__riser { height: min(calc(var(--t) * var(--rise) * 1cqh), 36cqh); }
+.ascent__stair { top: 38%; }
+.ascent__scope { display: none; }
+.ascent__detail { font-size: .95rem; margin-top: .25rem; color: var(--ember-ink); }
+.ascent__caption { min-height: 0; margin-bottom: .75rem; }
+.ascent__caption h3 { margin-bottom: .4rem; }
+.ascent__space { mask: linear-gradient(180deg, transparent, #000 8%, #000 91%, transparent); }
+.ascent[data-complete="true"] .ascent__year { color: var(--ink); font-weight: 600; font-size: min(16cqh, 8cqw); }
+.ascent[data-complete="true"] .ascent__caption h3 { font-stretch: var(--wide); }
+@media (max-width: 699px) { .ascent__stair { top: 42%; } .ascent[data-complete="true"] .ascent__year { font-size: 14cqw; } }
+
+.evolution { background: linear-gradient(180deg, rgb(220 213 201 / .35), transparent 35svh); }

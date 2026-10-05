@@ -127,7 +127,7 @@
    The figure sits left; the thing it counts is drawn right, and switches on
    mark by mark in its own order (--k), like segments on a board. Marks are
    pale ink; the one mark that carries the point is tungsten. */
-.scale-scene { --run: 400svh; }
+.scale-scene { --run: 340svh; }
 .scale-scene .story-sticky { overflow: clip; }
 .scale-scene .scene-footer { margin-top: 0; }
 .scale-scene__event {
@@ -139,8 +139,14 @@
   translate: 0 -48%;
   pointer-events: none;
 }
-.scale-scene__event svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.scale-scene__event svg:not([data-current="true"]) { visibility: hidden; transition: visibility 0s 500ms; }
+@media (prefers-reduced-motion: no-preference) { .scale-scene__event svg[data-current="true"] { animation: event-push 2200ms var(--ease-out) both; } }
+@keyframes event-push { from { transform: scale(.95); } }
+.scale-scene__event svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: transform 1800ms var(--ease-out), opacity 700ms ease; }
+/* Each event arrives with a slow push-in; the one leaving recedes. */
+.scale-scene__event svg:not([data-current="true"]) { transform: scale(1.04); opacity: 0; }
+/* A low tungsten pool the events play in: the same light from one figure to the next. */
+.scale-scene__event::before { content: ""; position: absolute; inset: -18%; background: radial-gradient(closest-side, rgb(238 185 123 / .07), transparent 70%); }
+.scale-scene__event svg:not([data-current="true"]) { visibility: hidden; transition: visibility 0s 700ms, transform 700ms ease, opacity 700ms ease; }
 .scale-scene__event svg:not([data-current="true"]) .mark { opacity: 0; transition-delay: 0ms; transition-duration: 400ms; }
 
 .mark {
@@ -184,3 +190,16 @@ line.mark--key { stroke-width: 3; }
 @media (prefers-reduced-motion: reduce) {
   .mark, .mark--draw { transition: none !important; }
 }
+
+/* A brief threshold bridges rooms without an empty viewport. */
+.scale { --threshold: min(16svh, 9rem); padding-block: var(--threshold); }
+.scale-scene { --run: 300svh; }
+
+/* Primary peaks hold; supporting numbers pass with less camera weight. */
+.scale-scene { --run: 260svh; }
+.scale-scene__event svg { animation: none !important; transition: transform 600ms var(--ease-out), opacity 450ms ease; }
+.scale-scene__event svg[data-current="true"] { transform: scale(1); }
+.scale-scene[data-weight="supporting"] .scale-scene__event svg[data-current="true"] { transform: scale(.88); }
+.scale-scene[data-weight="quiet"] .scale-scene__event svg[data-current="true"] { transform: scale(.8); }
+.mark { transition-delay: calc(var(--k) * 1ms); }
+.mark--draw { transition-duration: 600ms; transition-delay: 0ms; }

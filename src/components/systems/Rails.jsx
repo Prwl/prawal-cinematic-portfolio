@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef } from "react";
+import { camera } from "./camera.js";
 
 // Enrollment and Transactions as payment rails: a track receding into the
 // distance through four checkpoints (enroll, verify, screen, settle).
@@ -12,6 +13,14 @@ const GATES = [
   { name: "Settle", t: 0.84, from: 3 }
 ];
 
+// The camera travels down the line with the transaction: the first gate,
+// verification and screening with the siding, settlement and the ledger, then
+// the whole line.
+const SHOTS = {
+  wide: [null, [420, 310, 1.15], [725, 325, 1.12], [990, 240, 1.48], null],
+  compact: [null, [260, 560, 1.24], [390, 330, 1.14], [440, 200, 1.42], null]
+};
+
 function frame(compact) {
   return compact
     ? { w: 600, h: 820, N: [150, 770], F: [470, 150], across: [1, 0.22], width: 92, post: 190, depth: 2.4 }
@@ -22,6 +31,11 @@ export function Rails({ active, compact, live = true, reduce = false }) {
   const uid = useId();
   const svg = useRef(null);
   const f = frame(compact);
+  const shot = SHOTS[compact ? "compact" : "wide"][active];
+  const [fx, fy, zoom] = shot ?? [f.w / 2, f.h / 2, 1];
+  // Names disappear wholly when their gate leaves a deliberately close shot.
+  const labelVisible = (x, y, width = 110) => Math.abs(x - fx) < f.w / (2 * zoom) - width && Math.abs(y - fy) < f.h / (2 * zoom) - 30;
+
   const len = Math.hypot(...f.across);
   const ax = f.across[0] / len, ay = f.across[1] / len;
   const sc = (t) => 1 / (1 + f.depth * t);
@@ -48,6 +62,7 @@ export function Rails({ active, compact, live = true, reduce = false }) {
   return (
     <svg ref={svg} className="machine rails" viewBox={`0 0 ${f.w} ${f.h}`} role="img" aria-labelledby={uid} data-beat={active}>
       <title id={uid}>Conceptual abstraction: transactions travel payment rails through enrollment, identity verification, scoring and fraud screening, and settlement. One flagged transaction is turned onto a siding and held for review.</title>
+      <g className="machine__camera" style={camera(f.w, f.h, SHOTS[compact ? "compact" : "wide"][active])}>
       {/* Sleepers and the two rails. */}
       <g className="rails__bed">
         {Array.from({ length: 30 }, (_, i) => {
@@ -64,7 +79,7 @@ export function Rails({ active, compact, live = true, reduce = false }) {
       <g className="rails__siding" data-lit={active >= 2}>
         <path className="rails__branch" d={`M${sx.toFixed(1)},${sy.toFixed(1)} C${(sx + 10).toFixed(1)},${(sy + 50).toFixed(1)} ${(hold[0] - 30).toFixed(1)},${hold[1].toFixed(1)} ${hold[0].toFixed(1)},${hold[1].toFixed(1)}`} pathLength="1" />
         <rect className="rails__held" x={hold[0] - 6} y={hold[1] - 6} width="12" height="12" />
-        <text className="machine__name" x={hold[0] + 18} y={hold[1] + 5}>Held for review</text>
+        <text className="machine__name" style={{ opacity: active >= 2 && active !== 3 ? 1 : 0 }} x={compact ? hold[0] - 14 : hold[0] + 18} y={compact ? hold[1] + 36 : hold[1] + 5} textAnchor={compact ? "end" : "start"}>Held for review</text>
       </g>
 
       {/* Checkpoints: portals standing across the rails. */}
@@ -72,15 +87,17 @@ export function Rails({ active, compact, live = true, reduce = false }) {
         const s = sc(g.t);
         const a = side(g.t, -1.45), b = side(g.t, 1.45);
         const h = f.post * s;
-        const w = Math.max(3, 9 * s);
+        const w = Math.max(5, 15 * s);
         return (
           <g key={g.name} className="rails__gate" data-lit={active >= g.from}>
             <polygon className="rails__plane" points={`${a[0]},${a[1]} ${b[0]},${b[1]} ${b[0]},${b[1] - h} ${a[0]},${a[1] - h}`} />
+            <rect className="rails__return" x={a[0] + w / 2} y={a[1] - h + w * .6} width={w * .6} height={h} />
+            <rect className="rails__return" x={b[0] + w / 2} y={b[1] - h + w * .6} width={w * .6} height={h} />
             <rect className="rails__post" x={a[0] - w / 2} y={a[1] - h} width={w} height={h} />
             <rect className="rails__post" x={b[0] - w / 2} y={b[1] - h} width={w} height={h} />
             <line className="rails__lintel" x1={a[0]} y1={a[1] - h} x2={b[0]} y2={b[1] - h} style={{ strokeWidth: w }} />
             <line className="rails__key" x1={a[0]} y1={a[1] - h + w} x2={b[0]} y2={b[1] - h + w} />
-            <text className="machine__label" x={(a[0] + b[0]) / 2} y={Math.min(a[1], b[1]) - h - 16} textAnchor="middle">{g.name}</text>
+            <text className="machine__label" style={{ opacity: labelVisible((a[0] + b[0]) / 2, Math.min(a[1], b[1]) - h - 16, 65) ? 1 : 0 }} x={(a[0] + b[0]) / 2} y={Math.min(a[1], b[1]) - h - 16} textAnchor="middle">{g.name}</text>
           </g>
         );
       })}
@@ -118,6 +135,8 @@ export function Rails({ active, compact, live = true, reduce = false }) {
           {active >= 2 && <circle className="rails__packet rails__packet--held" cx={hold[0]} cy={hold[1]} r="5" />}
         </g>
       )}
+      </g>
+      <text className="machine__figure rails__figure" data-lit={active === 4} x={f.w - 30} y={f.h - 40} textAnchor="end">160K+</text>
     </svg>
   );
 }

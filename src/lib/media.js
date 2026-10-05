@@ -22,9 +22,9 @@ function srcset(base, widths, ext) {
 export const portraits = {
   close: {
     widths: [640, 1100],
-    avif: srcset("prawal-close", [640, 1100], "avif"),
-    webp: srcset("prawal-close", [640, 1100], "webp"),
-    fallback: url("prawal-close-640.webp"),
+    avif: srcset("prawal-close-finish", [640, 1100], "avif"),
+    webp: srcset("prawal-close-finish", [640, 1100], "webp"),
+    fallback: url("prawal-close-finish-640.webp"),
     width: 1980,
     height: 2240
   }
@@ -45,11 +45,11 @@ export const living = {
 };
 
 export function awardImage(key) {
-  return { avif: url(`awards/${key}.avif`), webp: url(`awards/${key}.webp`) };
+  return { avif: url(`awards/${key}.avif`), webp: url(`awards/${key}.webp`), avifSet: srcset(`awards/${key}`, [640, 1200], "avif"), webpSet: srcset(`awards/${key}`, [640, 1200], "webp") };
 }
 
 // Archive material (scripts/prepare-archive.mjs): event photographs,
 // credential documents, the book and the portraits of recommenders.
 export function archiveImage(set, key) {
-  return { avif: url(`${set}/${key}.avif`), webp: url(`${set}/${key}.webp`) };
+  return { avif: url(`${set}/${key}.avif`), webp: url(`${set}/${key}.webp`), ...(set === "events" ? { avifSet: srcset(`${set}/${key}`, [640, 1200], "avif"), webpSet: srcset(`${set}/${key}`, [640, 1200], "webp") } : {}) };
 }

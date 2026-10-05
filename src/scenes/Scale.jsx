@@ -92,6 +92,7 @@ function Columns() {
   ));
 }
 const events = [Dial, Sources, Days, Lift, Level, Columns];
+const SCALE_CUT = [0, 0, 0, 1, 2, 3, 3, 3, 4, 5, 5];
 
 /**
  * The one darker passage. Each figure has its moment: the room goes dark
@@ -99,8 +100,8 @@ const events = [Dial, Sources, Days, Lift, Level, Columns];
  * figure itself is lit.
  */
 export function Scale() {
-  const { ref, reduce, active, select } = useStory(figures.length);
-  const metric = figures[active];
+  const { ref, reduce, active, confirmed, select } = useStory(figures.length, 0, SCALE_CUT, 700);
+  const metric = figures[confirmed];
   const coreRef = useRef(null);
 
   // The fixed chrome takes graphite ink only while the solid dark is behind
@@ -128,7 +129,7 @@ export function Scale() {
     <section id="scale" className="chapter scale" aria-labelledby="scale-title" data-env="dark">
       <span ref={coreRef} className="scale__core" aria-hidden="true" />
       <Horizon />
-      <div ref={ref} className="story-run scale-scene" data-reduced={reduce}>
+      <div ref={ref} className="story-run scale-scene" data-weight={active === 0 || active === 3 ? "primary" : active === 4 ? "quiet" : "supporting"} data-reduced={reduce}>
         <div className="story-sticky wrap">
           <h2 id="scale-title" className="scene-heading">{scale.heading}</h2>
           <div className="scale-scene__event" aria-hidden="true">
@@ -139,11 +140,11 @@ export function Scale() {
             ))}
           </div>
           <div className="scale-scene__metric" aria-live="polite" aria-atomic="true">
-            <span key={active} className="title-wide num beat scale-scene__figure">{metric.figure}</span>
-            <p key={`${active}-lead`} className="beat beat--late">{metric.lead.replace(/,$/, "")}</p>
+            <span key={confirmed} className="title-wide num beat scale-scene__figure">{metric.figure}</span>
+            <p key={`${confirmed}-lead`} className="beat beat--late">{metric.lead.replace(/,$/, "")}</p>
           </div>
           <div className="scene-footer">
-            <StoryControls labels={["Payments", "Sources", "Onboarding", "AI delivery", "Trust", "Experience"]} active={active} onSelect={select} label="Scale metrics" />
+            <StoryControls labels={["Payments", "Sources", "Onboarding", "AI delivery", "Trust", "Experience"]} active={confirmed} onSelect={select} label="Scale metrics" />
             <DetailLayer title="Scale, with context" label="Evidence behind the figures" chapter="IV">
               {figures.map((f) => <article key={f.figure} className="detail-figure"><p className="detail-figure__num num">{f.figure}</p><p><strong>{f.lead}</strong> {f.rest}</p></article>)}
             </DetailLayer>

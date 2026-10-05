@@ -8,6 +8,10 @@ import "../styles/identity.css";
 // Four principles, each carved into a stone flat standing in a long hall.
 // Each flat carries the mark of its idea: a slit of light (clarity), a
 // measured module (structure), laid courses (trust), a plumb line (judgment).
+// Clarity is also on stage while the hall arrives; Judgment closes the hall
+// and leads into the framework, so it holds as long.
+const IDENTITY_CUT = [0, 0, 1, 2, 3];
+
 const principles = [
   { word: "Clarity", mark: "slit", line: "Give teams clarity before adding process." },
   { word: "Structure", mark: "module", line: "Build for maintainability before scale." },
@@ -21,15 +25,16 @@ const principles = [
  * past the lens, the ones ahead wait in haze.
  */
 export function Identity() {
-  const { ref, reduce, active, select } = useStory(principles.length);
-  const current = principles[active];
+  const { ref, reduce, active, confirmed, select } = useStory(principles.length, 0, IDENTITY_CUT, 1300);
+  const current = principles[confirmed];
   return (
     <section id="identity" className="chapter identity bleed" aria-labelledby="identity-title">
       <Horizon variant="handoff" />
       <div ref={ref} className="story-run hall" data-reduced={reduce}>
         <div className="story-sticky wrap">
           <h2 id="identity-title" className="scene-heading">How I think.</h2>
-          <div className="hall__space" aria-hidden="true" data-idea={current.mark} data-side={active % 2 ? "right" : "left"} style={{ "--at": active }}>
+          <div className="scene-band">
+          <div className="hall__space stage-bleed" aria-hidden="true" data-idea={principles[active].mark} data-side={active % 2 ? "right" : "left"} style={{ "--at": active }}>
             <span className="hall__floor" />
             <span className="hall__shaft" />
             <div className="hall__depth">
@@ -42,12 +47,13 @@ export function Identity() {
               ))}
             </div>
           </div>
+          </div>
           <p className="hall__line" aria-live="polite" aria-atomic="true">
             <span className="visually-hidden">{current.word}. </span>
-            <span key={active} className="beat beat--late">{current.line}</span>
+            <span key={confirmed} className="beat beat--late">{current.line}</span>
           </p>
           <div className="scene-footer">
-            <StoryControls labels={principles.map((p) => p.word)} active={active} onSelect={select} label="Leadership principles" />
+            <StoryControls labels={principles.map((p) => p.word)} active={confirmed} onSelect={select} label="Leadership principles" />
             <DetailLayer title="Leadership and background" label="Leadership, education and background" chapter="I">
               <p className="detail-lede">{identity.heading}</p>
               {identity.paragraphs.map((p) => <p key={p}>{p}</p>)}
