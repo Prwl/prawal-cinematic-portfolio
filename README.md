@@ -1,5 +1,14 @@
 # Prawal Sharma, cinematic portfolio
 
+> A single-page, scroll-driven cinematic portfolio.
+
+<p align="center">
+  <img src="docs/screenshots/desktop.jpg" width="38%" alt="Screenshot" />
+  <img src="docs/screenshots/inside.jpg" width="38%" alt="Screenshot" />
+  <img src="docs/screenshots/mobile.jpg" width="18%" alt="Screenshot" />
+</p>
+
+
 A single-page personal brand experience, developed in daylight: a career walked through one stone building over one day, each chapter a new lighting condition. The opening is a living portrait that turns toward the visitor's pointer. Built from scratch; the older `prawal-personal-brand` project was used only as a read-only source of facts and original photographs.
 
 ## Commands
