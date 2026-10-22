@@ -35,7 +35,7 @@ export const sceneScores = {
   pipeline: { beats: [[0, 1], [.75, 2], [1.75, 3], [2.75, 4]], duration: 3.6, final: 4 },
   ascent: { beats: [[0, 0], [.5, 1], [.75, 2], [1.05, 3], [1.6, 4], [2.45, 5]], duration: 3.7, final: 5 },
   'scale-scene': { beats: [[0, 0], [1.1, 1], [1.45, 2], [1.85, 3]], duration: 3.5, final: 3 },
-  hall: { beats: [[0, 0], [.55, 1], [1.15, 2], [1.85, 3]], duration: 3.5, final: 3 },
+  hall: { beats: [[0, 0], [.95, 1], [1.85, 2], [2.8, 3]], duration: 4.15, final: 3 },
   exhibition: { beats: [[0, 0], [.9, 2], [1.85, 4]], duration: 3.2, final: 4 },
   study: { beats: [[0, 0]], duration: 1.2, final: 0, gate: false },
   voices: { beats: [[0, 0]], duration: 1.2, final: 0, gate: false }

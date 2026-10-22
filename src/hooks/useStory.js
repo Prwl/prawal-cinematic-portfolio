@@ -32,6 +32,7 @@ export function useStory(count, resolved = 0) {
         if (machine.state !== "playing") { el.dataset.instant = "true"; return; }
         el.dataset.instant = "false";
         timeline = gsap.timeline({ onComplete: () => { machine.resolve(); releaseScene(adapter); } });
+        timeline.timeScale(Number(el.dataset.playbackRate) || 1);
         for (const [at, beat] of score.beats) timeline.call(() => paint(beat), [], at);
         timeline.to({}, { duration: score.duration }, 0);
         if (document.hidden) timeline.pause();

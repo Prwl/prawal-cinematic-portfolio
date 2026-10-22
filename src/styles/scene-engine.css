@@ -6,11 +6,7 @@
 .story-run[data-scene-state="playing"] .scene-footer::before { content: "Scroll again to continue"; position: absolute; right: 0; bottom: calc(100% + .5rem); font-size: .7rem; color: var(--ink-2); }
 .story-run:not([data-live="true"]) *, .story-run[data-reduced="true"] * { animation-play-state: paused !important; }
 .story-run :is(.ascent__caption, .system-story__narrative, .exhibition__label, .study__caption, .scale-scene__metric, .assembly__caption, .hall__line) { opacity: 1; }
-.hall__depth { transition-duration: 550ms; }
-.hall[data-final-frame="true"] .hall__depth { transform: none; }
-.hall[data-final-frame="true"] .hall__flat { left: calc(18% + var(--i) * 19%); width: 17%; height: calc(66% + var(--i) * 6%); transform: none; opacity: 1; filter: none; transition: opacity 650ms ease; animation: principle-lock 650ms var(--ease-out) both; }
-.hall[data-final-frame="true"] .hall__word { font-size: clamp(1.3rem, 2.4cqw, 3rem); }
-.hall[data-final-frame="true"] .hall__shaft, .assembly[data-final-frame="true"] .assembly__light { animation: scene-daylight 12s ease-in-out infinite alternate; }
+.assembly[data-final-frame="true"] .assembly__light { animation: scene-daylight 12s ease-in-out infinite alternate; }
 @keyframes scene-daylight { from { opacity: .7; } to { opacity: .95; } }
 .system-story[data-scene-state="resolved"] .machine__flow, .system-story[data-scene-state="released"] .machine__flow { animation-duration: 7s; opacity: .45; }
 .system-story[data-final-frame="true"] .lattice__edge { animation: dependency-light 9s ease-in-out infinite; }
@@ -62,8 +58,6 @@
 @media (max-width: 699px) {
  .story-run .story-sticky { min-height: 740px; height: 100svh; }
  .story-run[data-scene-state="playing"] .scene-footer::before { display: none; }
- .hall[data-final-frame="true"] .hall__flat { left: calc(5% + var(--i) * 23%); width: 21%; }
- .hall[data-final-frame="true"] .hall__word { font-size: 4cqw; writing-mode: vertical-rl; bottom: 8%; }
  .detail-layer { width: 100%; }
  .detail-layer__head { padding-top: max(1rem, env(safe-area-inset-top)); }
  .detail-layer__body { padding-bottom: max(3rem, env(safe-area-inset-bottom)); }
@@ -91,6 +85,3 @@
 .patch__context[data-lit] { opacity: 1; }
 .patch__context-label { font-size: 1.25rem; }
 @media (max-width: 699px) { .patch__grid { grid-template-columns: 1fr; gap: 1.5rem; } }
-
-@keyframes principle-lock { from { opacity: .35; translate: 0 14px; } }
-.hall[data-instant="true"] .hall__flat { animation: none; }
