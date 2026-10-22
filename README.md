@@ -103,3 +103,7 @@ Rasters carry an embedded origin note (Impeccable provenance). Re-running the pi
 - **Content:** every figure is traceable to the source portfolio or résumé; `tests/content.test.js` guards the scale figures, copy rules and the portrait's pose table.
 
 Design system: see `DESIGN.md`. Product context: `PRODUCT.md`.
+
+## License
+
+Code is released under the [MIT License](LICENSE). Photos, video, artwork, audio and written content are not covered by it: personal media is © Prawal Sharma, all rights reserved, and third-party assets remain under their own licenses.
